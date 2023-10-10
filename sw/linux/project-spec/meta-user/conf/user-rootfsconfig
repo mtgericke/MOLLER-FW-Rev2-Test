@@ -1,0 +1,14 @@
+#Note: Mention Each package in individual line
+#These packages will get added into rootfs menu entry
+
+CONFIG_peekpoke
+CONFIG_iperf3
+CONFIG_memtester
+CONFIG_phytool
+CONFIG_moller
+CONFIG_zeromq
+CONFIG_dma-proxy
+CONFIG_max30205
+CONFIG_lz4
+CONFIG_moller-service
+CONFIG_user-setup

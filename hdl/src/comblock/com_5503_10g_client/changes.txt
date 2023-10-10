@@ -1,0 +1,14 @@
+3/13/21
+Improved resilience to bad CRC frame in TCP_RXBUFNDEMUX2_10G.VHD
+
+3/5/21
+Corrected bug affecting window size info in TCP_CLIENTS ack: TX_ACK_WINDOW_LENGTH
+
+1/23/21
+Added prbs11 and ber tester for 10G
+Added flexibility in the tcp_txbuf and tcp_rxbufndemux2 buffer sizes, in preparation for the tcp window scaling
+increased tx and rx buffer size range to 2KB - 1MB
+TCP window scaling option https://tools.ietf.org/html/rfc1323
+
+12/13/20
+Corrected word alignment issue in tcp_rxbufndemux2

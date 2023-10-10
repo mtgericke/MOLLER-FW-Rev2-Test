@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# chkconfig: 35 90 12
+# description: Moller service
+#
+
+# Get function from functions library
+. /etc/init.d/functions
+
+# Start the service Moller
+start() {
+        logger "echo -n Starting Moller service: "
+        /usr/bin/moller &
+        ### Create the lock file ###
+        touch /var/lock/subsys/moller
+        success $"Moller service startup"
+        echo
+}
+
+# Restart the service Moller
+stop() {
+        logger  "echo -n Stopping Moller service: "
+        killproc moller
+        ### Now, delete the lock file ###
+        rm -f /var/lock/subsys/moller
+        echo
+}
+
+### main logic ###
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status moller
+        ;;
+  restart|reload|condrestart)
+        stop
+        start
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart|reload|status}"
+        exit 1
+esac
+
+exit 0

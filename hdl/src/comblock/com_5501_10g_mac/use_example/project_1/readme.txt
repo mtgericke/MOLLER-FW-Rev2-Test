@@ -1,0 +1,1 @@
+For earlier versions of Vivado, re-create the project by importing the .xise file in the directory above.

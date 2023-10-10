@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="TBCOM5501IPG_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="tbcom5501ipg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="420619600fs"></ZoomStartTime>
+      <ZoomEndTime time="420863401fs"></ZoomEndTime>
+      <Cursor1Time time="420192000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="251"></NameColumnWidth>
+      <ValueColumnWidth column_width="131"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="39" />
+   <wvobject fp_name="/tbcom5501ipg/CLK156g" type="logic">
+      <obj_property name="ElementShortName">CLK156g</obj_property>
+      <obj_property name="ObjectShortName">CLK156g</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/SYNC_RESET_CLK156" type="logic">
+      <obj_property name="ElementShortName">SYNC_RESET_CLK156</obj_property>
+      <obj_property name="ObjectShortName">SYNC_RESET_CLK156</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/TX_SEQ" type="array">
+      <obj_property name="ElementShortName">TX_SEQ[15:0]</obj_property>
+      <obj_property name="ObjectShortName">TX_SEQ[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/TX_WORD_CNTR" type="array">
+      <obj_property name="ElementShortName">TX_WORD_CNTR[15:0]</obj_property>
+      <obj_property name="ObjectShortName">TX_WORD_CNTR[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MAC_ADDR" type="array">
+      <obj_property name="ElementShortName">LAN1_MAC_ADDR[47:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MAC_ADDR[47:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MDIO_IN" type="logic">
+      <obj_property name="ElementShortName">LAN1_MDIO_IN</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MDIO_IN</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MDC" type="logic">
+      <obj_property name="ElementShortName">LAN1_MDC</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MDC</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MDIO_OUT" type="logic">
+      <obj_property name="ElementShortName">LAN1_MDIO_OUT</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MDIO_OUT</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MDIO_DIR" type="logic">
+      <obj_property name="ElementShortName">LAN1_MDIO_DIR</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MDIO_DIR</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_PHY_RESET" type="logic">
+      <obj_property name="ElementShortName">LAN1_PHY_RESET</obj_property>
+      <obj_property name="ObjectShortName">LAN1_PHY_RESET</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_TEST_MODE" type="array">
+      <obj_property name="ElementShortName">LAN1_TEST_MODE[1:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_TEST_MODE[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_POWER_DOWN" type="logic">
+      <obj_property name="ElementShortName">LAN1_POWER_DOWN</obj_property>
+      <obj_property name="ObjectShortName">LAN1_POWER_DOWN</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_PHY_ID" type="array">
+      <obj_property name="ElementShortName">LAN1_PHY_ID[15:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_PHY_ID[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_PHY_STATUS" type="array">
+      <obj_property name="ElementShortName">LAN1_PHY_STATUS[7:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_PHY_STATUS[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_PHY_STATUS2" type="array">
+      <obj_property name="ElementShortName">LAN1_PHY_STATUS2[7:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_PHY_STATUS2[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MAC_TX_DATA" type="array">
+      <obj_property name="ElementShortName">LAN1_MAC_TX_DATA[63:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MAC_TX_DATA[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MAC_TX_DATA_VALID" type="array">
+      <obj_property name="ElementShortName">LAN1_MAC_TX_DATA_VALID[7:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MAC_TX_DATA_VALID[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MAC_TX_EOF" type="logic">
+      <obj_property name="ElementShortName">LAN1_MAC_TX_EOF</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MAC_TX_EOF</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MAC_TX_CTS" type="logic">
+      <obj_property name="ElementShortName">LAN1_MAC_TX_CTS</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MAC_TX_CTS</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MAC_RX_DATA" type="array">
+      <obj_property name="ElementShortName">LAN1_MAC_RX_DATA[63:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MAC_RX_DATA[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MAC_RX_DATA_VALID" type="array">
+      <obj_property name="ElementShortName">LAN1_MAC_RX_DATA_VALID[7:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MAC_RX_DATA_VALID[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MAC_RX_SOF" type="logic">
+      <obj_property name="ElementShortName">LAN1_MAC_RX_SOF</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MAC_RX_SOF</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MAC_RX_EOF" type="logic">
+      <obj_property name="ElementShortName">LAN1_MAC_RX_EOF</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MAC_RX_EOF</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_MAC_RX_FRAME_VALID" type="logic">
+      <obj_property name="ElementShortName">LAN1_MAC_RX_FRAME_VALID</obj_property>
+      <obj_property name="ObjectShortName">LAN1_MAC_RX_FRAME_VALID</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_N_RX_FRAMES" type="array">
+      <obj_property name="ElementShortName">LAN1_N_RX_FRAMES[15:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_N_RX_FRAMES[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_N_RX_BAD_CRCS" type="array">
+      <obj_property name="ElementShortName">LAN1_N_RX_BAD_CRCS[15:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_N_RX_BAD_CRCS[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_N_RX_FRAMES_TOO_SHORT" type="array">
+      <obj_property name="ElementShortName">LAN1_N_RX_FRAMES_TOO_SHORT[15:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_N_RX_FRAMES_TOO_SHORT[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_N_RX_FRAMES_TOO_LONG" type="array">
+      <obj_property name="ElementShortName">LAN1_N_RX_FRAMES_TOO_LONG[15:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_N_RX_FRAMES_TOO_LONG[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_N_RX_WRONG_ADDR" type="array">
+      <obj_property name="ElementShortName">LAN1_N_RX_WRONG_ADDR[15:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_N_RX_WRONG_ADDR[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_N_RX_LENGTH_ERRORS" type="array">
+      <obj_property name="ElementShortName">LAN1_N_RX_LENGTH_ERRORS[15:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_N_RX_LENGTH_ERRORS[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/LAN1_RX_IPG" type="array">
+      <obj_property name="ElementShortName">LAN1_RX_IPG[7:0]</obj_property>
+      <obj_property name="ObjectShortName">LAN1_RX_IPG[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/XGMII_TXD" type="array">
+      <obj_property name="ElementShortName">XGMII_TXD[63:0]</obj_property>
+      <obj_property name="ObjectShortName">XGMII_TXD[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/XGMII_TXC" type="array">
+      <obj_property name="ElementShortName">XGMII_TXC[7:0]</obj_property>
+      <obj_property name="ObjectShortName">XGMII_TXC[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/XGMII_RXD" type="array">
+      <obj_property name="ElementShortName">XGMII_RXD[63:0]</obj_property>
+      <obj_property name="ObjectShortName">XGMII_RXD[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/XGMII_RXC" type="array">
+      <obj_property name="ElementShortName">XGMII_RXC[7:0]</obj_property>
+      <obj_property name="ObjectShortName">XGMII_RXC[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/TX_START1" type="other">
+      <obj_property name="ElementShortName">TX_START1</obj_property>
+      <obj_property name="ObjectShortName">TX_START1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/TX_START2" type="other">
+      <obj_property name="ElementShortName">TX_START2</obj_property>
+      <obj_property name="ObjectShortName">TX_START2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/TX_START3" type="other">
+      <obj_property name="ElementShortName">TX_START3</obj_property>
+      <obj_property name="ObjectShortName">TX_START3</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tbcom5501ipg/TX_START4" type="other">
+      <obj_property name="ElementShortName">TX_START4</obj_property>
+      <obj_property name="ObjectShortName">TX_START4</obj_property>
+   </wvobject>
+</wave_config>

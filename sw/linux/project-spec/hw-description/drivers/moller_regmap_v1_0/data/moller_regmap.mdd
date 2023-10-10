@@ -1,0 +1,10 @@
+
+
+OPTION psf_version = 2.1;
+
+BEGIN DRIVER moller_regmap
+	OPTION supported_peripherals = (moller_regmap);
+	OPTION copyfiles = all;
+	OPTION VERSION = 1.0;
+	OPTION NAME = moller_regmap;
+END DRIVER

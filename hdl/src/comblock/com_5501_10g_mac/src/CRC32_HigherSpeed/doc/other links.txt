@@ -1,0 +1,2 @@
+http://www.sunshine2k.de/coding/javascript/crc/crc_js.html
+http://create.stephan-brumme.com/crc32/
