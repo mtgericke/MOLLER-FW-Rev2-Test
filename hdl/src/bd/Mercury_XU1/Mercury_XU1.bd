@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xC185C343EF9D453D",
+      "boundary_crc": "0x95537910FEECCA0F",
       "device": "xczu6cg-ffvc900-1-e",
       "name": "Mercury_XU1",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
@@ -23,21 +23,22 @@
       "axcache_coherent": "",
       "axprot_unsecure": "",
       "smartconnect_1": "",
-      "moller_regmap": "",
       "xxv_ethernet_0": "",
       "tx_config": "",
       "rx_config": "",
       "testmode": "",
       "zero": "",
       "clksel": "",
-      "xlconstant_1": "",
       "xlconstant_2": "",
       "COM5501_0": "",
-      "tcp_udp_client_0": "",
       "xlconstant_3": "",
       "util_vector_logic_0": "",
+      "ti_zero": "",
       "mollerTI_0": "",
-      "ti_zero": ""
+      "tcp_udp_client_0": "",
+      "xlconcat_0": "",
+      "xlconstant_1": "",
+      "moller_regmap": ""
     },
     "interface_ports": {
       "run_fifo": {
@@ -378,21 +379,6 @@
       "udp_tx_dest_ipv4_6n": {
         "direction": "I"
       },
-      "udp_tx_dest_ip_addr": {
-        "direction": "I",
-        "left": "127",
-        "right": "0"
-      },
-      "udp_tx_dest_port_no": {
-        "direction": "I",
-        "left": "15",
-        "right": "0"
-      },
-      "udp_tx_source_port_no": {
-        "direction": "I",
-        "left": "15",
-        "right": "0"
-      },
       "udp_tx_eof": {
         "direction": "I"
       },
@@ -476,6 +462,11 @@
       },
       "TI1TX_P": {
         "direction": "O"
+      },
+      "adc_ctrl_clear_counters": {
+        "direction": "O",
+        "left": "0",
+        "right": "0"
       }
     },
     "components": {
@@ -3497,6 +3488,9 @@
           "FIFO_MODE": {
             "value": "2"
           },
+          "HAS_RD_DATA_COUNT": {
+            "value": "1"
+          },
           "HAS_WR_DATA_COUNT": {
             "value": "0"
           },
@@ -3518,6 +3512,9 @@
             "value": "0"
           },
           "ARB_ON_MAX_XFERS": {
+            "value": "0"
+          },
+          "ARB_ON_NUM_CYCLES": {
             "value": "0"
           },
           "ARB_ON_TLAST": {
@@ -3548,6 +3545,12 @@
           },
           "FIFO_MODE": {
             "value": "2"
+          },
+          "HAS_PROG_FULL": {
+            "value": "0"
+          },
+          "HAS_RD_DATA_COUNT": {
+            "value": "1"
           },
           "HAS_WR_DATA_COUNT": {
             "value": "0"
@@ -3741,6 +3744,9 @@
           "FIFO_MODE": {
             "value": "2"
           },
+          "HAS_RD_DATA_COUNT": {
+            "value": "1"
+          },
           "HAS_WR_DATA_COUNT": {
             "value": "0"
           },
@@ -3839,12 +3845,6 @@
             ]
           }
         }
-      },
-      "moller_regmap": {
-        "vlnv": "TRIUMF:user:moller_regmap:1.2",
-        "xci_name": "Mercury_XU1_moller_regmap_0",
-        "xci_path": "ip/Mercury_XU1_moller_regmap_0/Mercury_XU1_moller_regmap_0.xci",
-        "inst_hier_path": "moller_regmap"
       },
       "xxv_ethernet_0": {
         "vlnv": "xilinx.com:ip:xxv_ethernet:3.3",
@@ -3954,20 +3954,6 @@
           }
         }
       },
-      "xlconstant_1": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "Mercury_XU1_xlconstant_1_5",
-        "xci_path": "ip/Mercury_XU1_xlconstant_1_5/Mercury_XU1_xlconstant_1_5.xci",
-        "inst_hier_path": "xlconstant_1",
-        "parameters": {
-          "CONST_VAL": {
-            "value": "0x0004A307DC6F"
-          },
-          "CONST_WIDTH": {
-            "value": "48"
-          }
-        }
-      },
       "xlconstant_2": {
         "vlnv": "xilinx.com:ip:xlconstant:1.1",
         "xci_name": "Mercury_XU1_xlconstant_2_0",
@@ -3979,12 +3965,6 @@
         "xci_name": "Mercury_XU1_COM5501_0_0",
         "xci_path": "ip/Mercury_XU1_COM5501_0_0/Mercury_XU1_COM5501_0_0.xci",
         "inst_hier_path": "COM5501_0"
-      },
-      "tcp_udp_client_0": {
-        "vlnv": "COMBLOCK:user:tcp_udp_client:1.0",
-        "xci_name": "Mercury_XU1_tcp_udp_client_0_0",
-        "xci_path": "ip/Mercury_XU1_tcp_udp_client_0_0/Mercury_XU1_tcp_udp_client_0_0.xci",
-        "inst_hier_path": "tcp_udp_client_0"
       },
       "xlconstant_3": {
         "vlnv": "xilinx.com:ip:xlconstant:1.1",
@@ -4006,12 +3986,6 @@
           }
         }
       },
-      "mollerTI_0": {
-        "vlnv": "user.org:user:mollerTI:1.0",
-        "xci_name": "Mercury_XU1_mollerTI_0_0",
-        "xci_path": "ip/Mercury_XU1_mollerTI_0_0/Mercury_XU1_mollerTI_0_0.xci",
-        "inst_hier_path": "mollerTI_0"
-      },
       "ti_zero": {
         "vlnv": "xilinx.com:ip:xlconstant:1.1",
         "xci_name": "Mercury_XU1_xlconstant_4_0",
@@ -4022,85 +3996,65 @@
             "value": "0"
           }
         }
+      },
+      "mollerTI_0": {
+        "vlnv": "user.org:user:mollerTI:1.0",
+        "xci_name": "Mercury_XU1_mollerTI_0_0",
+        "xci_path": "ip/Mercury_XU1_mollerTI_0_0/Mercury_XU1_mollerTI_0_0.xci",
+        "inst_hier_path": "mollerTI_0"
+      },
+      "tcp_udp_client_0": {
+        "vlnv": "COMBLOCK:user:tcp_udp_client:1.0",
+        "xci_name": "Mercury_XU1_tcp_udp_client_0_0",
+        "xci_path": "ip/Mercury_XU1_tcp_udp_client_0_0/Mercury_XU1_tcp_udp_client_0_0.xci",
+        "inst_hier_path": "tcp_udp_client_0"
+      },
+      "xlconcat_0": {
+        "vlnv": "xilinx.com:ip:xlconcat:2.1",
+        "xci_name": "Mercury_XU1_xlconcat_0_0",
+        "xci_path": "ip/Mercury_XU1_xlconcat_0_0/Mercury_XU1_xlconcat_0_0.xci",
+        "inst_hier_path": "xlconcat_0",
+        "parameters": {
+          "IN0_WIDTH": {
+            "value": "32"
+          },
+          "IN1_WIDTH": {
+            "value": "96"
+          }
+        }
+      },
+      "xlconstant_1": {
+        "vlnv": "xilinx.com:ip:xlconstant:1.1",
+        "xci_name": "Mercury_XU1_xlconstant_1_5",
+        "xci_path": "ip/Mercury_XU1_xlconstant_1_5/Mercury_XU1_xlconstant_1_5.xci",
+        "inst_hier_path": "xlconstant_1",
+        "parameters": {
+          "CONST_VAL": {
+            "value": "0"
+          },
+          "CONST_WIDTH": {
+            "value": "96"
+          }
+        }
+      },
+      "moller_regmap": {
+        "vlnv": "TRIUMF:user:moller_regmap:1.2",
+        "xci_name": "Mercury_XU1_moller_regmap_0",
+        "xci_path": "ip/Mercury_XU1_moller_regmap_0/Mercury_XU1_moller_regmap_0.xci",
+        "inst_hier_path": "moller_regmap"
       }
     },
     "interface_nets": {
-      "axi_dma_0_M_AXI_SG": {
+      "mollerTI_0_C2H": {
         "interface_ports": [
-          "axi_dma_0/M_AXI_SG",
-          "smartconnect_2/S01_AXI"
+          "ti_fifo/S_AXIS",
+          "mollerTI_0/C2H"
         ]
       },
-      "rx_10g": {
+      "run_fifo_M_AXIS": {
         "interface_ports": [
-          "sfp_data_rx",
-          "xxv_ethernet_0/gt_rx"
-        ]
-      },
-      "smartconnect_0_M00_AXI": {
-        "interface_ports": [
-          "smartconnect_0/M00_AXI",
-          "moller_regmap/S00_AXI"
-        ]
-      },
-      "S_AXIS_0_1": {
-        "interface_ports": [
-          "run_fifo",
-          "run_fifo/S_AXIS"
-        ]
-      },
-      "S_AXIS_1_1": {
-        "interface_ports": [
-          "adc_fifo",
-          "adc_fifo/S_AXIS"
-        ]
-      },
-      "axi_dma_0_M_AXI_S2MM": {
-        "interface_ports": [
-          "axi_dma_0/M_AXI_S2MM",
-          "smartconnect_2/S00_AXI"
-        ]
-      },
-      "adc_fifo_M_AXIS": {
-        "interface_ports": [
-          "adc_fifo/M_AXIS",
-          "packet_switch/S01_AXIS"
-        ]
-      },
-      "zynq_ultra_ps_e_M_AXI_HPM0_FPD": {
-        "interface_ports": [
-          "zynq_ultra_ps_e/M_AXI_HPM0_FPD",
-          "smartconnect_1/S00_AXI"
-        ]
-      },
-      "sfp_data_refclk_1": {
-        "interface_ports": [
-          "sfp_data_refclk",
-          "xxv_ethernet_0/gt_ref_clk"
-        ]
-      },
-      "smartconnect_2_M00_AXI": {
-        "interface_ports": [
-          "smartconnect_2/M00_AXI",
-          "zynq_ultra_ps_e/S_AXI_HPC0_FPD"
-        ]
-      },
-      "ti_fifo_M_AXIS": {
-        "interface_ports": [
-          "ti_fifo/M_AXIS",
-          "packet_switch/S02_AXIS"
-        ]
-      },
-      "priority_switch_M00_AXIS": {
-        "interface_ports": [
-          "packet_switch/M00_AXIS",
-          "axi_dma_0/S_AXIS_S2MM"
-        ]
-      },
-      "zynq_ultra_ps_e_M_AXI_HPM0_LPD": {
-        "interface_ports": [
-          "smartconnect_0/S00_AXI",
-          "zynq_ultra_ps_e/M_AXI_HPM0_LPD"
+          "run_fifo/M_AXIS",
+          "packet_switch/S00_AXIS"
         ]
       },
       "xxv_ethernet_0_gt_tx": {
@@ -4109,10 +4063,82 @@
           "xxv_ethernet_0/gt_tx"
         ]
       },
-      "run_fifo_M_AXIS": {
+      "zynq_ultra_ps_e_M_AXI_HPM0_LPD": {
         "interface_ports": [
-          "run_fifo/M_AXIS",
-          "packet_switch/S00_AXIS"
+          "smartconnect_0/S00_AXI",
+          "zynq_ultra_ps_e/M_AXI_HPM0_LPD"
+        ]
+      },
+      "priority_switch_M00_AXIS": {
+        "interface_ports": [
+          "packet_switch/M00_AXIS",
+          "axi_dma_0/S_AXIS_S2MM"
+        ]
+      },
+      "ti_fifo_M_AXIS": {
+        "interface_ports": [
+          "ti_fifo/M_AXIS",
+          "packet_switch/S02_AXIS"
+        ]
+      },
+      "smartconnect_2_M00_AXI": {
+        "interface_ports": [
+          "smartconnect_2/M00_AXI",
+          "zynq_ultra_ps_e/S_AXI_HPC0_FPD"
+        ]
+      },
+      "sfp_data_refclk_1": {
+        "interface_ports": [
+          "sfp_data_refclk",
+          "xxv_ethernet_0/gt_ref_clk"
+        ]
+      },
+      "zynq_ultra_ps_e_M_AXI_HPM0_FPD": {
+        "interface_ports": [
+          "zynq_ultra_ps_e/M_AXI_HPM0_FPD",
+          "smartconnect_1/S00_AXI"
+        ]
+      },
+      "adc_fifo_M_AXIS": {
+        "interface_ports": [
+          "adc_fifo/M_AXIS",
+          "packet_switch/S01_AXIS"
+        ]
+      },
+      "axi_dma_0_M_AXI_S2MM": {
+        "interface_ports": [
+          "axi_dma_0/M_AXI_S2MM",
+          "smartconnect_2/S00_AXI"
+        ]
+      },
+      "S_AXIS_1_1": {
+        "interface_ports": [
+          "adc_fifo",
+          "adc_fifo/S_AXIS"
+        ]
+      },
+      "S_AXIS_0_1": {
+        "interface_ports": [
+          "run_fifo",
+          "run_fifo/S_AXIS"
+        ]
+      },
+      "smartconnect_0_M00_AXI": {
+        "interface_ports": [
+          "smartconnect_0/M00_AXI",
+          "moller_regmap/S00_AXI"
+        ]
+      },
+      "rx_10g": {
+        "interface_ports": [
+          "sfp_data_rx",
+          "xxv_ethernet_0/gt_rx"
+        ]
+      },
+      "axi_dma_0_M_AXI_SG": {
+        "interface_ports": [
+          "axi_dma_0/M_AXI_SG",
+          "smartconnect_2/S01_AXI"
         ]
       },
       "smartconnect_1_M00_AXI": {
@@ -4125,12 +4151,6 @@
         "interface_ports": [
           "mollerTI_0/S_AXI",
           "smartconnect_0/M01_AXI"
-        ]
-      },
-      "mollerTI_0_C2H": {
-        "interface_ports": [
-          "ti_fifo/S_AXIS",
-          "mollerTI_0/C2H"
         ]
       }
     },
@@ -4253,9 +4273,9 @@
           "run_fifo/s_axis_aclk",
           "adc_fifo/s_axis_aclk",
           "ti_fifo/s_axis_aclk",
-          "moller_regmap/s00_axi_aclk",
           "smartconnect_0/aclk1",
-          "mollerTI_0/s_axi_aclk"
+          "mollerTI_0/s_axi_aclk",
+          "moller_regmap/s00_axi_aclk"
         ]
       },
       "rst_125_1": {
@@ -4264,8 +4284,8 @@
           "run_fifo/s_axis_aresetn",
           "adc_fifo/s_axis_aresetn",
           "ti_fifo/s_axis_aresetn",
-          "moller_regmap/s00_axi_aresetn",
-          "mollerTI_0/s_axi_aresetn"
+          "mollerTI_0/s_axi_aresetn",
+          "moller_regmap/s00_axi_aresetn"
         ]
       },
       "status_clk_lockdetect_0_1": {
@@ -4417,8 +4437,8 @@
           "udp_tx_clk",
           "COM5501_0/CLK",
           "COM5501_0/CLK156g",
-          "tcp_udp_client_0/clk",
-          "xxv_ethernet_0/rx_core_clk_0"
+          "xxv_ethernet_0/rx_core_clk_0",
+          "tcp_udp_client_0/clk"
         ]
       },
       "zynq_ultra_ps_e_pl_clk1": {
@@ -4439,13 +4459,6 @@
           "sfp_reset",
           "COM5501_0/SYNC_RESET",
           "tcp_udp_client_0/sync_reset"
-        ]
-      },
-      "xlconstant_1_dout2": {
-        "ports": [
-          "xlconstant_1/dout",
-          "COM5501_0/MAC_ADDR",
-          "tcp_udp_client_0/mac_addr"
         ]
       },
       "user_rx_reset_0": {
@@ -4592,24 +4605,6 @@
         "ports": [
           "udp_tx_dest_ipv4_6n",
           "tcp_udp_client_0/udp_tx_dest_ipv4_6n"
-        ]
-      },
-      "udp_tx_dest_ip_addr_0_1": {
-        "ports": [
-          "udp_tx_dest_ip_addr",
-          "tcp_udp_client_0/udp_tx_dest_ip_addr"
-        ]
-      },
-      "udp_tx_dest_port_no_0_1": {
-        "ports": [
-          "udp_tx_dest_port_no",
-          "tcp_udp_client_0/udp_tx_dest_port_no"
-        ]
-      },
-      "udp_tx_source_port_no_0_1": {
-        "ports": [
-          "udp_tx_source_port_no",
-          "tcp_udp_client_0/udp_tx_source_port_no"
         ]
       },
       "udp_tx_eof_0_1": {
@@ -4792,6 +4787,67 @@
         "ports": [
           "ti_zero/dout",
           "mollerTI_0/h2c_tvalid"
+        ]
+      },
+      "run_fifo_axis_rd_data_count": {
+        "ports": [
+          "run_fifo/axis_rd_data_count",
+          "moller_regmap/run_fifo_count"
+        ]
+      },
+      "ti_fifo_axis_rd_data_count": {
+        "ports": [
+          "ti_fifo/axis_rd_data_count",
+          "moller_regmap/ti_fifo_count"
+        ]
+      },
+      "adc_fifo_axis_rd_data_count": {
+        "ports": [
+          "adc_fifo/axis_rd_data_count",
+          "moller_regmap/adc_fifo_count"
+        ]
+      },
+      "moller_regmap_adc_ctrl_clear_counters": {
+        "ports": [
+          "moller_regmap/adc_ctrl_clear_counters",
+          "adc_ctrl_clear_counters"
+        ]
+      },
+      "Net2": {
+        "ports": [
+          "moller_regmap/mac_addr",
+          "COM5501_0/MAC_ADDR",
+          "tcp_udp_client_0/mac_addr"
+        ]
+      },
+      "moller_regmap_udp_dst_port": {
+        "ports": [
+          "moller_regmap/udp_dst_port",
+          "tcp_udp_client_0/udp_tx_dest_port_no"
+        ]
+      },
+      "moller_regmap_udp_src_port": {
+        "ports": [
+          "moller_regmap/udp_src_port",
+          "tcp_udp_client_0/udp_tx_source_port_no"
+        ]
+      },
+      "xlconcat_0_dout": {
+        "ports": [
+          "xlconcat_0/dout",
+          "tcp_udp_client_0/udp_tx_dest_ip_addr"
+        ]
+      },
+      "moller_regmap_udp_dest_ip": {
+        "ports": [
+          "moller_regmap/udp_dest_ip",
+          "xlconcat_0/In0"
+        ]
+      },
+      "xlconstant_1_dout2": {
+        "ports": [
+          "xlconstant_1/dout",
+          "xlconcat_0/In1"
         ]
       }
     },

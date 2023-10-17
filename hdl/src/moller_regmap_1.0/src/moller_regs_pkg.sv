@@ -3,9 +3,9 @@
 
 // -----------------------------------------------------------------------------
 // 'moller' Register Definitions
-// Revision: 249
+// Revision: 287
 // -----------------------------------------------------------------------------
-// Generated on 2023-08-30 at 20:53 (UTC) by airhdl version 2023.07.1-936312266
+// Generated on 2023-10-17 at 05:20 (UTC) by airhdl version 2023.07.1-936312266
 // -----------------------------------------------------------------------------
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -23,13 +23,13 @@
 package moller_regs_pkg;
 
     // Revision number of the 'moller' register map
-    localparam MOLLER_REVISION = 249;
+    localparam MOLLER_REVISION = 287;
 
     // Default base address of the 'moller' register map
-    localparam logic [31:0] MOLLER_DEFAULT_BASEADDR = 32'h80010000;
+    localparam logic [31:0] MOLLER_DEFAULT_BASEADDR = 32'h80000000;
 
     // Size of the 'moller' register map, in bytes
-    localparam MOLLER_RANGE_BYTES = 224;
+    localparam MOLLER_RANGE_BYTES = 276;
 
     // Register 'adc_test_data'
     localparam logic [31:0] ADC_TEST_DATA_OFFSET = 32'h00000000; // address offset of the 'adc_test_data' register
@@ -83,6 +83,10 @@ package moller_regs_pkg;
     localparam ADC_CTRL_SAMPLE_RATE_BIT_OFFSET = 16; // bit offset of the 'sample_rate' field
     localparam ADC_CTRL_SAMPLE_RATE_BIT_WIDTH = 8; // bit width of the 'sample_rate' field
     localparam logic [23:16] ADC_CTRL_SAMPLE_RATE_RESET = 8'b00000000; // reset value of the 'sample_rate' field
+    // Field 'adc_ctrl.clear_counters'
+    localparam ADC_CTRL_CLEAR_COUNTERS_BIT_OFFSET = 28; // bit offset of the 'clear_counters' field
+    localparam ADC_CTRL_CLEAR_COUNTERS_BIT_WIDTH = 1; // bit width of the 'clear_counters' field
+    localparam logic [28:28] ADC_CTRL_CLEAR_COUNTERS_RESET = 1'b0; // reset value of the 'clear_counters' field
     // Field 'adc_ctrl.power_down'
     localparam ADC_CTRL_POWER_DOWN_BIT_OFFSET = 29; // bit offset of the 'power_down' field
     localparam ADC_CTRL_POWER_DOWN_BIT_WIDTH = 1; // bit width of the 'power_down' field
@@ -154,6 +158,70 @@ package moller_regs_pkg;
     localparam ADC_DELAY_OUT_VALUE_BIT_OFFSET = 0; // bit offset of the 'value' field
     localparam ADC_DELAY_OUT_VALUE_BIT_WIDTH = 9; // bit width of the 'value' field
     localparam logic [8:0] ADC_DELAY_OUT_VALUE_RESET = 9'b000000000; // reset value of the 'value' field
+
+    // Register 'adc_fifo_count'
+    localparam logic [31:0] ADC_FIFO_COUNT_OFFSET = 32'h000000E0; // address offset of the 'adc_fifo_count' register
+    // Field 'adc_fifo_count.value'
+    localparam ADC_FIFO_COUNT_VALUE_BIT_OFFSET = 0; // bit offset of the 'value' field
+    localparam ADC_FIFO_COUNT_VALUE_BIT_WIDTH = 32; // bit width of the 'value' field
+    localparam logic [31:0] ADC_FIFO_COUNT_VALUE_RESET = 32'b00000000000000000000000000000000; // reset value of the 'value' field
+
+    // Register 'run_fifo_count'
+    localparam logic [31:0] RUN_FIFO_COUNT_OFFSET = 32'h000000E4; // address offset of the 'run_fifo_count' register
+    // Field 'run_fifo_count.value'
+    localparam RUN_FIFO_COUNT_VALUE_BIT_OFFSET = 0; // bit offset of the 'value' field
+    localparam RUN_FIFO_COUNT_VALUE_BIT_WIDTH = 32; // bit width of the 'value' field
+    localparam logic [31:0] RUN_FIFO_COUNT_VALUE_RESET = 32'b00000000000000000000000000000000; // reset value of the 'value' field
+
+    // Register 'ti_fifo_count'
+    localparam logic [31:0] TI_FIFO_COUNT_OFFSET = 32'h000000E8; // address offset of the 'ti_fifo_count' register
+    // Field 'ti_fifo_count.value'
+    localparam TI_FIFO_COUNT_VALUE_BIT_OFFSET = 0; // bit offset of the 'value' field
+    localparam TI_FIFO_COUNT_VALUE_BIT_WIDTH = 32; // bit width of the 'value' field
+    localparam logic [31:0] TI_FIFO_COUNT_VALUE_RESET = 32'b00000000000000000000000000000000; // reset value of the 'value' field
+
+    // Register 'mac_addr_hi'
+    localparam logic [31:0] MAC_ADDR_HI_OFFSET = 32'h00000100; // address offset of the 'mac_addr_hi' register
+    // Field 'mac_addr_hi.value'
+    localparam MAC_ADDR_HI_VALUE_BIT_OFFSET = 0; // bit offset of the 'value' field
+    localparam MAC_ADDR_HI_VALUE_BIT_WIDTH = 32; // bit width of the 'value' field
+    localparam logic [31:0] MAC_ADDR_HI_VALUE_RESET = 32'b00000000000000000000000000000000; // reset value of the 'value' field
+
+    // Register 'mac_addr_lo'
+    localparam logic [31:0] MAC_ADDR_LO_OFFSET = 32'h00000104; // address offset of the 'mac_addr_lo' register
+    // Field 'mac_addr_lo.value'
+    localparam MAC_ADDR_LO_VALUE_BIT_OFFSET = 0; // bit offset of the 'value' field
+    localparam MAC_ADDR_LO_VALUE_BIT_WIDTH = 32; // bit width of the 'value' field
+    localparam logic [31:0] MAC_ADDR_LO_VALUE_RESET = 32'b00000000000000000000000000000000; // reset value of the 'value' field
+
+    // Register 'udp_dest_ip'
+    localparam logic [31:0] UDP_DEST_IP_OFFSET = 32'h00000108; // address offset of the 'udp_dest_ip' register
+    // Field 'udp_dest_ip.value'
+    localparam UDP_DEST_IP_VALUE_BIT_OFFSET = 0; // bit offset of the 'value' field
+    localparam UDP_DEST_IP_VALUE_BIT_WIDTH = 32; // bit width of the 'value' field
+    localparam logic [31:0] UDP_DEST_IP_VALUE_RESET = 32'b00000000000000000000000000000000; // reset value of the 'value' field
+
+    // Register 'udp_dst_port'
+    localparam logic [31:0] UDP_DST_PORT_OFFSET = 32'h0000010C; // address offset of the 'udp_dst_port' register
+    // Field 'udp_dst_port.value'
+    localparam UDP_DST_PORT_VALUE_BIT_OFFSET = 0; // bit offset of the 'value' field
+    localparam UDP_DST_PORT_VALUE_BIT_WIDTH = 16; // bit width of the 'value' field
+    localparam logic [15:0] UDP_DST_PORT_VALUE_RESET = 16'b0000000000000000; // reset value of the 'value' field
+    // Field 'udp_dst_port.unused'
+    localparam UDP_DST_PORT_UNUSED_BIT_OFFSET = 16; // bit offset of the 'unused' field
+    localparam UDP_DST_PORT_UNUSED_BIT_WIDTH = 16; // bit width of the 'unused' field
+    localparam logic [31:16] UDP_DST_PORT_UNUSED_RESET = 16'b0000000000000000; // reset value of the 'unused' field
+
+    // Register 'udp_src_port'
+    localparam logic [31:0] UDP_SRC_PORT_OFFSET = 32'h00000110; // address offset of the 'udp_src_port' register
+    // Field 'udp_src_port.value'
+    localparam UDP_SRC_PORT_VALUE_BIT_OFFSET = 0; // bit offset of the 'value' field
+    localparam UDP_SRC_PORT_VALUE_BIT_WIDTH = 16; // bit width of the 'value' field
+    localparam logic [15:0] UDP_SRC_PORT_VALUE_RESET = 16'b0000000000000000; // reset value of the 'value' field
+    // Field 'udp_src_port.unused'
+    localparam UDP_SRC_PORT_UNUSED_BIT_OFFSET = 16; // bit offset of the 'unused' field
+    localparam UDP_SRC_PORT_UNUSED_BIT_WIDTH = 16; // bit width of the 'unused' field
+    localparam logic [31:16] UDP_SRC_PORT_UNUSED_RESET = 16'b0000000000000000; // reset value of the 'unused' field
 
 endpackage: moller_regs_pkg
 

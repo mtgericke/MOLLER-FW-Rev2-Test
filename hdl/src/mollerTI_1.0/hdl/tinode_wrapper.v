@@ -31,7 +31,7 @@ module tinode_wrapper (
 
     // Trigger inputs, or TS_code inputs, which is similar to the TI front panel (34-pin connector) inputs
     input wire [16:1] GENINP, // ExtraIn(2:1) & TS(6:1) & Trg & BUSY
-    inout wire [6:1] SWM,
+    inout wire [8:1] SWM,
 
     // to interface with PCIe for IRQ
     input wire axi_aresetn, // out axi_aresetn, synced with axi_aclk for axi interfaces reset

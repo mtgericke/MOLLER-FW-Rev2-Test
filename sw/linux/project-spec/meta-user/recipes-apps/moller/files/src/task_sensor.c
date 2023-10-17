@@ -9,7 +9,7 @@ static float read_temp(int n);
 static float read_iio_sensor(const char* str_raw, const char* str_scale, const char* str_offset, float factor);
 
 void* sensor_thread(void *vargp) {
-
+	printf("Starting Sensor Thread\n");
 	while(1) {
 
         sched_yield();

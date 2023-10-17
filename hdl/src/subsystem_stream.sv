@@ -15,7 +15,6 @@ module subsystem_stream #(
     input wire [15:0] num_samples,
     input wire [6:0] rate_div,
 
-    input wire fifo_clk,
   	output wire [63:0] fifo_tdata,
     output wire fifo_tfirst,
 	output wire fifo_tlast,
@@ -75,7 +74,6 @@ always@(posedge clk) begin
     end
 end
 
-/*
 always@(posedge clk) begin
     stream_in_ts <= in_ts;
 
@@ -105,24 +103,12 @@ always@(posedge clk) begin
     end
 end
 
-*/
-
-always@(posedge fifo_clk) begin
-    if(rst) begin
-        stream_in_tvalid <= 1'b0;
-        stream_in_tdata <= 0;
-    end else begin
-        stream_in_tvalid <= 1'b1;
-        stream_in_tdata <= (in_tready) ? stream_in_tdata + 1'b1 : stream_in_tdata;
-    end
-end
-
 axi_stream_ts_data #(
     .ID(8'hDD),
-    .MAX_PKT_LEN(180),
+    .MAX_PKT_LEN(8192),
     .DEPTH_BITS(15)
 ) adc_data_streamer (
-	.clk(fifo_clk),
+	.clk(clk),
 	.rst(rst),
 
   	.ena(ena),

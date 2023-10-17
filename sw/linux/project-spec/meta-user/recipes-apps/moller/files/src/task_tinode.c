@@ -17,10 +17,14 @@ static int tinode_regmap_fd;
 static volatile uint32_t *tinode_regmap;
 
 void* tinode_thread(void *vargp) {
+	printf("Starting TINode Thread\n");
+	fflush(stdout);
 
 	regmap_init();
 
     if(tinode_regmap) {
+		printf("TINode Initialized\n");
+		fflush(stdout);
         tinode_regmap[TINODE_REG_VME_RESET_INT] = 0x00000020;
         tinode_regmap[TINODE_REG_FIBER_EN]      = 0x000005FF;
         tinode_regmap[TINODE_REG_CLOCK_SRC]     = 0x00000002;

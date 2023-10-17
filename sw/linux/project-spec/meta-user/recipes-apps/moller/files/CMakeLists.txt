@@ -22,6 +22,5 @@ add_executable(moller
 target_link_libraries(moller
     zmq
     pthread
-    lz4
     gpiod
 )

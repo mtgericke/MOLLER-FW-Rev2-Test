@@ -47,7 +47,7 @@ module system_top
 
     // TODO: Future revision should move these to fabric pins
     // input wire TACH3, // PS_MIO44
-    // input wire TACH2, // PS_MIO42l
+    // input wire TACH2, // PS_MIO42
     // input wire TACH1, // PS_MIO43
 
     // Inputs from clock cleaner, same freq, but can be delayed relative to each other
@@ -224,6 +224,7 @@ wire ctrl_adc_ena;
 
 wire ctrl_adc_testpat;
 wire ctrl_adc_pwr_down;
+wire ctrl_clear_counters;
 wire adc_testpat;
 wire adc_phase_adjust;
 wire [55:0] adc_phase_error;
@@ -249,7 +250,7 @@ assign I2C_SCL_PL = 1'bZ;
 assign I2C_SDA_PL = 1'bZ;
 assign LED2_N_PWR_SYNC = 1'bZ;
 assign LMK_STAT_CLKin2_SYNC = 1'b1; // SYNC for clock cleaner
-assign ADC_PDn = 1'b1; // ~ctrl_adc_pwr_down; // TEMP HACK TO RE-USE POWERDOWN AS counter reset
+assign ADC_PDn = ~ctrl_adc_pwr_down;
 assign ADC_TESTPAT = ctrl_adc_testpat;
 assign LMK_STAT_CLKin0 = SW1[6];
 assign LMK_STAT_CLKin1 = SW1[5];
@@ -346,7 +347,7 @@ subsystem_adc #(
     .clk(clk),
     .clk_convert(clk_convert), // 2x clk, used for ADC CLK and ADC CONVERT signals
 
-    .reset_counters( ctrl_adc_pwr_down ),
+    .reset_counters( ctrl_clear_counters ),
 
     .convert( 1'b1 ),
     .sample_rate( ctrl_sample_rate ),
@@ -388,7 +389,6 @@ subsystem_stream stream_subsystem (
     .num_samples( stream_num_samples ),
     .rate_div( stream_rate_div ),
 
-    .fifo_clk( udp_tx_clk ),
     .fifo_tdata( adc_fifo_tdata ),
     .fifo_tfirst( adc_fifo_tfirst ),
 	.fifo_tlast( adc_fifo_tlast ),
@@ -465,12 +465,10 @@ Mercury_XU1 bd (
     .run_fifo_tvalid( run_fifo_tvalid ),
 
     // ADC streaming fifo
-    /*
     .adc_fifo_tdata( adc_fifo_tdata ),
     .adc_fifo_tlast( adc_fifo_tlast ),
     .adc_fifo_tready( adc_fifo_tready ),
     .adc_fifo_tvalid( adc_fifo_tvalid ),
-    */
 
     // technically QSFP, but we are using one port
     .sfp_data_refclk_clk_n(MGT_B228_REFCLK1_N),
@@ -482,27 +480,15 @@ Mercury_XU1 bd (
     .sfp_reset(~LMK_STAT_LD),
 
     // Comblock 10g UDP client input stream
-    //.udp_tx_ack(),
-    //.udp_tx_cts(adc_fifo_tready),
-    //.udp_tx_data(adc_fifo_tdata), // 64
-    //.udp_tx_data_valid({8{adc_fifo_tvalid}}),   // 8
-    //.udp_tx_dest_ip_addr(128'h00000000c0a80164), // 0xc0a80164 = 192.168.1.100
-    //.udp_tx_dest_ipv4_6n(1'b1), // 1 bit, always use ipv4
-    //.udp_tx_dest_port_no(16'd5000), // 16
-    //.udp_tx_eof(adc_fifo_tlast),
-    //.udp_tx_nak(),
-    //.udp_tx_sof(adc_fifo_tfirst),
-    //.udp_tx_source_port_no(16'd5000), // 16
-
     .udp_tx_ack(),
-    .udp_tx_nak(),
-    .udp_tx_cts(adc_fifo_tready),
-    .udp_tx_data(adc_fifo_tdata), // 64
-    .udp_tx_data_valid(8'h0),   // 8
+    .udp_tx_cts(),
+    .udp_tx_data(64'h0), // 64
+    .udp_tx_data_valid({8{1'b0}}),   // 8
     .udp_tx_dest_ip_addr(128'h00000000c0a80164), // 0xc0a80164 = 192.168.1.100
     .udp_tx_dest_ipv4_6n(1'b1), // 1 bit, always use ipv4
     .udp_tx_dest_port_no(16'd5000), // 16
     .udp_tx_eof(1'b0),
+    .udp_tx_nak(),
     .udp_tx_sof(1'b0),
     .udp_tx_source_port_no(16'd5000), // 16
 
@@ -530,6 +516,7 @@ Mercury_XU1 bd (
     .adc_ctrl_power_down( ctrl_adc_pwr_down ),
     .adc_ctrl_testpattern( ctrl_adc_testpat ),
     .adc_ctrl_sample_rate( ctrl_sample_rate ),
+    .adc_ctrl_clear_counters( ctrl_clear_counters ),
 
     .status_clk_holdover( LMK_STAT_HOLDOVER ),
     .status_clk_lockdetect( LMK_STAT_LD ),

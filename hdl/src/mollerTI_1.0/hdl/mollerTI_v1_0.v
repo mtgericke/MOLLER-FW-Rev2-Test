@@ -11,7 +11,7 @@
 
 		// Parameters of Axi Slave Bus Interface S_AXI
 		parameter integer C_S_AXI_DATA_WIDTH	= 32,
-		parameter integer C_S_AXI_ADDR_WIDTH	= 9,
+		parameter integer C_S_AXI_ADDR_WIDTH	= 13,
 
 		// Parameters of Axi Slave Bus Interface C2H
 		parameter integer C_C2H_TDATA_WIDTH	= 64,
@@ -73,7 +73,7 @@
 		output wire [1 : 0] s_axi_bresp,
 		output wire  s_axi_bvalid,
 		input wire  s_axi_bready,
-		input wire [9 : 0] s_axi_araddr,
+		input wire [C_S_AXI_ADDR_WIDTH-1 : 0] s_axi_araddr,
 		input wire [2 : 0] s_axi_arprot,
 		input wire  s_axi_arvalid,
 		output wire  s_axi_arready,
@@ -141,7 +141,7 @@
 
 		// AXI light interface for register READ/WRITE.  512 Bytes are implemented.  (Addr(12:10) == 000, other bits are not checked)
 		.CLKReg(s_axi_aclk),
-		.m_axil_awaddr({23'h0, s_axi_awaddr}),
+		.m_axil_awaddr({{(32-C_S_AXI_ADDR_WIDTH){1'b0}}, s_axi_awaddr}),
 		.m_axil_awprot(s_axi_awprot),
 		.m_axil_awvalid(s_axi_awvalid),
 		.m_axil_awready(s_axi_awready),
@@ -149,7 +149,7 @@
 		.m_axil_wstrb(s_axi_wstrb),
 		.m_axil_wvalid(s_axi_wvalid),
 		.m_axil_wready(s_axi_wready),
-		.m_axil_araddr({23'h0,s_axi_araddr}),
+		.m_axil_araddr({{(32-C_S_AXI_ADDR_WIDTH){1'b0}},s_axi_araddr}),
 		.m_axil_arprot(s_axi_arprot),
 		.m_axil_arvalid(s_axi_arvalid),
 		.m_axil_arready(s_axi_arready),
@@ -170,7 +170,7 @@
 		.s_axis_c2h_tready(c2h_tready),
 		.s_axis_c2h_tkeep(c2h_tkeep),
 
-		// H2C: from compputer to FPGA, not used
+		// H2C: from computer to FPGA, not used
 		.m_axis_h2c_tdata(h2c_tdata),
 		.m_axis_h2c_tlast(h2c_tlast),
 		.m_axis_h2c_tvalid(h2c_tvalid),

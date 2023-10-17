@@ -12,7 +12,7 @@ extern "C" {
 #define TINODE_DEFAULT_BASEADDR 0x80010000
 
 /* Size of the 'tinode' register map, in bytes */
-#define TINODE_RANGE_BYTES 512
+#define TINODE_RANGE_BYTES (2 << 13)
 
 #define TINODE_REG_CRATE_ID 0x00
 #define TINODE_REG_CRATE_ID_MASK 0x000000FF

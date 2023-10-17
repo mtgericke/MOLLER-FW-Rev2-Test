@@ -1,8 +1,8 @@
 // -------------------------------------------------------------------------------------------------
 // 'moller' Register Component
-// Revision: 249
+// Revision: 287
 // -------------------------------------------------------------------------------------------------
-// Generated on 2023-08-30 at 20:53 (UTC) by airhdl version 2023.07.1-936312266
+// Generated on 2023-10-17 at 05:20 (UTC) by airhdl version 2023.07.1-936312266
 // -------------------------------------------------------------------------------------------------
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -21,7 +21,7 @@
 
 module moller_regs #(
     parameter AXI_ADDR_WIDTH = 32, // width of the AXI address bus
-    parameter logic [31:0] BASEADDR = 32'h80010000 // the register file's system base address
+    parameter logic [31:0] BASEADDR = 32'h80000000 // the register file's system base address
     ) (
     // Clock and Reset
     input  wire                      axi_aclk,
@@ -71,6 +71,7 @@ module moller_regs #(
     output wire adc_ctrl_strobe, // strobe signal for register 'adc_ctrl' (pulsed when the register is written from the bus)
     output wire [15:0] adc_ctrl_ch_disable, // value of field 'adc_ctrl.ch_disable'
     output wire [7:0] adc_ctrl_sample_rate, // value of field 'adc_ctrl.sample_rate'
+    output wire [0:0] adc_ctrl_clear_counters, // value of field 'adc_ctrl.clear_counters'
     output wire [0:0] adc_ctrl_power_down, // value of field 'adc_ctrl.power_down'
     output wire [0:0] adc_ctrl_testpattern, // value of field 'adc_ctrl.testpattern'
     output wire [0:0] adc_ctrl_ena, // value of field 'adc_ctrl.ena'
@@ -89,7 +90,25 @@ module moller_regs #(
     output wire [15:0] adc_delay_in_strobe, // strobe signal for register 'adc_delay_in' (pulsed when the register is written from the bus)
     output wire [15:0] [8:0] adc_delay_in_value, // value of field 'adc_delay_in.value'
     output wire [15:0] adc_delay_out_strobe, // strobe signal for register 'adc_delay_out' (pulsed when the register is read from the bus)
-    input wire [15:0] [8:0] adc_delay_out_value // value of field 'adc_delay_out.value'
+    input wire [15:0] [8:0] adc_delay_out_value, // value of field 'adc_delay_out.value'
+    output wire adc_fifo_count_strobe, // strobe signal for register 'adc_fifo_count' (pulsed when the register is read from the bus)
+    input wire [31:0] adc_fifo_count_value, // value of field 'adc_fifo_count.value'
+    output wire run_fifo_count_strobe, // strobe signal for register 'run_fifo_count' (pulsed when the register is read from the bus)
+    input wire [31:0] run_fifo_count_value, // value of field 'run_fifo_count.value'
+    output wire ti_fifo_count_strobe, // strobe signal for register 'ti_fifo_count' (pulsed when the register is read from the bus)
+    input wire [31:0] ti_fifo_count_value, // value of field 'ti_fifo_count.value'
+    output wire mac_addr_hi_strobe, // strobe signal for register 'mac_addr_hi' (pulsed when the register is written from the bus)
+    output wire [31:0] mac_addr_hi_value, // value of field 'mac_addr_hi.value'
+    output wire mac_addr_lo_strobe, // strobe signal for register 'mac_addr_lo' (pulsed when the register is written from the bus)
+    output wire [31:0] mac_addr_lo_value, // value of field 'mac_addr_lo.value'
+    output wire udp_dest_ip_strobe, // strobe signal for register 'udp_dest_ip' (pulsed when the register is written from the bus)
+    output wire [31:0] udp_dest_ip_value, // value of field 'udp_dest_ip.value'
+    output wire udp_dst_port_strobe, // strobe signal for register 'udp_dst_port' (pulsed when the register is written from the bus)
+    output wire [15:0] udp_dst_port_value, // value of field 'udp_dst_port.value'
+    output wire [15:0] udp_dst_port_unused, // value of field 'udp_dst_port.unused'
+    output wire udp_src_port_strobe, // strobe signal for register 'udp_src_port' (pulsed when the register is written from the bus)
+    output wire [15:0] udp_src_port_value, // value of field 'udp_src_port.value'
+    output wire [15:0] udp_src_port_unused // value of field 'udp_src_port.unused'
     );
 
     // Constants
@@ -125,6 +144,7 @@ module moller_regs #(
     logic s_adc_ctrl_strobe_r;
     logic [15:0] s_reg_adc_ctrl_ch_disable_r;
     logic [7:0] s_reg_adc_ctrl_sample_rate_r;
+    logic [0:0] s_reg_adc_ctrl_clear_counters_r;
     logic [0:0] s_reg_adc_ctrl_power_down_r;
     logic [0:0] s_reg_adc_ctrl_testpattern_r;
     logic [0:0] s_reg_adc_ctrl_ena_r;
@@ -144,6 +164,24 @@ module moller_regs #(
     logic [15:0] [8:0] s_reg_adc_delay_in_value_r;
     logic [15:0] s_adc_delay_out_strobe_r;
     logic [15:0] [8:0] s_reg_adc_delay_out_value;
+    logic s_adc_fifo_count_strobe_r;
+    logic [31:0] s_reg_adc_fifo_count_value;
+    logic s_run_fifo_count_strobe_r;
+    logic [31:0] s_reg_run_fifo_count_value;
+    logic s_ti_fifo_count_strobe_r;
+    logic [31:0] s_reg_ti_fifo_count_value;
+    logic s_mac_addr_hi_strobe_r;
+    logic [31:0] s_reg_mac_addr_hi_value_r;
+    logic s_mac_addr_lo_strobe_r;
+    logic [31:0] s_reg_mac_addr_lo_value_r;
+    logic s_udp_dest_ip_strobe_r;
+    logic [31:0] s_reg_udp_dest_ip_value_r;
+    logic s_udp_dst_port_strobe_r;
+    logic [15:0] s_reg_udp_dst_port_value_r;
+    logic [15:0] s_reg_udp_dst_port_unused_r;
+    logic s_udp_src_port_strobe_r;
+    logic [15:0] s_reg_udp_src_port_value_r;
+    logic [15:0] s_reg_udp_src_port_unused_r;
 
     //----------------------------------------------------------------------------------------------
     // Inputs
@@ -160,6 +198,9 @@ module moller_regs #(
     assign s_reg_status_clk_holdover = status_clk_holdover;
     assign s_reg_status_adc_train_done = status_adc_train_done;
     assign s_reg_adc_delay_out_value = adc_delay_out_value;
+    assign s_reg_adc_fifo_count_value = adc_fifo_count_value;
+    assign s_reg_run_fifo_count_value = run_fifo_count_value;
+    assign s_reg_ti_fifo_count_value = ti_fifo_count_value;
 
     //----------------------------------------------------------------------------------------------
     // Read-transaction FSM
@@ -202,6 +243,9 @@ module moller_regs #(
             s_freq_som1_strobe_r <= '0;
             s_status_strobe_r <= '0;
             s_adc_delay_out_strobe_r <= '0;
+            s_adc_fifo_count_strobe_r <= '0;
+            s_run_fifo_count_strobe_r <= '0;
+            s_ti_fifo_count_strobe_r <= '0;
         end else begin
             // Default values:
             s_axi_arready_r <= 1'b0;
@@ -213,6 +257,9 @@ module moller_regs #(
             s_freq_som1_strobe_r <= '0;
             s_status_strobe_r <= '0;
             s_adc_delay_out_strobe_r <= '0;
+            s_adc_fifo_count_strobe_r <= '0;
+            s_run_fifo_count_strobe_r <= '0;
+            s_ti_fifo_count_strobe_r <= '0;
 
             case (v_state_r) // sigasi @suppress "Default clause missing from case statement"
 
@@ -264,6 +311,7 @@ module moller_regs #(
                         v_addr_hit = 1'b1;
                         v_rdata_r[15:0] <= s_reg_adc_ctrl_ch_disable_r;
                         v_rdata_r[23:16] <= s_reg_adc_ctrl_sample_rate_r;
+                        v_rdata_r[28:28] <= s_reg_adc_ctrl_clear_counters_r;
                         v_rdata_r[29:29] <= s_reg_adc_ctrl_power_down_r;
                         v_rdata_r[30:30] <= s_reg_adc_ctrl_testpattern_r;
                         v_rdata_r[31:31] <= s_reg_adc_ctrl_ena_r;
@@ -322,6 +370,59 @@ module moller_regs #(
                             s_adc_delay_out_strobe_r[i] <= 1'b1;
                             v_state_r <= READ_RESPONSE;
                         end
+                    end
+                    // Register 'adc_fifo_count' at address offset 0xE0
+                    if (s_axi_araddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::ADC_FIFO_COUNT_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        v_rdata_r[31:0] <= s_reg_adc_fifo_count_value;
+                        s_adc_fifo_count_strobe_r <= 1'b1;
+                        v_state_r <= READ_RESPONSE;
+                    end
+                    // Register 'run_fifo_count' at address offset 0xE4
+                    if (s_axi_araddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::RUN_FIFO_COUNT_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        v_rdata_r[31:0] <= s_reg_run_fifo_count_value;
+                        s_run_fifo_count_strobe_r <= 1'b1;
+                        v_state_r <= READ_RESPONSE;
+                    end
+                    // Register 'ti_fifo_count' at address offset 0xE8
+                    if (s_axi_araddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::TI_FIFO_COUNT_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        v_rdata_r[31:0] <= s_reg_ti_fifo_count_value;
+                        s_ti_fifo_count_strobe_r <= 1'b1;
+                        v_state_r <= READ_RESPONSE;
+                    end
+                    // Register 'mac_addr_hi' at address offset 0x100
+                    if (s_axi_araddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::MAC_ADDR_HI_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        v_rdata_r[31:0] <= s_reg_mac_addr_hi_value_r;
+                        v_state_r <= READ_RESPONSE;
+                    end
+                    // Register 'mac_addr_lo' at address offset 0x104
+                    if (s_axi_araddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::MAC_ADDR_LO_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        v_rdata_r[31:0] <= s_reg_mac_addr_lo_value_r;
+                        v_state_r <= READ_RESPONSE;
+                    end
+                    // Register 'udp_dest_ip' at address offset 0x108
+                    if (s_axi_araddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::UDP_DEST_IP_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        v_rdata_r[31:0] <= s_reg_udp_dest_ip_value_r;
+                        v_state_r <= READ_RESPONSE;
+                    end
+                    // Register 'udp_dst_port' at address offset 0x10C
+                    if (s_axi_araddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::UDP_DST_PORT_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        v_rdata_r[15:0] <= s_reg_udp_dst_port_value_r;
+                        v_rdata_r[31:16] <= s_reg_udp_dst_port_unused_r;
+                        v_state_r <= READ_RESPONSE;
+                    end
+                    // Register 'udp_src_port' at address offset 0x110
+                    if (s_axi_araddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::UDP_SRC_PORT_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        v_rdata_r[15:0] <= s_reg_udp_src_port_value_r;
+                        v_rdata_r[31:16] <= s_reg_udp_src_port_unused_r;
+                        v_state_r <= READ_RESPONSE;
                     end
                     if (v_addr_hit) begin
                         v_rresp_r <= AXI_OKAY;
@@ -401,6 +502,7 @@ module moller_regs #(
             s_adc_ctrl_strobe_r <= '0;
             s_reg_adc_ctrl_ch_disable_r <= moller_regs_pkg::ADC_CTRL_CH_DISABLE_RESET;
             s_reg_adc_ctrl_sample_rate_r <= moller_regs_pkg::ADC_CTRL_SAMPLE_RATE_RESET;
+            s_reg_adc_ctrl_clear_counters_r <= moller_regs_pkg::ADC_CTRL_CLEAR_COUNTERS_RESET;
             s_reg_adc_ctrl_power_down_r <= moller_regs_pkg::ADC_CTRL_POWER_DOWN_RESET;
             s_reg_adc_ctrl_testpattern_r <= moller_regs_pkg::ADC_CTRL_TESTPATTERN_RESET;
             s_reg_adc_ctrl_ena_r <= moller_regs_pkg::ADC_CTRL_ENA_RESET;
@@ -408,6 +510,18 @@ module moller_regs #(
             for (int i = 0; i < 16; i++) begin
                 s_reg_adc_delay_in_value_r[i] <= moller_regs_pkg::ADC_DELAY_IN_VALUE_RESET;
             end
+            s_mac_addr_hi_strobe_r <= '0;
+            s_reg_mac_addr_hi_value_r <= moller_regs_pkg::MAC_ADDR_HI_VALUE_RESET;
+            s_mac_addr_lo_strobe_r <= '0;
+            s_reg_mac_addr_lo_value_r <= moller_regs_pkg::MAC_ADDR_LO_VALUE_RESET;
+            s_udp_dest_ip_strobe_r <= '0;
+            s_reg_udp_dest_ip_value_r <= moller_regs_pkg::UDP_DEST_IP_VALUE_RESET;
+            s_udp_dst_port_strobe_r <= '0;
+            s_reg_udp_dst_port_value_r <= moller_regs_pkg::UDP_DST_PORT_VALUE_RESET;
+            s_reg_udp_dst_port_unused_r <= moller_regs_pkg::UDP_DST_PORT_UNUSED_RESET;
+            s_udp_src_port_strobe_r <= '0;
+            s_reg_udp_src_port_value_r <= moller_regs_pkg::UDP_SRC_PORT_VALUE_RESET;
+            s_reg_udp_src_port_unused_r <= moller_regs_pkg::UDP_SRC_PORT_UNUSED_RESET;
 
         end else begin
             // Default values:
@@ -416,6 +530,11 @@ module moller_regs #(
             s_stream_ctrl_strobe_r <= '0;
             s_adc_ctrl_strobe_r <= '0;
             s_adc_delay_in_strobe_r <= '0;
+            s_mac_addr_hi_strobe_r <= '0;
+            s_mac_addr_lo_strobe_r <= '0;
+            s_udp_dest_ip_strobe_r <= '0;
+            s_udp_dst_port_strobe_r <= '0;
+            s_udp_src_port_strobe_r <= '0;
             v_addr_hit = 1'b0;
 
             case (v_state_r) // sigasi @suppress "Default clause missing from case statement"
@@ -656,6 +775,10 @@ module moller_regs #(
                         if (s_axi_wstrb_reg_r[2]) begin
                             s_reg_adc_ctrl_sample_rate_r[7] <= s_axi_wdata_reg_r[23]; // sample_rate[7]
                         end
+                        // field 'clear_counters':
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_adc_ctrl_clear_counters_r[0] <= s_axi_wdata_reg_r[28]; // clear_counters[0]
+                        end
                         // field 'power_down':
                         if (s_axi_wstrb_reg_r[3]) begin
                             s_reg_adc_ctrl_power_down_r[0] <= s_axi_wdata_reg_r[29]; // power_down[0]
@@ -712,6 +835,526 @@ module moller_regs #(
                     end
 
 
+
+
+
+                    // Register  'mac_addr_hi' at address offset 0x100
+                    if (s_axi_awaddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::MAC_ADDR_HI_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        s_mac_addr_hi_strobe_r <= 1'b1;
+                        // field 'value':
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_hi_value_r[0] <= s_axi_wdata_reg_r[0]; // value[0]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_hi_value_r[1] <= s_axi_wdata_reg_r[1]; // value[1]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_hi_value_r[2] <= s_axi_wdata_reg_r[2]; // value[2]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_hi_value_r[3] <= s_axi_wdata_reg_r[3]; // value[3]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_hi_value_r[4] <= s_axi_wdata_reg_r[4]; // value[4]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_hi_value_r[5] <= s_axi_wdata_reg_r[5]; // value[5]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_hi_value_r[6] <= s_axi_wdata_reg_r[6]; // value[6]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_hi_value_r[7] <= s_axi_wdata_reg_r[7]; // value[7]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_hi_value_r[8] <= s_axi_wdata_reg_r[8]; // value[8]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_hi_value_r[9] <= s_axi_wdata_reg_r[9]; // value[9]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_hi_value_r[10] <= s_axi_wdata_reg_r[10]; // value[10]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_hi_value_r[11] <= s_axi_wdata_reg_r[11]; // value[11]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_hi_value_r[12] <= s_axi_wdata_reg_r[12]; // value[12]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_hi_value_r[13] <= s_axi_wdata_reg_r[13]; // value[13]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_hi_value_r[14] <= s_axi_wdata_reg_r[14]; // value[14]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_hi_value_r[15] <= s_axi_wdata_reg_r[15]; // value[15]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_hi_value_r[16] <= s_axi_wdata_reg_r[16]; // value[16]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_hi_value_r[17] <= s_axi_wdata_reg_r[17]; // value[17]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_hi_value_r[18] <= s_axi_wdata_reg_r[18]; // value[18]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_hi_value_r[19] <= s_axi_wdata_reg_r[19]; // value[19]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_hi_value_r[20] <= s_axi_wdata_reg_r[20]; // value[20]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_hi_value_r[21] <= s_axi_wdata_reg_r[21]; // value[21]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_hi_value_r[22] <= s_axi_wdata_reg_r[22]; // value[22]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_hi_value_r[23] <= s_axi_wdata_reg_r[23]; // value[23]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_hi_value_r[24] <= s_axi_wdata_reg_r[24]; // value[24]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_hi_value_r[25] <= s_axi_wdata_reg_r[25]; // value[25]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_hi_value_r[26] <= s_axi_wdata_reg_r[26]; // value[26]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_hi_value_r[27] <= s_axi_wdata_reg_r[27]; // value[27]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_hi_value_r[28] <= s_axi_wdata_reg_r[28]; // value[28]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_hi_value_r[29] <= s_axi_wdata_reg_r[29]; // value[29]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_hi_value_r[30] <= s_axi_wdata_reg_r[30]; // value[30]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_hi_value_r[31] <= s_axi_wdata_reg_r[31]; // value[31]
+                        end
+                    end
+
+                    // Register  'mac_addr_lo' at address offset 0x104
+                    if (s_axi_awaddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::MAC_ADDR_LO_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        s_mac_addr_lo_strobe_r <= 1'b1;
+                        // field 'value':
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_lo_value_r[0] <= s_axi_wdata_reg_r[0]; // value[0]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_lo_value_r[1] <= s_axi_wdata_reg_r[1]; // value[1]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_lo_value_r[2] <= s_axi_wdata_reg_r[2]; // value[2]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_lo_value_r[3] <= s_axi_wdata_reg_r[3]; // value[3]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_lo_value_r[4] <= s_axi_wdata_reg_r[4]; // value[4]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_lo_value_r[5] <= s_axi_wdata_reg_r[5]; // value[5]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_lo_value_r[6] <= s_axi_wdata_reg_r[6]; // value[6]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_mac_addr_lo_value_r[7] <= s_axi_wdata_reg_r[7]; // value[7]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_lo_value_r[8] <= s_axi_wdata_reg_r[8]; // value[8]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_lo_value_r[9] <= s_axi_wdata_reg_r[9]; // value[9]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_lo_value_r[10] <= s_axi_wdata_reg_r[10]; // value[10]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_lo_value_r[11] <= s_axi_wdata_reg_r[11]; // value[11]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_lo_value_r[12] <= s_axi_wdata_reg_r[12]; // value[12]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_lo_value_r[13] <= s_axi_wdata_reg_r[13]; // value[13]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_lo_value_r[14] <= s_axi_wdata_reg_r[14]; // value[14]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_mac_addr_lo_value_r[15] <= s_axi_wdata_reg_r[15]; // value[15]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_lo_value_r[16] <= s_axi_wdata_reg_r[16]; // value[16]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_lo_value_r[17] <= s_axi_wdata_reg_r[17]; // value[17]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_lo_value_r[18] <= s_axi_wdata_reg_r[18]; // value[18]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_lo_value_r[19] <= s_axi_wdata_reg_r[19]; // value[19]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_lo_value_r[20] <= s_axi_wdata_reg_r[20]; // value[20]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_lo_value_r[21] <= s_axi_wdata_reg_r[21]; // value[21]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_lo_value_r[22] <= s_axi_wdata_reg_r[22]; // value[22]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_mac_addr_lo_value_r[23] <= s_axi_wdata_reg_r[23]; // value[23]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_lo_value_r[24] <= s_axi_wdata_reg_r[24]; // value[24]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_lo_value_r[25] <= s_axi_wdata_reg_r[25]; // value[25]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_lo_value_r[26] <= s_axi_wdata_reg_r[26]; // value[26]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_lo_value_r[27] <= s_axi_wdata_reg_r[27]; // value[27]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_lo_value_r[28] <= s_axi_wdata_reg_r[28]; // value[28]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_lo_value_r[29] <= s_axi_wdata_reg_r[29]; // value[29]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_lo_value_r[30] <= s_axi_wdata_reg_r[30]; // value[30]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_mac_addr_lo_value_r[31] <= s_axi_wdata_reg_r[31]; // value[31]
+                        end
+                    end
+
+                    // Register  'udp_dest_ip' at address offset 0x108
+                    if (s_axi_awaddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::UDP_DEST_IP_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        s_udp_dest_ip_strobe_r <= 1'b1;
+                        // field 'value':
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dest_ip_value_r[0] <= s_axi_wdata_reg_r[0]; // value[0]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dest_ip_value_r[1] <= s_axi_wdata_reg_r[1]; // value[1]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dest_ip_value_r[2] <= s_axi_wdata_reg_r[2]; // value[2]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dest_ip_value_r[3] <= s_axi_wdata_reg_r[3]; // value[3]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dest_ip_value_r[4] <= s_axi_wdata_reg_r[4]; // value[4]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dest_ip_value_r[5] <= s_axi_wdata_reg_r[5]; // value[5]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dest_ip_value_r[6] <= s_axi_wdata_reg_r[6]; // value[6]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dest_ip_value_r[7] <= s_axi_wdata_reg_r[7]; // value[7]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dest_ip_value_r[8] <= s_axi_wdata_reg_r[8]; // value[8]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dest_ip_value_r[9] <= s_axi_wdata_reg_r[9]; // value[9]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dest_ip_value_r[10] <= s_axi_wdata_reg_r[10]; // value[10]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dest_ip_value_r[11] <= s_axi_wdata_reg_r[11]; // value[11]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dest_ip_value_r[12] <= s_axi_wdata_reg_r[12]; // value[12]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dest_ip_value_r[13] <= s_axi_wdata_reg_r[13]; // value[13]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dest_ip_value_r[14] <= s_axi_wdata_reg_r[14]; // value[14]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dest_ip_value_r[15] <= s_axi_wdata_reg_r[15]; // value[15]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dest_ip_value_r[16] <= s_axi_wdata_reg_r[16]; // value[16]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dest_ip_value_r[17] <= s_axi_wdata_reg_r[17]; // value[17]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dest_ip_value_r[18] <= s_axi_wdata_reg_r[18]; // value[18]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dest_ip_value_r[19] <= s_axi_wdata_reg_r[19]; // value[19]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dest_ip_value_r[20] <= s_axi_wdata_reg_r[20]; // value[20]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dest_ip_value_r[21] <= s_axi_wdata_reg_r[21]; // value[21]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dest_ip_value_r[22] <= s_axi_wdata_reg_r[22]; // value[22]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dest_ip_value_r[23] <= s_axi_wdata_reg_r[23]; // value[23]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dest_ip_value_r[24] <= s_axi_wdata_reg_r[24]; // value[24]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dest_ip_value_r[25] <= s_axi_wdata_reg_r[25]; // value[25]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dest_ip_value_r[26] <= s_axi_wdata_reg_r[26]; // value[26]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dest_ip_value_r[27] <= s_axi_wdata_reg_r[27]; // value[27]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dest_ip_value_r[28] <= s_axi_wdata_reg_r[28]; // value[28]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dest_ip_value_r[29] <= s_axi_wdata_reg_r[29]; // value[29]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dest_ip_value_r[30] <= s_axi_wdata_reg_r[30]; // value[30]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dest_ip_value_r[31] <= s_axi_wdata_reg_r[31]; // value[31]
+                        end
+                    end
+
+                    // Register  'udp_dst_port' at address offset 0x10C
+                    if (s_axi_awaddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::UDP_DST_PORT_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        s_udp_dst_port_strobe_r <= 1'b1;
+                        // field 'value':
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dst_port_value_r[0] <= s_axi_wdata_reg_r[0]; // value[0]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dst_port_value_r[1] <= s_axi_wdata_reg_r[1]; // value[1]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dst_port_value_r[2] <= s_axi_wdata_reg_r[2]; // value[2]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dst_port_value_r[3] <= s_axi_wdata_reg_r[3]; // value[3]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dst_port_value_r[4] <= s_axi_wdata_reg_r[4]; // value[4]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dst_port_value_r[5] <= s_axi_wdata_reg_r[5]; // value[5]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dst_port_value_r[6] <= s_axi_wdata_reg_r[6]; // value[6]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_dst_port_value_r[7] <= s_axi_wdata_reg_r[7]; // value[7]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dst_port_value_r[8] <= s_axi_wdata_reg_r[8]; // value[8]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dst_port_value_r[9] <= s_axi_wdata_reg_r[9]; // value[9]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dst_port_value_r[10] <= s_axi_wdata_reg_r[10]; // value[10]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dst_port_value_r[11] <= s_axi_wdata_reg_r[11]; // value[11]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dst_port_value_r[12] <= s_axi_wdata_reg_r[12]; // value[12]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dst_port_value_r[13] <= s_axi_wdata_reg_r[13]; // value[13]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dst_port_value_r[14] <= s_axi_wdata_reg_r[14]; // value[14]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_dst_port_value_r[15] <= s_axi_wdata_reg_r[15]; // value[15]
+                        end
+                        // field 'unused':
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dst_port_unused_r[0] <= s_axi_wdata_reg_r[16]; // unused[0]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dst_port_unused_r[1] <= s_axi_wdata_reg_r[17]; // unused[1]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dst_port_unused_r[2] <= s_axi_wdata_reg_r[18]; // unused[2]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dst_port_unused_r[3] <= s_axi_wdata_reg_r[19]; // unused[3]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dst_port_unused_r[4] <= s_axi_wdata_reg_r[20]; // unused[4]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dst_port_unused_r[5] <= s_axi_wdata_reg_r[21]; // unused[5]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dst_port_unused_r[6] <= s_axi_wdata_reg_r[22]; // unused[6]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_dst_port_unused_r[7] <= s_axi_wdata_reg_r[23]; // unused[7]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dst_port_unused_r[8] <= s_axi_wdata_reg_r[24]; // unused[8]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dst_port_unused_r[9] <= s_axi_wdata_reg_r[25]; // unused[9]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dst_port_unused_r[10] <= s_axi_wdata_reg_r[26]; // unused[10]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dst_port_unused_r[11] <= s_axi_wdata_reg_r[27]; // unused[11]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dst_port_unused_r[12] <= s_axi_wdata_reg_r[28]; // unused[12]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dst_port_unused_r[13] <= s_axi_wdata_reg_r[29]; // unused[13]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dst_port_unused_r[14] <= s_axi_wdata_reg_r[30]; // unused[14]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_dst_port_unused_r[15] <= s_axi_wdata_reg_r[31]; // unused[15]
+                        end
+                    end
+
+                    // Register  'udp_src_port' at address offset 0x110
+                    if (s_axi_awaddr_reg_r[AXI_ADDR_WIDTH-1:2] == BASEADDR[AXI_ADDR_WIDTH-1:2] + moller_regs_pkg::UDP_SRC_PORT_OFFSET[AXI_ADDR_WIDTH-1:2]) begin
+                        v_addr_hit = 1'b1;
+                        s_udp_src_port_strobe_r <= 1'b1;
+                        // field 'value':
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_src_port_value_r[0] <= s_axi_wdata_reg_r[0]; // value[0]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_src_port_value_r[1] <= s_axi_wdata_reg_r[1]; // value[1]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_src_port_value_r[2] <= s_axi_wdata_reg_r[2]; // value[2]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_src_port_value_r[3] <= s_axi_wdata_reg_r[3]; // value[3]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_src_port_value_r[4] <= s_axi_wdata_reg_r[4]; // value[4]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_src_port_value_r[5] <= s_axi_wdata_reg_r[5]; // value[5]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_src_port_value_r[6] <= s_axi_wdata_reg_r[6]; // value[6]
+                        end
+                        if (s_axi_wstrb_reg_r[0]) begin
+                            s_reg_udp_src_port_value_r[7] <= s_axi_wdata_reg_r[7]; // value[7]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_src_port_value_r[8] <= s_axi_wdata_reg_r[8]; // value[8]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_src_port_value_r[9] <= s_axi_wdata_reg_r[9]; // value[9]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_src_port_value_r[10] <= s_axi_wdata_reg_r[10]; // value[10]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_src_port_value_r[11] <= s_axi_wdata_reg_r[11]; // value[11]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_src_port_value_r[12] <= s_axi_wdata_reg_r[12]; // value[12]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_src_port_value_r[13] <= s_axi_wdata_reg_r[13]; // value[13]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_src_port_value_r[14] <= s_axi_wdata_reg_r[14]; // value[14]
+                        end
+                        if (s_axi_wstrb_reg_r[1]) begin
+                            s_reg_udp_src_port_value_r[15] <= s_axi_wdata_reg_r[15]; // value[15]
+                        end
+                        // field 'unused':
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_src_port_unused_r[0] <= s_axi_wdata_reg_r[16]; // unused[0]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_src_port_unused_r[1] <= s_axi_wdata_reg_r[17]; // unused[1]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_src_port_unused_r[2] <= s_axi_wdata_reg_r[18]; // unused[2]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_src_port_unused_r[3] <= s_axi_wdata_reg_r[19]; // unused[3]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_src_port_unused_r[4] <= s_axi_wdata_reg_r[20]; // unused[4]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_src_port_unused_r[5] <= s_axi_wdata_reg_r[21]; // unused[5]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_src_port_unused_r[6] <= s_axi_wdata_reg_r[22]; // unused[6]
+                        end
+                        if (s_axi_wstrb_reg_r[2]) begin
+                            s_reg_udp_src_port_unused_r[7] <= s_axi_wdata_reg_r[23]; // unused[7]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_src_port_unused_r[8] <= s_axi_wdata_reg_r[24]; // unused[8]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_src_port_unused_r[9] <= s_axi_wdata_reg_r[25]; // unused[9]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_src_port_unused_r[10] <= s_axi_wdata_reg_r[26]; // unused[10]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_src_port_unused_r[11] <= s_axi_wdata_reg_r[27]; // unused[11]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_src_port_unused_r[12] <= s_axi_wdata_reg_r[28]; // unused[12]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_src_port_unused_r[13] <= s_axi_wdata_reg_r[29]; // unused[13]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_src_port_unused_r[14] <= s_axi_wdata_reg_r[30]; // unused[14]
+                        end
+                        if (s_axi_wstrb_reg_r[3]) begin
+                            s_reg_udp_src_port_unused_r[15] <= s_axi_wdata_reg_r[31]; // unused[15]
+                        end
+                    end
+
                     if (!v_addr_hit) begin
                         s_axi_bresp_r   <= AXI_SLVERR;
                         // pragma translate_off
@@ -758,6 +1401,7 @@ module moller_regs #(
     assign adc_ctrl_strobe = s_adc_ctrl_strobe_r;
     assign adc_ctrl_ch_disable = s_reg_adc_ctrl_ch_disable_r;
     assign adc_ctrl_sample_rate = s_reg_adc_ctrl_sample_rate_r;
+    assign adc_ctrl_clear_counters = s_reg_adc_ctrl_clear_counters_r;
     assign adc_ctrl_power_down = s_reg_adc_ctrl_power_down_r;
     assign adc_ctrl_testpattern = s_reg_adc_ctrl_testpattern_r;
     assign adc_ctrl_ena = s_reg_adc_ctrl_ena_r;
@@ -769,6 +1413,21 @@ module moller_regs #(
     assign adc_delay_in_strobe = s_adc_delay_in_strobe_r;
     assign adc_delay_in_value = s_reg_adc_delay_in_value_r;
     assign adc_delay_out_strobe = s_adc_delay_out_strobe_r;
+    assign adc_fifo_count_strobe = s_adc_fifo_count_strobe_r;
+    assign run_fifo_count_strobe = s_run_fifo_count_strobe_r;
+    assign ti_fifo_count_strobe = s_ti_fifo_count_strobe_r;
+    assign mac_addr_hi_strobe = s_mac_addr_hi_strobe_r;
+    assign mac_addr_hi_value = s_reg_mac_addr_hi_value_r;
+    assign mac_addr_lo_strobe = s_mac_addr_lo_strobe_r;
+    assign mac_addr_lo_value = s_reg_mac_addr_lo_value_r;
+    assign udp_dest_ip_strobe = s_udp_dest_ip_strobe_r;
+    assign udp_dest_ip_value = s_reg_udp_dest_ip_value_r;
+    assign udp_dst_port_strobe = s_udp_dst_port_strobe_r;
+    assign udp_dst_port_value = s_reg_udp_dst_port_value_r;
+    assign udp_dst_port_unused = s_reg_udp_dst_port_unused_r;
+    assign udp_src_port_strobe = s_udp_src_port_strobe_r;
+    assign udp_src_port_value = s_reg_udp_src_port_value_r;
+    assign udp_src_port_unused = s_reg_udp_src_port_unused_r;
 
 endmodule: moller_regs
 

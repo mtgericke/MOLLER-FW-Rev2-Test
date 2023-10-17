@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-//Date        : Tue Oct 10 18:56:29 2023
+//Date        : Tue Oct 17 08:10:44 2023
 //Host        : home running 64-bit unknown
 //Command     : generate_target Mercury_XU1_wrapper.bd
 //Design      : Mercury_XU1_wrapper
@@ -30,6 +30,7 @@ module Mercury_XU1_wrapper
     TICLK_N,
     TICLK_P,
     adc_ctrl_ch_disable,
+    adc_ctrl_clear_counters,
     adc_ctrl_ena,
     adc_ctrl_power_down,
     adc_ctrl_sample_rate,
@@ -74,13 +75,10 @@ module Mercury_XU1_wrapper
     udp_tx_cts,
     udp_tx_data,
     udp_tx_data_valid,
-    udp_tx_dest_ip_addr,
     udp_tx_dest_ipv4_6n,
-    udp_tx_dest_port_no,
     udp_tx_eof,
     udp_tx_nak,
-    udp_tx_sof,
-    udp_tx_source_port_no);
+    udp_tx_sof);
   input CLK250;
   input CLK625;
   input CLKPrg;
@@ -101,6 +99,7 @@ module Mercury_XU1_wrapper
   input TICLK_N;
   input TICLK_P;
   output [15:0]adc_ctrl_ch_disable;
+  output [0:0]adc_ctrl_clear_counters;
   output [0:0]adc_ctrl_ena;
   output [0:0]adc_ctrl_power_down;
   output [7:0]adc_ctrl_sample_rate;
@@ -145,13 +144,10 @@ module Mercury_XU1_wrapper
   output udp_tx_cts;
   input [63:0]udp_tx_data;
   input [7:0]udp_tx_data_valid;
-  input [127:0]udp_tx_dest_ip_addr;
   input udp_tx_dest_ipv4_6n;
-  input [15:0]udp_tx_dest_port_no;
   input udp_tx_eof;
   output udp_tx_nak;
   input udp_tx_sof;
-  input [15:0]udp_tx_source_port_no;
 
   wire CLK250;
   wire CLK625;
@@ -173,6 +169,7 @@ module Mercury_XU1_wrapper
   wire TICLK_N;
   wire TICLK_P;
   wire [15:0]adc_ctrl_ch_disable;
+  wire [0:0]adc_ctrl_clear_counters;
   wire [0:0]adc_ctrl_ena;
   wire [0:0]adc_ctrl_power_down;
   wire [7:0]adc_ctrl_sample_rate;
@@ -217,13 +214,10 @@ module Mercury_XU1_wrapper
   wire udp_tx_cts;
   wire [63:0]udp_tx_data;
   wire [7:0]udp_tx_data_valid;
-  wire [127:0]udp_tx_dest_ip_addr;
   wire udp_tx_dest_ipv4_6n;
-  wire [15:0]udp_tx_dest_port_no;
   wire udp_tx_eof;
   wire udp_tx_nak;
   wire udp_tx_sof;
-  wire [15:0]udp_tx_source_port_no;
 
   Mercury_XU1 Mercury_XU1_i
        (.CLK250(CLK250),
@@ -246,6 +240,7 @@ module Mercury_XU1_wrapper
         .TICLK_N(TICLK_N),
         .TICLK_P(TICLK_P),
         .adc_ctrl_ch_disable(adc_ctrl_ch_disable),
+        .adc_ctrl_clear_counters(adc_ctrl_clear_counters),
         .adc_ctrl_ena(adc_ctrl_ena),
         .adc_ctrl_power_down(adc_ctrl_power_down),
         .adc_ctrl_sample_rate(adc_ctrl_sample_rate),
@@ -290,11 +285,8 @@ module Mercury_XU1_wrapper
         .udp_tx_cts(udp_tx_cts),
         .udp_tx_data(udp_tx_data),
         .udp_tx_data_valid(udp_tx_data_valid),
-        .udp_tx_dest_ip_addr(udp_tx_dest_ip_addr),
         .udp_tx_dest_ipv4_6n(udp_tx_dest_ipv4_6n),
-        .udp_tx_dest_port_no(udp_tx_dest_port_no),
         .udp_tx_eof(udp_tx_eof),
         .udp_tx_nak(udp_tx_nak),
-        .udp_tx_sof(udp_tx_sof),
-        .udp_tx_source_port_no(udp_tx_source_port_no));
+        .udp_tx_sof(udp_tx_sof));
 endmodule

@@ -485,7 +485,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>c2f35564</spirit:value>
+            <spirit:value>ca64b554</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -557,7 +557,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>affdb98f</spirit:value>
+            <spirit:value>89a053d0</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -857,7 +857,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ADDR_WIDTH&apos;)) - 1)">8</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ADDR_WIDTH&apos;)) - 1)">12</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -1020,7 +1020,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long">9</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ADDR_WIDTH&apos;)) - 1)">12</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -1305,7 +1305,7 @@
         <spirit:name>C_S_AXI_ADDR_WIDTH</spirit:name>
         <spirit:displayName>C S AXI ADDR WIDTH</spirit:displayName>
         <spirit:description>Width of S_AXI address bus</spirit:description>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXI_ADDR_WIDTH" spirit:order="7" spirit:rangeType="long">9</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXI_ADDR_WIDTH" spirit:order="7" spirit:rangeType="long">13</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -1816,7 +1816,7 @@
       <spirit:file>
         <spirit:name>hdl/mollerTI_v1_0.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_0d226991</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_f5c9d406</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -1915,7 +1915,7 @@
       <spirit:name>C_S_AXI_ADDR_WIDTH</spirit:name>
       <spirit:displayName>C S AXI ADDR WIDTH</spirit:displayName>
       <spirit:description>Width of S_AXI address bus</spirit:description>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S_AXI_ADDR_WIDTH" spirit:order="7">9</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S_AXI_ADDR_WIDTH" spirit:order="7">13</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -1967,8 +1967,8 @@
         <xilinx:xpmLibrary>XPM_FIFO</xilinx:xpmLibrary>
         <xilinx:xpmLibrary>XPM_MEMORY</xilinx:xpmLibrary>
       </xilinx:xpmLibraries>
-      <xilinx:coreRevision>15</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-10-14T23:54:01Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>16</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2023-10-17T05:59:11Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@2e87a91a_ARCHIVE_LOCATION">/home/xil/hdl/mollerTI/mollerTI_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@146fd17d_ARCHIVE_LOCATION">/home/xil/hdl/mollerTI/mollerTI_1.0</xilinx:tag>
@@ -2335,16 +2335,38 @@
         <xilinx:tag xilinx:name="ui.data.coregen.dd@137b0a2e_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@a9b6cf_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@47bbf7d6_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@46fb96ce_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@39ac0fba_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@33a82327_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@21fc14d_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@45ecdbc6_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@67d36155_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@19d5481_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5ac8e494_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d7c9349_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2d8f3664_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7386808a_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a3fe036_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6c8f4701_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e325690_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@333cd00b_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4e0c088_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@40c95580_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7831f4b1_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1b29edc2_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2388fff_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@38758a06_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e2ce8a7_ARCHIVE_LOCATION">/home/xil/hdl/src/mollerTI_1.0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2020.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="5a616e50"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="c30980da"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="4aeaebf8"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="3393b461"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="e9f0175a"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="581b5d77"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="dc84659c"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="da18cf78"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="f81bc771"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="0ee18ee1"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

@@ -24,6 +24,8 @@
 #include "external/dma-proxy.h"
 #include "moller.h"
 
+static int UPDATE_RATE_PER_SECOND;
+
 void* dma_thread(void *vargp) {
 
    	void *context;
@@ -36,15 +38,20 @@ void* dma_thread(void *vargp) {
 	uint8_t header_id;
 	uint32_t header_len;
 	uint32_t header_num;
-	uint64_t num_pkts;
-	uint64_t num_bytes;
-	uint64_t num_errors;
-	uint64_t num_valid;
-	uint64_t num_timeouts;
-	uint64_t num_samples;
-	int compressed_size;
+	uint32_t num_pkts;
+	uint32_t num_bytes;
+	uint32_t num_errors;
+	uint32_t num_valid;
+	uint32_t num_timeouts;
+	uint32_t num_samples;
+	uint32_t num_unknown_errors;
+
+	struct timeval last_update_time, current_time;
+    double secs;
 
 	context = vargp;
+
+	printf("Starting DMA Thread\n");
 
 	pub = zmq_socket(context, ZMQ_PUB);
 	zmq_setsockopt(pub, ZMQ_SNDHWM, "", 32768);
@@ -73,11 +80,40 @@ void* dma_thread(void *vargp) {
 	num_pkts = 0;
 	num_bytes = 0;
 	num_errors = 0;
+	num_unknown_errors = 0;
 	num_valid = 0;
 	num_timeouts = 0;
 	num_samples = 0;
 
+
+	fflush(stdout);
+
+	gettimeofday(&last_update_time, NULL);
+
+
+	printf("Starting DMA Main Loop\n");
+	fflush(stdout);
+
 	while(1) {
+
+		gettimeofday(&current_time, NULL);
+		secs = (double)(current_time.tv_usec - last_update_time.tv_usec) / 1000000 + (double)(current_time.tv_sec - last_update_time.tv_sec);
+		if(secs >= UPDATE_RATE_PER_SECOND) {
+			gettimeofday(&last_update_time, NULL);
+
+			uint32_t status_buffer[6];
+
+			status_buffer[0] = num_pkts;
+			status_buffer[1] = num_bytes;
+			status_buffer[2] = num_errors;
+			status_buffer[3] = num_valid;
+			status_buffer[4] = num_timeouts;
+			status_buffer[5] = num_samples;
+
+			zmq_send(pub, "STATUS", 6, ZMQ_SNDMORE);
+			zmq_send(pub, status_buffer, sizeof(status_buffer), 0);
+		}
+
 		// Perform a receive DMA transfer and after it finishes check the status
 		rx_proxy_interface_p->length = BUFFER_SIZE;
 
@@ -100,7 +136,7 @@ void* dma_thread(void *vargp) {
 						switch(header_id) {
 							case 0xAA:
 								zmq_send(pub, "AVG", 3, ZMQ_SNDMORE);
-								zmq_send (pub, rx_proxy_interface_p->buffer, 8+(header_len*8), 0);
+								zmq_send(pub, rx_proxy_interface_p->buffer, 8+(header_len*8), 0);
 								break;
 
 							case 0xDD:
@@ -119,20 +155,23 @@ void* dma_thread(void *vargp) {
 				break;
 			case PROXY_TIMEOUT:
 				num_timeouts++;
-				// printf("Proxy rx transfer timeout\n");
+				printf("Proxy rx transfer timeout\n");
 				break;
 			case PROXY_BUSY:
 				num_errors++;
-				// printf("Proxy rx transfer busy\n");
+				printf("Proxy rx transfer busy\n");
 				break;
 			case PROXY_ERROR:
 				num_errors++;
-				// printf("Proxy rx transfer error\n");
+				printf("Proxy rx transfer error\n");
 				break;
 			default:
+				num_unknown_errors++;
+				printf("Uknown error\n");
 				break;
 		}
 
+		fflush(stdout);
 		sched_yield();
 	}
 

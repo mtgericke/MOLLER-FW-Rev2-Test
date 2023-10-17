@@ -11,7 +11,7 @@
 
 		// Parameters of Axi Slave Bus Interface S00_AXI
 		parameter integer C_S00_AXI_DATA_WIDTH	= 32,
-		parameter integer C_S00_AXI_ADDR_WIDTH	= 8
+		parameter integer C_S00_AXI_ADDR_WIDTH	= 9
 	)
 	(
 		// Users to add ports here
@@ -37,12 +37,22 @@
 		output wire [7:0] adc_ctrl_sample_rate,
     	output wire [15:0] adc_ctrl_ch_disable, // Value of register 'adc_ctrl', field 'ch_disable'
     	output wire [0:0] adc_ctrl_power_down, // Value of register 'adc_ctrl', field 'power_down'
+		output wire [0:0] adc_ctrl_clear_counters, // Value of register 'adc_ctrl', field 'clear_counters'
     	output wire [0:0] adc_ctrl_testpattern, // Value of register 'adc_ctrl', field 'testpattern'
     	output wire [0:0] adc_ctrl_ena, // Value of register 'adc_ctrl', field 'ena'
 
 		input wire [0:0] status_clk_lockdetect, // Value of register 'status', field 'clk_lockdetect'
 		input wire [0:0] status_clk_holdover, // Value of register 'status', field 'clk_holdover'
 		input wire [0:0] status_adc_train_done, // Value of register 'status', field 'adc_train_done'
+
+    	input wire [31:0] adc_fifo_count, // value of field 'adc_fifo_count.value'
+    	input wire [31:0] run_fifo_count, // value of field 'run_fifo_count.value'
+    	input wire [31:0] ti_fifo_count, // value of field 'ti_fifo_count.value'
+
+    	output wire [47:0] mac_addr, // value of field 'mac_addr_hi.value'
+    	output wire [31:0] udp_dest_ip, // value of field 'udp_dest_ip.value'
+    	output wire [15:0] udp_dst_port, // value of field 'udp_dst_port.value'
+    	output wire [15:0] udp_src_port, // value of field 'udp_src_port.value'
 
 		// User ports ends
 		// Do not modify the ports beyond this line
@@ -71,6 +81,11 @@
 		output wire  s00_axi_rvalid,
 		input wire  s00_axi_rready
 	);
+
+	wire [31:0] mac_hi;
+	wire [31:0] mac_lo;
+
+	assign mac_addr = { mac_hi[15:0], mac_lo };
 
 	// Instantiation of Axi Bus Interface S00_AXI
 	moller_regs # (
@@ -101,10 +116,21 @@
     	.adc_ctrl_power_down(adc_ctrl_power_down), // Value of register 'adc_ctrl', field 'power_down'
     	.adc_ctrl_testpattern(adc_ctrl_testpattern), // Value of register 'adc_ctrl', field 'testpattern'
     	.adc_ctrl_ena(adc_ctrl_ena), // Value of register 'adc_ctrl', field 'ena'
+		.adc_ctrl_clear_counters(adc_ctrl_clear_counters),
 
 		.status_clk_lockdetect(status_clk_lockdetect), // Value of register 'status', field 'clk_lockdetect'
 		.status_clk_holdover(status_clk_holdover), // Value of register 'status', field 'clk_holdover'
 		.status_adc_train_done(status_adc_train_done), // Value of register 'status', field 'adc_train_done'
+
+    	.adc_fifo_count_value(adc_fifo_count), // value of field 'adc_fifo_count.value'
+    	.run_fifo_count_value(run_fifo_count), // value of field 'run_fifo_count.value'
+    	.ti_fifo_count_value(ti_fifo_count), // value of field 'ti_fifo_count.value'
+
+    	.mac_addr_hi_value(mac_hi), // value of field 'mac_addr_hi.value'
+    	.mac_addr_lo_value(mac_lo), // value of field 'mac_addr_lo.value'
+    	.udp_dest_ip_value(udp_dest_ip), // value of field 'udp_dest_ip.value'
+    	.udp_dst_port_value(udp_dst_port), // value of field 'udp_dst_port.value'
+    	.udp_src_port_value(udp_src_port_value), // value of field 'udp_src_port.value'
 
 		.axi_aclk(s00_axi_aclk),
 		.axi_aresetn(s00_axi_aresetn),

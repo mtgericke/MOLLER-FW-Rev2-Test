@@ -6,8 +6,8 @@
 --	Date last modified: 7/20/18
 -- Inheritance: 	com5402pkg.VHD 10/5/13
 --
--- description:  This package defines supplemental types, subtypes, 
---	constants, and functions. 
+-- description:  This package defines supplemental types, subtypes,
+--	constants, and functions.
 --
 -- Usage: enter the number of UDP tx and rx components, the number of TCP servers and the number of TCP clients.
 ---------------------------------------------------------------
@@ -18,7 +18,7 @@ use ieee.numeric_std.all;
 package com5502pkg is
 
 	--// TCP STREAMS -----------------------------------------------------
-	constant NTCPSTREAMS_MAX: integer range 0 to 255 := 2;  
+	constant NTCPSTREAMS_MAX: integer range 0 to 255 := 1;
 	-- MAXIMUM number of concurrent TCP streams handled by this component
 	-- MUST BE >= NTCPSTREAM in the generic section of COM5502/COM5503
 	-- limitation: <= 255 streams (some integer to 8-bit slv conversions in the memory pointers)
@@ -36,7 +36,7 @@ package com5502pkg is
 	type SLV8xNTCPSTREAMStype is array (integer range 0 to (NTCPSTREAMS_MAX-1)) of std_logic_vector(7 downto 0);
 	type SLV4xNTCPSTREAMStype is array (integer range 0 to (NTCPSTREAMS_MAX-1)) of std_logic_vector(3 downto 0);
 	type SLV2xNTCPSTREAMStype is array (integer range 0 to (NTCPSTREAMS_MAX-1)) of std_logic_vector(1 downto 0);
-	
+
 	type U64xNTCPSTREAMStype is array (integer range 0 to (NTCPSTREAMS_MAX-1)) of unsigned(63 downto 0);
 	type U32xNTCPSTREAMStype is array (integer range 0 to (NTCPSTREAMS_MAX-1)) of unsigned(31 downto 0);
 	type U24xNTCPSTREAMStype is array (integer range 0 to (NTCPSTREAMS_MAX-1)) of unsigned(23 downto 0);

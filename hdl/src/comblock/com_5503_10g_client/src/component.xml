@@ -84,7 +84,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>3f3e0e86</spirit:value>
+            <spirit:value>93f022c7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -100,7 +100,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>3f3e0e86</spirit:value>
+            <spirit:value>93f022c7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1402,8 +1402,8 @@
       </xilinx:taxonomies>
       <xilinx:displayName>tcp_udp_client</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
-      <xilinx:coreRevision>4</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2023-09-21T17:39:52Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>5</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2023-10-17T06:15:28Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="nopcore"/>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@4192e1b2_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
@@ -1445,12 +1445,23 @@
         <xilinx:tag xilinx:name="ui.data.coregen.dd@6f726813_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@4958369b_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@4a52d5b1_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@58e8bfbe_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7bb17cf0_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@634ace70_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@9eb5f01_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@19244a4_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@24bbaaa6_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d1f4327_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3abde78c_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7da5da87_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37e094e9_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@50181970_ARCHIVE_LOCATION">/home/xil/hdl/src/comblock/com_5503_10g_client/src</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2020.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="9f9a1781"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="a9513f1a"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="1226600f"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="3a086aa7"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="85ae025c"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="c8b1aaf2"/>

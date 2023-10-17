@@ -30,6 +30,8 @@ void* cmd_thread(void *vargp) {
 
 	context = vargp;
 
+	printf("Starting Command Thread\n");
+
     command = zmq_socket (context, ZMQ_REP);
     if(zmq_bind (command, "tcp://*:5555") != 0) {
         printf("Failed to Bind ZMQ to port 5555");
@@ -143,7 +145,7 @@ static void adc_init(void) {
 
 
 		// Reset counters and go/stay in test mode
-		moller_regmap[ADC_CTRL_OFFSET/4] = 0xE0000000;
+		moller_regmap[ADC_CTRL_OFFSET/4] = 0xD0000000;
 		usleep(100);
 		moller_regmap[ADC_CTRL_OFFSET/4] = 0xC0000000;
 
@@ -162,7 +164,7 @@ static void adc_init(void) {
 	}
 
 	// Reset counters and leave test mode
-	moller_regmap[ADC_CTRL_OFFSET/4] = 0xA0000000;
+	moller_regmap[ADC_CTRL_OFFSET/4] = 0x90000000;
 	usleep(100);
 	moller_regmap[ADC_CTRL_OFFSET/4] = 0x80000000;
 }

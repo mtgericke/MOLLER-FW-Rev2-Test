@@ -132,6 +132,7 @@ xilinx.com:ip:proc_sys_reset:5.0\
 xilinx.com:ip:smartconnect:1.0\
 COMBLOCK:user:tcp_udp_client:1.0\
 xilinx.com:ip:util_vector_logic:2.0\
+xilinx.com:ip:xlconcat:2.1\
 xilinx.com:ip:xxv_ethernet:3.3\
 xilinx.com:ip:zynq_ultra_ps_e:3.3\
 "
@@ -256,6 +257,7 @@ proc create_root_design { parentCell } {
   set TICLK_N [ create_bd_port -dir I TICLK_N ]
   set TICLK_P [ create_bd_port -dir I TICLK_P ]
   set adc_ctrl_ch_disable [ create_bd_port -dir O -from 15 -to 0 adc_ctrl_ch_disable ]
+  set adc_ctrl_clear_counters [ create_bd_port -dir O -from 0 -to 0 adc_ctrl_clear_counters ]
   set adc_ctrl_ena [ create_bd_port -dir O -from 0 -to 0 adc_ctrl_ena ]
   set adc_ctrl_power_down [ create_bd_port -dir O -from 0 -to 0 adc_ctrl_power_down ]
   set adc_ctrl_sample_rate [ create_bd_port -dir O -from 7 -to 0 adc_ctrl_sample_rate ]
@@ -319,6 +321,8 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.FIFO_DEPTH {8192} \
    CONFIG.FIFO_MODE {2} \
+   CONFIG.HAS_PROG_FULL {0} \
+   CONFIG.HAS_RD_DATA_COUNT {1} \
    CONFIG.HAS_WR_DATA_COUNT {0} \
    CONFIG.IS_ACLK_ASYNC {1} \
    CONFIG.TDATA_NUM_BYTES {8} \
@@ -359,11 +363,14 @@ proc create_root_design { parentCell } {
 
   # Create instance: mollerTI_0, and set properties
   set mollerTI_0 [ create_bd_cell -type ip -vlnv user.org:user:mollerTI:1.0 mollerTI_0 ]
+  set_property -dict [ list \
+   CONFIG.C_S_AXI_ADDR_WIDTH {13} \
+ ] $mollerTI_0
 
   # Create instance: moller_regmap, and set properties
   set moller_regmap [ create_bd_cell -type ip -vlnv TRIUMF:user:moller_regmap:1.2 moller_regmap ]
   set_property -dict [ list \
-   CONFIG.C_S00_AXI_ADDR_WIDTH {8} \
+   CONFIG.C_S00_AXI_ADDR_WIDTH {9} \
  ] $moller_regmap
 
   # Create instance: packet_switch, and set properties
@@ -371,6 +378,7 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.ARB_ALGORITHM {0} \
    CONFIG.ARB_ON_MAX_XFERS {0} \
+   CONFIG.ARB_ON_NUM_CYCLES {0} \
    CONFIG.ARB_ON_TLAST {1} \
    CONFIG.HAS_TLAST {1} \
    CONFIG.NUM_SI {3} \
@@ -386,6 +394,7 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.FIFO_DEPTH {1024} \
    CONFIG.FIFO_MODE {2} \
+   CONFIG.HAS_RD_DATA_COUNT {1} \
    CONFIG.HAS_WR_DATA_COUNT {0} \
    CONFIG.IS_ACLK_ASYNC {1} \
    CONFIG.TDATA_NUM_BYTES {8} \
@@ -434,6 +443,7 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.FIFO_DEPTH {256} \
    CONFIG.FIFO_MODE {2} \
+   CONFIG.HAS_RD_DATA_COUNT {1} \
    CONFIG.HAS_WR_DATA_COUNT {0} \
    CONFIG.IS_ACLK_ASYNC {1} \
    CONFIG.TDATA_NUM_BYTES {8} \
@@ -460,6 +470,13 @@ proc create_root_design { parentCell } {
    CONFIG.LOGO_FILE {data/sym_notgate.png} \
  ] $util_vector_logic_0
 
+  # Create instance: xlconcat_0, and set properties
+  set xlconcat_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 xlconcat_0 ]
+  set_property -dict [ list \
+   CONFIG.IN0_WIDTH {32} \
+   CONFIG.IN1_WIDTH {96} \
+ ] $xlconcat_0
+
   # Create instance: xlconstant_0, and set properties
   set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
   set_property -dict [ list \
@@ -470,8 +487,8 @@ proc create_root_design { parentCell } {
   # Create instance: xlconstant_1, and set properties
   set xlconstant_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_1 ]
   set_property -dict [ list \
-   CONFIG.CONST_VAL {0x0004A307DC6F} \
-   CONFIG.CONST_WIDTH {48} \
+   CONFIG.CONST_VAL {0} \
+   CONFIG.CONST_WIDTH {96} \
  ] $xlconstant_1
 
   # Create instance: xlconstant_2, and set properties
@@ -2028,6 +2045,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net N_TX_FRAMES [get_bd_pins COM5501_0/N_TX_FRAMES]
   connect_bd_net -net Net [get_bd_ports clk_125] [get_bd_pins adc_fifo/s_axis_aclk] [get_bd_pins mollerTI_0/s_axi_aclk] [get_bd_pins moller_regmap/s00_axi_aclk] [get_bd_pins run_fifo/s_axis_aclk] [get_bd_pins smartconnect_0/aclk1] [get_bd_pins ti_fifo/s_axis_aclk]
   connect_bd_net -net Net1 [get_bd_ports SWM] [get_bd_pins mollerTI_0/SWM]
+  connect_bd_net -net Net2 [get_bd_pins COM5501_0/MAC_ADDR] [get_bd_pins moller_regmap/mac_addr] [get_bd_pins tcp_udp_client_0/mac_addr]
   connect_bd_net -net RX_IPG [get_bd_pins COM5501_0/RX_IPG]
   connect_bd_net -net SYNC_RESET_0_1 [get_bd_ports sfp_reset] [get_bd_pins COM5501_0/SYNC_RESET] [get_bd_pins tcp_udp_client_0/sync_reset]
   connect_bd_net -net TI1RX_N_1 [get_bd_ports TI1RX_N] [get_bd_pins mollerTI_0/TI1RX_N]
@@ -2038,6 +2056,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net TICLK_P_1 [get_bd_ports TICLK_P] [get_bd_pins mollerTI_0/TICLK_P]
   connect_bd_net -net TP [get_bd_pins COM5501_0/TP]
   connect_bd_net -net adc_delay_value_0_1 [get_bd_ports adc_delay_value] [get_bd_pins moller_regmap/adc_delay_value]
+  connect_bd_net -net adc_fifo_axis_rd_data_count [get_bd_pins adc_fifo/axis_rd_data_count] [get_bd_pins moller_regmap/adc_fifo_count]
   connect_bd_net -net adc_test_data_bad_dco_counter_1 [get_bd_ports adc_test_data_bad_dco_counter] [get_bd_pins moller_regmap/adc_test_data_bad_dco_counter]
   connect_bd_net -net adc_test_data_bad_pattern_counter_1 [get_bd_ports adc_test_data_bad_pattern_counter] [get_bd_pins moller_regmap/adc_test_data_bad_pattern_counter]
   connect_bd_net -net axcache_coherent_dout [get_bd_pins axcache_coherent/dout] [get_bd_pins zynq_ultra_ps_e/saxigp0_arcache] [get_bd_pins zynq_ultra_ps_e/saxigp0_awcache]
@@ -2062,17 +2081,22 @@ proc create_root_design { parentCell } {
   connect_bd_net -net moller_regmap_0_stream_ctrl_num_samples [get_bd_ports stream_ctrl_num_samples] [get_bd_pins moller_regmap/stream_ctrl_num_samples]
   connect_bd_net -net moller_regmap_0_stream_ctrl_rate_div [get_bd_ports stream_ctrl_rate_div] [get_bd_pins moller_regmap/stream_ctrl_rate_div]
   connect_bd_net -net moller_regmap_adc_ctrl_ch_disable [get_bd_ports adc_ctrl_ch_disable] [get_bd_pins moller_regmap/adc_ctrl_ch_disable]
+  connect_bd_net -net moller_regmap_adc_ctrl_clear_counters [get_bd_ports adc_ctrl_clear_counters] [get_bd_pins moller_regmap/adc_ctrl_clear_counters]
   connect_bd_net -net moller_regmap_adc_ctrl_ena [get_bd_ports adc_ctrl_ena] [get_bd_pins moller_regmap/adc_ctrl_ena]
   connect_bd_net -net moller_regmap_adc_ctrl_power_down [get_bd_ports adc_ctrl_power_down] [get_bd_pins moller_regmap/adc_ctrl_power_down]
   connect_bd_net -net moller_regmap_adc_ctrl_sample_rate [get_bd_ports adc_ctrl_sample_rate] [get_bd_pins moller_regmap/adc_ctrl_sample_rate]
   connect_bd_net -net moller_regmap_adc_ctrl_testpattern [get_bd_ports adc_ctrl_testpattern] [get_bd_pins moller_regmap/adc_ctrl_testpattern]
   connect_bd_net -net moller_regmap_adc_load_value [get_bd_ports adc_load_value] [get_bd_pins moller_regmap/adc_load_value]
+  connect_bd_net -net moller_regmap_udp_dest_ip [get_bd_pins moller_regmap/udp_dest_ip] [get_bd_pins xlconcat_0/In0]
+  connect_bd_net -net moller_regmap_udp_dst_port [get_bd_pins moller_regmap/udp_dst_port] [get_bd_pins tcp_udp_client_0/udp_tx_dest_port_no]
+  connect_bd_net -net moller_regmap_udp_src_port [get_bd_pins moller_regmap/udp_src_port] [get_bd_pins tcp_udp_client_0/udp_tx_source_port_no]
   connect_bd_net -net pd1_dout [get_bd_pins COM5501_0/TEST_MODE] [get_bd_pins testmode/dout]
   connect_bd_net -net ps_sys_rst_interconnect_aresetn [get_bd_pins ps_sys_rst/interconnect_aresetn] [get_bd_pins smartconnect_0/aresetn] [get_bd_pins smartconnect_1/aresetn] [get_bd_pins smartconnect_2/aresetn]
   connect_bd_net -net ps_sys_rst_mb_reset [get_bd_ports soc_in_reset] [get_bd_pins ps_sys_rst/mb_reset]
   connect_bd_net -net ps_sys_rst_peripheral_aresetn [get_bd_pins axi_dma_0/axi_resetn] [get_bd_pins packet_switch/aresetn] [get_bd_pins ps_sys_rst/peripheral_aresetn]
   connect_bd_net -net revision_value_1 [get_bd_ports revision_value] [get_bd_pins moller_regmap/revision_value]
   connect_bd_net -net rst_125_1 [get_bd_ports rst_125_n] [get_bd_pins adc_fifo/s_axis_aresetn] [get_bd_pins mollerTI_0/s_axi_aresetn] [get_bd_pins moller_regmap/s00_axi_aresetn] [get_bd_pins run_fifo/s_axis_aresetn] [get_bd_pins ti_fifo/s_axis_aresetn]
+  connect_bd_net -net run_fifo_axis_rd_data_count [get_bd_pins moller_regmap/run_fifo_count] [get_bd_pins run_fifo/axis_rd_data_count]
   connect_bd_net -net rx_config_dout [get_bd_pins COM5501_0/MAC_RX_CONFIG] [get_bd_pins rx_config/dout]
   connect_bd_net -net stat_rx_status_0 [get_bd_pins xxv_ethernet_0/stat_rx_status_0]
   connect_bd_net -net status_adc_train_done_0_1 [get_bd_ports status_adc_train_done] [get_bd_pins moller_regmap/status_adc_train_done]
@@ -2085,21 +2109,20 @@ proc create_root_design { parentCell } {
   connect_bd_net -net tcp_udp_client_0_udp_tx_cts [get_bd_ports udp_tx_cts] [get_bd_pins tcp_udp_client_0/udp_tx_cts]
   connect_bd_net -net tcp_udp_client_0_udp_tx_nak [get_bd_ports udp_tx_nak] [get_bd_pins tcp_udp_client_0/udp_tx_nak]
   connect_bd_net -net testmode1_dout [get_bd_pins COM5501_0/MDIO_IN] [get_bd_pins COM5501_0/PHY_CONFIG_CHANGE] [get_bd_pins COM5501_0/PHY_RESET] [get_bd_pins COM5501_0/POWER_DOWN] [get_bd_pins zero/dout]
+  connect_bd_net -net ti_fifo_axis_rd_data_count [get_bd_pins moller_regmap/ti_fifo_count] [get_bd_pins ti_fifo/axis_rd_data_count]
   connect_bd_net -net udp_tx_data_0_1 [get_bd_ports udp_tx_data] [get_bd_pins tcp_udp_client_0/udp_tx_data]
   connect_bd_net -net udp_tx_data_valid_0_1 [get_bd_ports udp_tx_data_valid] [get_bd_pins tcp_udp_client_0/udp_tx_data_valid]
-  connect_bd_net -net udp_tx_dest_ip_addr_0_1 [get_bd_ports udp_tx_dest_ip_addr] [get_bd_pins tcp_udp_client_0/udp_tx_dest_ip_addr]
   connect_bd_net -net udp_tx_dest_ipv4_6n_0_1 [get_bd_ports udp_tx_dest_ipv4_6n] [get_bd_pins tcp_udp_client_0/udp_tx_dest_ipv4_6n]
-  connect_bd_net -net udp_tx_dest_port_no_0_1 [get_bd_ports udp_tx_dest_port_no] [get_bd_pins tcp_udp_client_0/udp_tx_dest_port_no]
   connect_bd_net -net udp_tx_eof_0_1 [get_bd_ports udp_tx_eof] [get_bd_pins tcp_udp_client_0/udp_tx_eof]
   connect_bd_net -net udp_tx_sof_0_1 [get_bd_ports udp_tx_sof] [get_bd_pins tcp_udp_client_0/udp_tx_sof]
-  connect_bd_net -net udp_tx_source_port_no_0_1 [get_bd_ports udp_tx_source_port_no] [get_bd_pins tcp_udp_client_0/udp_tx_source_port_no]
   connect_bd_net -net user_rx_reset_0 [get_bd_pins xxv_ethernet_0/user_rx_reset_0]
   connect_bd_net -net user_tx_reset_0 [get_bd_pins xxv_ethernet_0/user_tx_reset_0]
   connect_bd_net -net util_vector_logic_0_Res [get_bd_pins util_vector_logic_0/Res] [get_bd_pins xxv_ethernet_0/rx_reset_0] [get_bd_pins xxv_ethernet_0/sys_reset] [get_bd_pins xxv_ethernet_0/tx_reset_0]
+  connect_bd_net -net xlconcat_0_dout [get_bd_pins tcp_udp_client_0/udp_tx_dest_ip_addr] [get_bd_pins xlconcat_0/dout]
   connect_bd_net -net xlconstant_0_dout [get_bd_pins packet_switch/s_req_suppress] [get_bd_pins xlconstant_0/dout]
   connect_bd_net -net xlconstant_1_dout [get_bd_pins COM5501_0/MAC_TX_CONFIG] [get_bd_pins tx_config/dout]
   connect_bd_net -net xlconstant_1_dout1 [get_bd_pins clksel/dout] [get_bd_pins xxv_ethernet_0/rxoutclksel_in_0] [get_bd_pins xxv_ethernet_0/txoutclksel_in_0]
-  connect_bd_net -net xlconstant_1_dout2 [get_bd_pins COM5501_0/MAC_ADDR] [get_bd_pins tcp_udp_client_0/mac_addr] [get_bd_pins xlconstant_1/dout]
+  connect_bd_net -net xlconstant_1_dout2 [get_bd_pins xlconcat_0/In1] [get_bd_pins xlconstant_1/dout]
   connect_bd_net -net xlconstant_2_dout [get_bd_pins tcp_udp_client_0/dynamic_ipv4] [get_bd_pins xlconstant_2/dout]
   connect_bd_net -net xlconstant_3_dout [get_bd_pins COM5501_0/MAC_RX_CTS] [get_bd_pins xlconstant_3/dout]
   connect_bd_net -net xlconstant_4_dout [get_bd_pins mollerTI_0/h2c_tvalid] [get_bd_pins ti_zero/dout]

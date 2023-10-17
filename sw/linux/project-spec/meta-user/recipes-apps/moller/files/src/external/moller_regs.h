@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // 'moller' Register Definitions
-// Revision: 246
+// Revision: 287
 // -----------------------------------------------------------------------------
-// Generated on 2023-06-15 at 03:41 (UTC) by airhdl version 2023.06.1-893761360
+// Generated on 2023-10-17 at 05:00 (UTC) by airhdl version 2023.07.1-936312266
 // -----------------------------------------------------------------------------
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 // AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -25,13 +25,13 @@ extern "C" {
 #endif
 
 /* Revision number of the 'moller' register map */
-#define MOLLER_REVISION 249
+#define MOLLER_REVISION 287
 
 /* Default base address of the 'moller' register map */
 #define MOLLER_DEFAULT_BASEADDR 0x80000000
 
 /* Size of the 'moller' register map, in bytes */
-#define MOLLER_RANGE_BYTES 224
+#define MOLLER_RANGE_BYTES 276
 
 /* Register 'adc_test_data' */
 #define ADC_TEST_DATA_OFFSET 0x00000000 /* address offset of the 'adc_test_data' register */
@@ -105,6 +105,12 @@ extern "C" {
 #define ADC_CTRL_SAMPLE_RATE_BIT_WIDTH 8 /* bit width of the 'sample_rate' field */
 #define ADC_CTRL_SAMPLE_RATE_BIT_MASK 0x00FF0000 /* bit mask of the 'sample_rate' field */
 #define ADC_CTRL_SAMPLE_RATE_RESET 0x0 /* reset value of the 'sample_rate' field */
+
+/* Field  'adc_ctrl.clear_counters' */
+#define ADC_CTRL_CLEAR_COUNTERS_BIT_OFFSET 28 /* bit offset of the 'clear_counters' field */
+#define ADC_CTRL_CLEAR_COUNTERS_BIT_WIDTH 1 /* bit width of the 'clear_counters' field */
+#define ADC_CTRL_CLEAR_COUNTERS_BIT_MASK 0x10000000 /* bit mask of the 'clear_counters' field */
+#define ADC_CTRL_CLEAR_COUNTERS_RESET 0x0 /* reset value of the 'clear_counters' field */
 
 /* Field  'adc_ctrl.power_down' */
 #define ADC_CTRL_POWER_DOWN_BIT_OFFSET 29 /* bit offset of the 'power_down' field */
@@ -200,6 +206,90 @@ extern "C" {
 #define ADC_DELAY_OUT_VALUE_BIT_WIDTH 9 /* bit width of the 'value' field */
 #define ADC_DELAY_OUT_VALUE_BIT_MASK 0x000001FF /* bit mask of the 'value' field */
 #define ADC_DELAY_OUT_VALUE_RESET 0x0 /* reset value of the 'value' field */
+
+/* Register 'adc_fifo_count' */
+#define ADC_FIFO_COUNT_OFFSET 0x000000E0 /* address offset of the 'adc_fifo_count' register */
+
+/* Field  'adc_fifo_count.value' */
+#define ADC_FIFO_COUNT_VALUE_BIT_OFFSET 0 /* bit offset of the 'value' field */
+#define ADC_FIFO_COUNT_VALUE_BIT_WIDTH 32 /* bit width of the 'value' field */
+#define ADC_FIFO_COUNT_VALUE_BIT_MASK 0xFFFFFFFF /* bit mask of the 'value' field */
+#define ADC_FIFO_COUNT_VALUE_RESET 0x0 /* reset value of the 'value' field */
+
+/* Register 'run_fifo_count' */
+#define RUN_FIFO_COUNT_OFFSET 0x000000E4 /* address offset of the 'run_fifo_count' register */
+
+/* Field  'run_fifo_count.value' */
+#define RUN_FIFO_COUNT_VALUE_BIT_OFFSET 0 /* bit offset of the 'value' field */
+#define RUN_FIFO_COUNT_VALUE_BIT_WIDTH 32 /* bit width of the 'value' field */
+#define RUN_FIFO_COUNT_VALUE_BIT_MASK 0xFFFFFFFF /* bit mask of the 'value' field */
+#define RUN_FIFO_COUNT_VALUE_RESET 0x0 /* reset value of the 'value' field */
+
+/* Register 'ti_fifo_count' */
+#define TI_FIFO_COUNT_OFFSET 0x000000E8 /* address offset of the 'ti_fifo_count' register */
+
+/* Field  'ti_fifo_count.value' */
+#define TI_FIFO_COUNT_VALUE_BIT_OFFSET 0 /* bit offset of the 'value' field */
+#define TI_FIFO_COUNT_VALUE_BIT_WIDTH 32 /* bit width of the 'value' field */
+#define TI_FIFO_COUNT_VALUE_BIT_MASK 0xFFFFFFFF /* bit mask of the 'value' field */
+#define TI_FIFO_COUNT_VALUE_RESET 0x0 /* reset value of the 'value' field */
+
+/* Register 'mac_addr_hi' */
+#define MAC_ADDR_HI_OFFSET 0x00000100 /* address offset of the 'mac_addr_hi' register */
+
+/* Field  'mac_addr_hi.value' */
+#define MAC_ADDR_HI_VALUE_BIT_OFFSET 0 /* bit offset of the 'value' field */
+#define MAC_ADDR_HI_VALUE_BIT_WIDTH 32 /* bit width of the 'value' field */
+#define MAC_ADDR_HI_VALUE_BIT_MASK 0xFFFFFFFF /* bit mask of the 'value' field */
+#define MAC_ADDR_HI_VALUE_RESET 0x0 /* reset value of the 'value' field */
+
+/* Register 'mac_addr_lo' */
+#define MAC_ADDR_LO_OFFSET 0x00000104 /* address offset of the 'mac_addr_lo' register */
+
+/* Field  'mac_addr_lo.value' */
+#define MAC_ADDR_LO_VALUE_BIT_OFFSET 0 /* bit offset of the 'value' field */
+#define MAC_ADDR_LO_VALUE_BIT_WIDTH 32 /* bit width of the 'value' field */
+#define MAC_ADDR_LO_VALUE_BIT_MASK 0xFFFFFFFF /* bit mask of the 'value' field */
+#define MAC_ADDR_LO_VALUE_RESET 0x0 /* reset value of the 'value' field */
+
+/* Register 'udp_dest_ip' */
+#define UDP_DEST_IP_OFFSET 0x00000108 /* address offset of the 'udp_dest_ip' register */
+
+/* Field  'udp_dest_ip.value' */
+#define UDP_DEST_IP_VALUE_BIT_OFFSET 0 /* bit offset of the 'value' field */
+#define UDP_DEST_IP_VALUE_BIT_WIDTH 32 /* bit width of the 'value' field */
+#define UDP_DEST_IP_VALUE_BIT_MASK 0xFFFFFFFF /* bit mask of the 'value' field */
+#define UDP_DEST_IP_VALUE_RESET 0x0 /* reset value of the 'value' field */
+
+/* Register 'udp_dst_port' */
+#define UDP_DST_PORT_OFFSET 0x0000010C /* address offset of the 'udp_dst_port' register */
+
+/* Field  'udp_dst_port.value' */
+#define UDP_DST_PORT_VALUE_BIT_OFFSET 0 /* bit offset of the 'value' field */
+#define UDP_DST_PORT_VALUE_BIT_WIDTH 16 /* bit width of the 'value' field */
+#define UDP_DST_PORT_VALUE_BIT_MASK 0x0000FFFF /* bit mask of the 'value' field */
+#define UDP_DST_PORT_VALUE_RESET 0x0 /* reset value of the 'value' field */
+
+/* Field  'udp_dst_port.unused' */
+#define UDP_DST_PORT_UNUSED_BIT_OFFSET 16 /* bit offset of the 'unused' field */
+#define UDP_DST_PORT_UNUSED_BIT_WIDTH 16 /* bit width of the 'unused' field */
+#define UDP_DST_PORT_UNUSED_BIT_MASK 0xFFFF0000 /* bit mask of the 'unused' field */
+#define UDP_DST_PORT_UNUSED_RESET 0x0 /* reset value of the 'unused' field */
+
+/* Register 'udp_src_port' */
+#define UDP_SRC_PORT_OFFSET 0x00000110 /* address offset of the 'udp_src_port' register */
+
+/* Field  'udp_src_port.value' */
+#define UDP_SRC_PORT_VALUE_BIT_OFFSET 0 /* bit offset of the 'value' field */
+#define UDP_SRC_PORT_VALUE_BIT_WIDTH 16 /* bit width of the 'value' field */
+#define UDP_SRC_PORT_VALUE_BIT_MASK 0x0000FFFF /* bit mask of the 'value' field */
+#define UDP_SRC_PORT_VALUE_RESET 0x0 /* reset value of the 'value' field */
+
+/* Field  'udp_src_port.unused' */
+#define UDP_SRC_PORT_UNUSED_BIT_OFFSET 16 /* bit offset of the 'unused' field */
+#define UDP_SRC_PORT_UNUSED_BIT_WIDTH 16 /* bit width of the 'unused' field */
+#define UDP_SRC_PORT_UNUSED_BIT_MASK 0xFFFF0000 /* bit mask of the 'unused' field */
+#define UDP_SRC_PORT_UNUSED_RESET 0x0 /* reset value of the 'unused' field */
 
 #ifdef __cplusplus
 }
