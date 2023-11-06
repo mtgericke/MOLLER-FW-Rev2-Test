@@ -150,8 +150,8 @@ hdl: ## Vivado Batch Build
 	bash -l -c "cd /home/xil/hdl; vivado -mode batch -source scripts/build.tcl"
 
 gui: ## Vivado GUI
-	docker run --rm --env="DISPLAY" --net=host \
-	 --ipc host --privileged \
+	docker run --rm --net=host --env="DISPLAY" \
+	--ipc host --privileged \
 	--user "$$(id -u):$$(id -g)" \
 	-v /dev:/dev \
 	-v ${PWD}/sw/linux/tftpboot:/tftpboot:rw \
@@ -284,10 +284,7 @@ sdcard-copy: ## Copy Petalinux to sdcard
 
 create-zip: ## Make a zip of the required files
 	cd sw/linux/images/linux/; \
-	cp ../../../scripts/moller_dump.py .; \
-	cp ../../../scripts/moller_ctrl.py .; \
-	cp ../../../scripts/moller_viewer.py .; \
-	zip ../../../../moller_$(shell date +%Y%m%d).zip BOOT.BIN boot.scr Image rootfs.cpio.gz.u-boot moller_dump.py moller_ctrl.py moller_viewer.py; rm moller_*.py
+	zip ../../../../moller_$(shell date +%Y%m%d).zip BOOT.BIN boot.scr Image rootfs.cpio.gz.u-boot
 
 unzip-to-sdcard:
 	unzip -p ${SDCARD_ZIP} BOOT.BIN >/media/${USER}/${SDCARD_BOOT_LABEL}/BOOT.BIN

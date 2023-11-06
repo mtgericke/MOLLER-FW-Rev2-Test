@@ -1,7 +1,5 @@
 `timescale 1 ns / 1 ps
 
-//`include "dual_one_clock_wr_first.v"
-
 module data_delayer
 #(
 	parameter DEPTH = 1,

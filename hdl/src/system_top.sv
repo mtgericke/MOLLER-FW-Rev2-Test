@@ -484,15 +484,15 @@ Mercury_XU1 bd (
     .udp_tx_cts(),
     .udp_tx_data(64'h0), // 64
     .udp_tx_data_valid({8{1'b0}}),   // 8
-    .udp_tx_dest_ip_addr(128'h00000000c0a80164), // 0xc0a80164 = 192.168.1.100
-    .udp_tx_dest_ipv4_6n(1'b1), // 1 bit, always use ipv4
-    .udp_tx_dest_port_no(16'd5000), // 16
     .udp_tx_eof(1'b0),
     .udp_tx_nak(),
     .udp_tx_sof(1'b0),
-    .udp_tx_source_port_no(16'd5000), // 16
-
     .udp_tx_clk(clk_udp_tx),
+
+    // Moved to internal regmap control
+    //.udp_tx_dest_ip_addr(128'h00000000c0a80164), // 0xc0a80164 = 192.168.1.100
+    //.udp_tx_dest_port_no(16'd5000), // 16
+    //.udp_tx_source_port_no(16'd5000), // 16
 
     // Register map I/O
     .adc_delay_value(adc_ch_delay),

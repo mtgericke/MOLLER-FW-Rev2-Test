@@ -301,13 +301,10 @@ proc create_root_design { parentCell } {
   set udp_tx_cts [ create_bd_port -dir O udp_tx_cts ]
   set udp_tx_data [ create_bd_port -dir I -from 63 -to 0 udp_tx_data ]
   set udp_tx_data_valid [ create_bd_port -dir I -from 7 -to 0 udp_tx_data_valid ]
-  set udp_tx_dest_ip_addr [ create_bd_port -dir I -from 127 -to 0 udp_tx_dest_ip_addr ]
   set udp_tx_dest_ipv4_6n [ create_bd_port -dir I udp_tx_dest_ipv4_6n ]
-  set udp_tx_dest_port_no [ create_bd_port -dir I -from 15 -to 0 udp_tx_dest_port_no ]
   set udp_tx_eof [ create_bd_port -dir I udp_tx_eof ]
   set udp_tx_nak [ create_bd_port -dir O udp_tx_nak ]
   set udp_tx_sof [ create_bd_port -dir I udp_tx_sof ]
-  set udp_tx_source_port_no [ create_bd_port -dir I -from 15 -to 0 udp_tx_source_port_no ]
 
   # Create instance: COM5501_0, and set properties
   set COM5501_0 [ create_bd_cell -type ip -vlnv COMBLOCK:user.org:COM5501_MAC:1.0 COM5501_0 ]
@@ -496,6 +493,9 @@ proc create_root_design { parentCell } {
 
   # Create instance: xlconstant_3, and set properties
   set xlconstant_3 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_3 ]
+
+  # Create instance: xlconstant_4, and set properties
+  set xlconstant_4 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_4 ]
 
   # Create instance: xxv_ethernet_0, and set properties
   set xxv_ethernet_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xxv_ethernet:3.3 xxv_ethernet_0 ]
@@ -2112,7 +2112,6 @@ proc create_root_design { parentCell } {
   connect_bd_net -net ti_fifo_axis_rd_data_count [get_bd_pins moller_regmap/ti_fifo_count] [get_bd_pins ti_fifo/axis_rd_data_count]
   connect_bd_net -net udp_tx_data_0_1 [get_bd_ports udp_tx_data] [get_bd_pins tcp_udp_client_0/udp_tx_data]
   connect_bd_net -net udp_tx_data_valid_0_1 [get_bd_ports udp_tx_data_valid] [get_bd_pins tcp_udp_client_0/udp_tx_data_valid]
-  connect_bd_net -net udp_tx_dest_ipv4_6n_0_1 [get_bd_ports udp_tx_dest_ipv4_6n] [get_bd_pins tcp_udp_client_0/udp_tx_dest_ipv4_6n]
   connect_bd_net -net udp_tx_eof_0_1 [get_bd_ports udp_tx_eof] [get_bd_pins tcp_udp_client_0/udp_tx_eof]
   connect_bd_net -net udp_tx_sof_0_1 [get_bd_ports udp_tx_sof] [get_bd_pins tcp_udp_client_0/udp_tx_sof]
   connect_bd_net -net user_rx_reset_0 [get_bd_pins xxv_ethernet_0/user_rx_reset_0]
@@ -2126,6 +2125,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net xlconstant_2_dout [get_bd_pins tcp_udp_client_0/dynamic_ipv4] [get_bd_pins xlconstant_2/dout]
   connect_bd_net -net xlconstant_3_dout [get_bd_pins COM5501_0/MAC_RX_CTS] [get_bd_pins xlconstant_3/dout]
   connect_bd_net -net xlconstant_4_dout [get_bd_pins mollerTI_0/h2c_tvalid] [get_bd_pins ti_zero/dout]
+  connect_bd_net -net xlconstant_4_dout1 [get_bd_pins tcp_udp_client_0/udp_tx_dest_ipv4_6n] [get_bd_pins xlconstant_4/dout]
   connect_bd_net -net xxv_ethernet_0_rx_mii_c_0 [get_bd_pins COM5501_0/XGMII_RXC] [get_bd_pins xxv_ethernet_0/rx_mii_c_0]
   connect_bd_net -net xxv_ethernet_0_rx_mii_d_0 [get_bd_pins COM5501_0/XGMII_RXD] [get_bd_pins xxv_ethernet_0/rx_mii_d_0]
   connect_bd_net -net xxv_ethernet_0_tx_mii_clk_0 [get_bd_ports udp_tx_clk] [get_bd_pins COM5501_0/CLK] [get_bd_pins COM5501_0/CLK156g] [get_bd_pins tcp_udp_client_0/clk] [get_bd_pins xxv_ethernet_0/rx_core_clk_0] [get_bd_pins xxv_ethernet_0/tx_mii_clk_0]
