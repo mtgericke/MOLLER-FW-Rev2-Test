@@ -60,6 +60,6 @@ static void gpio_init(void) {
 	struct gpiod_chip *chip;
 	struct gpiod_line *adc_cvnt_sel;
 	chip = gpiod_chip_open_by_name(MIO_GPIO_CHIP);
-	adc_cvnt_sel = gpiod_chip_get_line(chip, MIO_PIN_ADC_CNVT_SEL);
-	gpiod_line_request_output(adc_cvnt_sel, GPIOD_CONSUMER_NAME, 0);
+	// adc_cvnt_sel = gpiod_chip_get_line(chip, MIO_PIN_ADC_CNVT_SEL);
+	// gpiod_line_request_output(adc_cvnt_sel, GPIOD_CONSUMER_NAME, 0);
 }

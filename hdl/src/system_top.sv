@@ -33,7 +33,7 @@ module system_top
     input wire LMK_STAT_LD,  // MUXable, can be readback pin
     input wire LMK_STAT_HOLDOVER, // MUXable, can be readback pin
 
-    // output wire ADC_CNVT_SEL, // accessible thru PS_MIO41
+    output wire ADC_CNVT_SEL,
     output wire ADC_TESTPAT,
     output wire SEL_TI_MGTn,
     output wire ADC_PDn,
@@ -240,6 +240,8 @@ wire [16:1] genoutp;
 wire [NUM_ADC_CH-1:0][15:0] bad_dco_counter;
 wire [NUM_ADC_CH-1:0][15:0] bad_data_counter;
 
+
+
 assign ext_sig[1] = genoutp[3];
 assign ext_sig[2] = genoutp[2];
 
@@ -261,6 +263,8 @@ assign TI_RESETn = 1'bZ;
 assign TI_ModSELn = 1'bZ;
 assign DATA_RESETn = 1'bZ;
 assign DATA_ModSELn = 1'bZ;
+
+assign ADC_CNVT_SEL = 1'b0;
 
 // Conversion Enable signal to ADCs
 OBUFDS diff_som_out_cnv_a	(	.I(adc_convert),	    .O(SOM_OUT_CNVA_P),	.OB(SOM_OUT_CNVA_N)	);

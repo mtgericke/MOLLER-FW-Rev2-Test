@@ -77,9 +77,15 @@ set_property -dict {PACKAGE_PIN J14 IOSTANDARD LVCMOS33} [get_ports {LMK_STAT_CL
 set_property -dict {PACKAGE_PIN K14 IOSTANDARD LVCMOS33} [get_ports {LMK_STAT_CLKin2_SYNC}]
 set_property -dict {PACKAGE_PIN J15 IOSTANDARD LVCMOS33} [get_ports {LMK_STAT_HOLDOVER}]
 
-set_property -dict {PACKAGE_PIN AG4 IOSTANDARD LVCMOS18} [get_ports {ADC_TESTPAT}]
-set_property -dict {PACKAGE_PIN AJ1 IOSTANDARD LVCMOS18} [get_ports {SEL_TI_MGTn}]
+set_property -dict {PACKAGE_PIN K13 IOSTANDARD LVCMOS18} [get_ports {ADC_TESTPAT}]
+set_property -dict {PACKAGE_PIN K12 IOSTANDARD LVCMOS18} [get_ports {SEL_TI_MGTn}]
 set_property -dict {PACKAGE_PIN AH11 IOSTANDARD LVCMOS18} [get_ports {ADC_PDn}]
+
+set_property -dict {PACKAGE_PIN J10 IOSTANDARD LVCMOS18} [get_ports {ADC_CNVT_SEL}]
+# set_property -dict {PACKAGE_PIN J11 IOSTANDARD LVCMOS18} [get_ports {TACH1}]
+# set_property -dict {PACKAGE_PIN H11 IOSTANDARD LVCMOS18} [get_ports {TACH2}]
+# set_property -dict {PACKAGE_PIN J12 IOSTANDARD LVCMOS18} [get_ports {TACH3}]
+
 
 set_property -dict {PACKAGE_PIN W7  IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {ADC_DCO_P[12]}]
 set_property -dict {PACKAGE_PIN W6  IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {ADC_DCO_N[12]}]
