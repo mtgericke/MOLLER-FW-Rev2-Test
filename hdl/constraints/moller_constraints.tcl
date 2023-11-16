@@ -30,12 +30,12 @@ set_property BITSTREAM.CONFIG.UNUSEDPIN PULLNONE [current_design]
 
 # J800
 
-set_property -dict {PACKAGE_PIN A12 IOSTANDARD LVCMOS18 PULLUP TRUE} [get_ports {SW1[1]}]
-set_property -dict {PACKAGE_PIN A11 IOSTANDARD LVCMOS18 PULLUP TRUE} [get_ports {SW1[2]}]
-set_property -dict {PACKAGE_PIN C12 IOSTANDARD LVCMOS18 PULLUP TRUE} [get_ports {SW1[3]}]
-set_property -dict {PACKAGE_PIN B11 IOSTANDARD LVCMOS18 PULLUP TRUE} [get_ports {SW1[4]}]
-set_property -dict {PACKAGE_PIN B10 IOSTANDARD LVCMOS18 PULLUP TRUE} [get_ports {SW1[5]}]
-set_property -dict {PACKAGE_PIN A10 IOSTANDARD LVCMOS18 PULLUP TRUE} [get_ports {SW1[6]}]
+set_property -dict {PACKAGE_PIN A12 IOSTANDARD LVCMOS25 PULLUP TRUE} [get_ports {SW1[1]}]
+set_property -dict {PACKAGE_PIN A11 IOSTANDARD LVCMOS25 PULLUP TRUE} [get_ports {SW1[2]}]
+set_property -dict {PACKAGE_PIN C12 IOSTANDARD LVCMOS25 PULLUP TRUE} [get_ports {SW1[3]}]
+set_property -dict {PACKAGE_PIN B11 IOSTANDARD LVCMOS25 PULLUP TRUE} [get_ports {SW1[4]}]
+set_property -dict {PACKAGE_PIN B10 IOSTANDARD LVCMOS25 PULLUP TRUE} [get_ports {SW1[5]}]
+set_property -dict {PACKAGE_PIN A10 IOSTANDARD LVCMOS25 PULLUP TRUE} [get_ports {SW1[6]}]
 
 set_property -dict {PACKAGE_PIN E14 IOSTANDARD LVCMOS33 } [get_ports {DATA_ModPRSn}]
 set_property -dict {PACKAGE_PIN E13 IOSTANDARD LVCMOS33 } [get_ports {DATA_INTn}]
@@ -60,10 +60,10 @@ set_property -dict {PACKAGE_PIN H13 IOSTANDARD LVCMOS33} [get_ports {LED_DSP[0]}
 # set_property -dict {PACKAGE_PIN H12 IOSTANDARD LVDS_25} [get_ports {EXT_SIG_P[1]}]
 # set_property -dict {PACKAGE_PIN G11 IOSTANDARD LVDS_25} [get_ports {EXT_SIG_N[1]}
 
-set_property -dict {PACKAGE_PIN G10 IOSTANDARD LVCMOS18} [get_ports {EXT_SIG_P[2]}]
-set_property -dict {PACKAGE_PIN F10 IOSTANDARD LVCMOS18} [get_ports {EXT_SIG_N[2]}]
-set_property -dict {PACKAGE_PIN H12 IOSTANDARD LVCMOS18} [get_ports {EXT_SIG_P[1]}]
-set_property -dict {PACKAGE_PIN G11 IOSTANDARD LVCMOS18} [get_ports {EXT_SIG_N[1]}]
+set_property -dict {PACKAGE_PIN G10 IOSTANDARD LVCMOS25} [get_ports {EXT_SIG_P[2]}]
+set_property -dict {PACKAGE_PIN F10 IOSTANDARD LVCMOS25} [get_ports {EXT_SIG_N[2]}]
+set_property -dict {PACKAGE_PIN H12 IOSTANDARD LVCMOS25} [get_ports {EXT_SIG_P[1]}]
+set_property -dict {PACKAGE_PIN G11 IOSTANDARD LVCMOS25} [get_ports {EXT_SIG_N[1]}]
 
 set_property -dict {PACKAGE_PIN G13 IOSTANDARD LVCMOS33} [get_ports {CONTROL[0]}]
 set_property -dict {PACKAGE_PIN F13 IOSTANDARD LVCMOS33} [get_ports {CONTROL[1]}]
@@ -77,14 +77,14 @@ set_property -dict {PACKAGE_PIN J14 IOSTANDARD LVCMOS33} [get_ports {LMK_STAT_CL
 set_property -dict {PACKAGE_PIN K14 IOSTANDARD LVCMOS33} [get_ports {LMK_STAT_CLKin2_SYNC}]
 set_property -dict {PACKAGE_PIN J15 IOSTANDARD LVCMOS33} [get_ports {LMK_STAT_HOLDOVER}]
 
-set_property -dict {PACKAGE_PIN K13 IOSTANDARD LVCMOS18} [get_ports {ADC_TESTPAT}]
-set_property -dict {PACKAGE_PIN K12 IOSTANDARD LVCMOS18} [get_ports {SEL_TI_MGTn}]
+set_property -dict {PACKAGE_PIN K13 IOSTANDARD LVCMOS25} [get_ports {ADC_TESTPAT}]
+set_property -dict {PACKAGE_PIN K12 IOSTANDARD LVCMOS25} [get_ports {SEL_TI_MGTn}]
 set_property -dict {PACKAGE_PIN AH11 IOSTANDARD LVCMOS18} [get_ports {ADC_PDn}]
 
-set_property -dict {PACKAGE_PIN J10 IOSTANDARD LVCMOS18} [get_ports {ADC_CNVT_SEL}]
-# set_property -dict {PACKAGE_PIN J11 IOSTANDARD LVCMOS18} [get_ports {TACH1}]
-# set_property -dict {PACKAGE_PIN H11 IOSTANDARD LVCMOS18} [get_ports {TACH2}]
-# set_property -dict {PACKAGE_PIN J12 IOSTANDARD LVCMOS18} [get_ports {TACH3}]
+set_property -dict {PACKAGE_PIN J10 IOSTANDARD LVCMOS25} [get_ports {ADC_CNVT_SEL}]
+# set_property -dict {PACKAGE_PIN J11 IOSTANDARD LVCMOS25} [get_ports {TACH1}]
+# set_property -dict {PACKAGE_PIN H11 IOSTANDARD LVCMOS25} [get_ports {TACH2}]
+# set_property -dict {PACKAGE_PIN J12 IOSTANDARD LVCMOS25} [get_ports {TACH3}]
 
 
 set_property -dict {PACKAGE_PIN W7  IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {ADC_DCO_P[12]}]

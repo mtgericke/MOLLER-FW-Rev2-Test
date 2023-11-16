@@ -210,8 +210,7 @@ wire [15:0] stream_num_samples;
 wire [6:0] stream_rate_div;
 
 wire [31:0] freq_osc;
-wire [31:0] freq_som0;
-wire [31:0] freq_som1;
+wire [1:0][31:0] freq_som;
 wire [31:0] freq_td;
 
 wire soc_in_reset;
@@ -264,7 +263,7 @@ assign TI_ModSELn = 1'bZ;
 assign DATA_RESETn = 1'bZ;
 assign DATA_ModSELn = 1'bZ;
 
-assign ADC_CNVT_SEL = 1'b0;
+assign ADC_CNVT_SEL = 1'b1;
 
 // Conversion Enable signal to ADCs
 OBUFDS diff_som_out_cnv_a	(	.I(adc_convert),	    .O(SOM_OUT_CNVA_P),	.OB(SOM_OUT_CNVA_N)	);
@@ -315,7 +314,7 @@ subsystem_clock clock_subsystem (
     .LMK_UWIRE_DATA( LMK_UWIRE_DATA ),
     .LMK_UWIRE_LE( LMK_UWIRE_LE ),
 
-    .fc_clk_som_in( {freq_som1, freq_som0} ),
+    .fc_clk_som_in( freq_som ),
     .fc_clk_osc( freq_osc ),
     .fc_clk_td( freq_td )
 );
@@ -505,8 +504,8 @@ Mercury_XU1 bd (
     .adc_test_data_bad_pattern_counter( bad_data_counter ),
 
     .freq_osc_value( freq_osc ),
-    .freq_som0_value( freq_som0 ),
-    .freq_som1_value( freq_som1 ),
+    .freq_som0_value( freq_som[0] ),
+    .freq_som1_value( freq_som[1] ),
     .freq_td_value( freq_td ),
 
     .stream_ctrl_ch0(stream_ch0),

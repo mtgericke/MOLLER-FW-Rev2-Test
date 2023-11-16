@@ -305,11 +305,11 @@ sdcard-format: ## Format SDCard image for petalinux
 	sudo sync
 
 # ssh-update-sdcard: ## Copy files via SSH/SCP and reboot device
-# 	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/boot.scr sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk1p1/
+# 	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/boot.scr sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk0p1/
 # 	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} 'sync;'
 
 ssh-update-sdcard: ## Copy files via SSH/SCP and reboot device
-	@scp ${SSH_OPTIONS} sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk1p1/
+	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/boot.scr sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk0p1/
 	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} 'sync;'
 
 
@@ -318,7 +318,7 @@ ssh-update-emmc:
 	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} 'sync'
 
 ssh-update-rootfs:
-	@scp ${SSH_OPTIONS}  sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk1p1/
+	@scp ${SSH_OPTIONS}  sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk0p1/
 	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} 'sync'
 
 

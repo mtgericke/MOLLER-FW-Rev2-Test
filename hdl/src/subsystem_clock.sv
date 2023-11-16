@@ -93,11 +93,15 @@ end
 
 reg [15:0] r_cc_locked_sync;
 reg r_cc_locked;
+reg [31:0] rst_osc_delay = 32'h0;
 always@(posedge clk_osc_100) begin
     r_cc_locked_sync <= { r_cc_locked_sync[14:0], cc_locked };
     r_cc_locked <= &r_cc_locked_sync;
 
-    rst_osc <= 1'b0; // just dump the reset, oscillator should be long stable by time FPGA is read from SDcard via bootloader
+    rst_osc_delay <= (rst_osc_delay < 32'd100000000) ? rst_osc_delay + 1'b1 : rst_osc_delay;
+
+    // just dump the reset, oscillator should be long stable by time FPGA is read from SDcard via bootloader
+    rst_osc <= (rst_osc_delay < 32'd100000000) ? 1'b1 : 1'b0;
     rst_mmcm <= ~r_cc_locked;
 end
 

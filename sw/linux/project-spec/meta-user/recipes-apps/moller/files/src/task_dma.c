@@ -155,15 +155,15 @@ void* dma_thread(void *vargp) {
 				break;
 			case PROXY_TIMEOUT:
 				num_timeouts++;
-				printf("Proxy rx transfer timeout\n");
+				// printf("Proxy rx transfer timeout\n");
 				break;
 			case PROXY_BUSY:
 				num_errors++;
-				printf("Proxy rx transfer busy\n");
+				// printf("Proxy rx transfer busy\n");
 				break;
 			case PROXY_ERROR:
 				num_errors++;
-				printf("Proxy rx transfer error\n");
+				// printf("Proxy rx transfer error\n");
 				break;
 			default:
 				num_unknown_errors++;

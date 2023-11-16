@@ -142,15 +142,16 @@ static void adc_init(void) {
 		for(uint32_t ch=0; ch<16; ch++) {
 			moller_regmap[(ADC_DELAY_IN_OFFSET/4) + ch] = n;
 		}
-
+		// Give the update some time
+		usleep(1000);
 
 		// Reset counters and go/stay in test mode
 		moller_regmap[ADC_CTRL_OFFSET/4] = 0xD0000000;
-		usleep(100);
-		moller_regmap[ADC_CTRL_OFFSET/4] = 0xC0000000;
+		usleep(1000);
 
-		// Let the counters run for a bit
-		usleep(10000);
+		// Take counters out of reset and run them for a bit
+		moller_regmap[ADC_CTRL_OFFSET/4] = 0xC0000000;
+		usleep(1000);
 
 		// Get counter values for each channel and store results
 		for(uint32_t ch=0; ch<16; ch++) {
@@ -163,9 +164,11 @@ static void adc_init(void) {
 		moller_regmap[(ADC_DELAY_IN_OFFSET/4) + ch] = find_mid_of_longest_run(error_counters[ch]);
 	}
 
+	usleep(1000);
+
 	// Reset counters and leave test mode
 	moller_regmap[ADC_CTRL_OFFSET/4] = 0x90000000;
-	usleep(100);
+	usleep(1000);
 	moller_regmap[ADC_CTRL_OFFSET/4] = 0x80000000;
 }
 

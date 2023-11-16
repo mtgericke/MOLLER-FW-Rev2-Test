@@ -16,7 +16,6 @@ extern "C" {
 
 #define GPIOD_CONSUMER_NAME "moller"
 #define MIO_GPIO_CHIP "gpiochip0"
-#define MIO_PIN_ADC_CNVT_SEL 41
 
 void* cmd_thread(void *vargp);
 void* dma_thread(void *vargp);
