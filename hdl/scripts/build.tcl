@@ -16,7 +16,6 @@ read_verilog -sv "./src/moller_regmap_1.0/src/moller_regs_pkg.sv"
 read_verilog -sv [glob -type f -directory ./src *.{sv,v}]
 read_verilog -sv [glob -type f -directory ./src/uwire *.{sv,v}]
 read_verilog -sv [glob -type f -directory ./src/util *.{sv,v}]
-read_verilog -sv [glob -type f -directory ./src/test *.{sv,v}]
 
 set_property "ip_repo_paths" "./src/moller_regmap_1.0 ./src/mollerTI_1.0 ./src/comblock/com_5501_10g_mac ./src/comblock/com_5503_10g_client" [current_fileset]
 update_ip_catalog

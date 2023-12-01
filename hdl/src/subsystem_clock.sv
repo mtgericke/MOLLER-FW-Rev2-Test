@@ -2,7 +2,6 @@
 module subsystem_clock (
     input wire clk_osc_100, // oscillator 100MHz
     input wire clk_cc_250, // clock cleaner 250 MHz output (TD_250)
-    input wire [1:0] clk_cc_som,
 
     input wire cc_locked,
     input wire soc_ready,
@@ -56,9 +55,9 @@ assign uwire_cfg_data = {
     32'h00140203,
     32'h00140284,
     32'h00140145,
-    32'h11110006,
+    32'h00000006, // Disabling CLK 3/2/1/0. Originally: 32'h11110006
     32'h11110007,
-    32'h11110008,
+    32'h11000008, // Disabling CLK 9/8. Orignally 32'h11110008
     32'h55555549,
     32'h914249AA,
     32'h1403000B,
@@ -70,7 +69,7 @@ assign uwire_cfg_data = {
     32'h000000D8,
     32'h02C9C419,
     32'hAFA8001A,
-    32'h1E90065B,
+    32'h1D90065B, // 32'h1E90065B,
     32'h0040191C,
     32'h0180015D,
     32'h0500015E,
@@ -151,26 +150,6 @@ mmcm_adc adc_mmcm (
     .clk_adc ( clk_out_125 ),
     .clk_625 ( clk_625 )
 );
-
-
-freq_counter #(
-    .REF_FREQ(FREQ_125)
-) fc_som0 (
-    .clk        ( clk_out_125 ),
-    .rst        ( rst_out_125 ),
-    .clk_freq   ( clk_cc_som[0] ),
-    .q          ( fc_clk_som_in[0] )
-);
-
-freq_counter #(
-    .REF_FREQ(FREQ_125)
-) fc_som1 (
-    .clk        ( clk_out_125 ),
-    .rst        ( rst_out_125 ),
-    .clk_freq   ( clk_cc_som[1] ),
-    .q          ( fc_clk_som_in[1] )
-);
-
 
 freq_counter #(
     .REF_FREQ(FREQ_125)

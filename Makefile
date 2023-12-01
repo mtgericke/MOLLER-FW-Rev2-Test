@@ -53,17 +53,6 @@ clean: ## Clean
 # For timing sim use: -L simprims_ver
 # For func/behavioral sim use: -L unisims_ver
 
-sim-trainer-gui: ## Simulate ADC deserializer
-	docker run --rm --net=host --env="DISPLAY" \
-	--user "$$(id -u):$$(id -g)" \
-	-v ${PWD}/hdl:/home/xil/hdl:rw \
-	-v ${LICENSE_DIR}:/home/xil/.Xilinx:rw \
-	-v "$$HOME/.Xauthority:/home/xil/.Xauthority:rw" xilinx:${VIVADO_VER} \
-	bash -l -c "cd /home/xil/hdl; \
-		xelab -nolog -prj sim/adc_trainer/adc_trainer.prj -L simprims_ver -debug typical -s sim_trainer xil_defaultlib.tb_adc_trainer xil_defaultlib.glbl;  \
-		xsim sim_trainer -nolog --gui -wdb sim_trainer.wdb -t sim/adc_trainer/adc_trainer.tcl"
-
-
 sim-adc: ## Simulate ADC deserializer
 	docker run --rm --net=host --env="DISPLAY" \
 	--user "$$(id -u):$$(id -g)" \
@@ -277,18 +266,21 @@ petalinux-app: ## Build petalinux app only
 	bash -l -c "cd /home/xil/sw/linux; petalinux-build -c moller"
 
 sdcard-copy: ## Copy Petalinux to sdcard
-	cp sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/boot.scr sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot /media/${USER}/${SDCARD_BOOT_LABEL}
+	cp sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot /media/${USER}/${SDCARD_BOOT_LABEL}
+	cp sw/linux/project-spec/configs/extlinux.conf /media/${USER}/${SDCARD_BOOT_LABEL}/extlinux/extlinux.conf
+
 	sync
 	sudo umount /media/${USER}/${SDCARD_BOOT_LABEL}
 	sudo umount /media/${USER}/${SDCARD_ROOTFS_LABEL}
 
 create-zip: ## Make a zip of the required files
+	cp sw/linux/project-spec/configs/extlinux.conf sw/linux/images/linux/extlinux.conf; \
 	cd sw/linux/images/linux/; \
-	zip ../../../../moller_$(shell date +%Y%m%d).zip BOOT.BIN boot.scr Image rootfs.cpio.gz.u-boot
+	zip ../../../../moller_$(shell date +%Y%m%d).zip BOOT.BIN extlinux.conf Image rootfs.cpio.gz.u-boot
 
 unzip-to-sdcard:
 	unzip -p ${SDCARD_ZIP} BOOT.BIN >/media/${USER}/${SDCARD_BOOT_LABEL}/BOOT.BIN
-	unzip -p ${SDCARD_ZIP} boot.scr >/media/${USER}/${SDCARD_BOOT_LABEL}/boot.scr
+	unzip -p ${SDCARD_ZIP} extlinux.conf >/media/${USER}/${SDCARD_BOOT_LABEL}/extlinux/extlinux.conf
 	unzip -p ${SDCARD_ZIP} Image >/media/${USER}/${SDCARD_BOOT_LABEL}/Image
 	unzip -p ${SDCARD_ZIP} rootfs.cpio.gz.u-boot >/media/${USER}/${SDCARD_BOOT_LABEL}/rootfs.cpio.gz.u-boot
 	sudo sync
@@ -304,23 +296,15 @@ sdcard-format: ## Format SDCard image for petalinux
 	sudo mkfs.ext4 -L ${SDCARD_ROOTFS_LABEL} ${SDCARD_DEV}2
 	sudo sync
 
-# ssh-update-sdcard: ## Copy files via SSH/SCP and reboot device
-# 	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/boot.scr sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk0p1/
-# 	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} 'sync;'
-
 ssh-update-sdcard: ## Copy files via SSH/SCP and reboot device
-	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/boot.scr sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk0p1/
+	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk1p1/
+	@scp ${SSH_OPTIONS} sw/linux/project-spec/configs/extlinux.conf root@${DEVICE_IP}:/media/sd-mmcblk1p1/extlinux/extlinux.conf
 	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} 'sync;'
 
-
 ssh-update-emmc:
-	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/boot.scr sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk0p1/
+	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk0p1/
+	@scp ${SSH_OPTIONS} sw/linux/project-spec/configs/extlinux.conf  root@${DEVICE_IP}:/media/sd-mmcblk0p1/extlinux/extlinux.conf
 	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} 'sync'
-
-ssh-update-rootfs:
-	@scp ${SSH_OPTIONS}  sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk0p1/
-	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} 'sync'
-
 
 ssh-reboot:
 	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} '/sbin/shutdown -r now'

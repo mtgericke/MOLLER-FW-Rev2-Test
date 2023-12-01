@@ -13,7 +13,7 @@ imageub_addr=0x10000000
 kernel_addr=0x80000
 kernel_offset=0x1E00200
 kernel_size=0x7800000
-kernel_type=image.ub
+kernel_type=Image
 
 for boot_target in ${boot_targets};
 do

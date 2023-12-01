@@ -18,10 +18,13 @@ module system_top
 
     output wire [3:0] LED_DSP,  // 4 Red LEDs, vertically stacked
 
-    output wire [2:1] EXT_SIG_P, // 2.5V LVDS, may need to be used as 4 separate 2.5V inputs
-    output wire [2:1] EXT_SIG_N, // 2.5V LVDS, may need to be used as 4 separate 2.5V inputs
+    input wire EXT_LVDS_IN_P, // 2.5V LVDS, may need to be used as 4 separate 2.5V inputs
+    input wire EXT_LVDS_IN_N, // 2.5V LVDS, may need to be used as 4 separate 2.5V inputs
 
-    input wire [1:0] CONTROL,   // Galvanically isolated user-inputs via LEMO (Labelled TTL0/1)
+    output wire EXT_LVDS_OUT_P, // 2.5V LVDS, may need to be used as 4 separate 2.5V inputs
+    output wire EXT_LVDS_OUT_N, // 2.5V LVDS, may need to be used as 4 separate 2.5V inputs
+
+    input wire [1:0] TTL_INPUT,   // Galvanically isolated user-inputs via LEMO (Labelled TTL0/1)
 
     // LMK04816 clock cleaner pins
     output wire LMK_UWIRE_CLK,
@@ -49,11 +52,6 @@ module system_top
     // input wire TACH3, // PS_MIO44
     // input wire TACH2, // PS_MIO42
     // input wire TACH1, // PS_MIO43
-
-    // Inputs from clock cleaner, same freq, but can be delayed relative to each other
-    // LMK04816 CLK_OUT1/0 -> SOM_IN_CLK0/1
-    input wire [1:0] SOM_IN_CLK_P,
-    input wire [1:0] SOM_IN_CLK_N,
 
     // LEMO NIM Inputs, Labelled NIM0/1
     input wire [1:0] LVDS_NIM_P,
@@ -157,9 +155,8 @@ localparam CNV_CLOCK_PERIOD = 4;
 
 reg [31:0] valid_count;
 
-wire [1:0] lvds_nim;
-wire [2:1] ext_sig;
-wire [1:0] som_in_clk;
+wire [1:0] nim_input;
+// wire [2:1] ext_sig;
 wire rx_ti_sync;
 wire clnr_osc;
 wire fpga_clk250_td;
@@ -239,13 +236,14 @@ wire [16:1] genoutp;
 wire [NUM_ADC_CH-1:0][15:0] bad_dco_counter;
 wire [NUM_ADC_CH-1:0][15:0] bad_data_counter;
 
+wire ext_lvds_out;
+wire ext_lvds_in;
 
+wire [3:0] led_output;
 
-assign ext_sig[1] = genoutp[3];
-assign ext_sig[2] = genoutp[2];
+// assign ext_sig[1] = genoutp[3];
+// assign ext_sig[2] = genoutp[2];
 
-assign EXT_SIG_P = ext_sig;
-assign EXT_SIG_N = 2'b00;
 
 assign I2C_SCL_PL = 1'bZ;
 assign I2C_SDA_PL = 1'bZ;
@@ -265,6 +263,9 @@ assign DATA_ModSELn = 1'bZ;
 
 assign ADC_CNVT_SEL = 1'b1;
 
+
+assign LED_DSP = (SW1[2]) ? led_output : { TTL_INPUT, nim_input };
+
 // Conversion Enable signal to ADCs
 OBUFDS diff_som_out_cnv_a	(	.I(adc_convert),	    .O(SOM_OUT_CNVA_P),	.OB(SOM_OUT_CNVA_N)	);
 OBUFDS diff_som_out_cnv_b	(	.I(adc_convert),  	    .O(SOM_OUT_CNVB_P),	.OB(SOM_OUT_CNVB_N)	);
@@ -282,22 +283,21 @@ end
 endgenerate
 
 // Various Inputs
-IBUFDS diff_lvds_nim0       (	.O(lvds_nim[0]),	    .I(LVDS_NIM_P[0]),      .IB(LVDS_NIM_N[0]) );
-IBUFDS diff_lvds_nim1       (	.O(lvds_nim[1]),	    .I(LVDS_NIM_P[1]),      .IB(LVDS_NIM_N[1]) );
+IBUFDS diff_lvds_nim0       (	.O(nim_input[0]),	    .I(LVDS_NIM_P[0]),      .IB(LVDS_NIM_N[0]) );
+IBUFDS diff_lvds_nim1       (	.O(nim_input[1]),	    .I(LVDS_NIM_P[1]),      .IB(LVDS_NIM_N[1]) );
 IBUFDS diff_rx_ti_sync      (	.O(rx_ti_sync),	        .I(RX_TI_SYNC_P),       .IB(RX_TI_SYNC_N) );
-IBUFDS diff_clnr_osc        (	.O(clnr_osc),	        .I(CLNR_OSC_P),         .IB(CLNR_OSC_N) );          // 100 MHz VCXO
-IBUFDS diff_fpga_250_td     (	.O(fpga_clk250_td),	    .I(FPGA_CLK250_TD_P),   .IB(FPGA_CLK250_TD_N) );    // Cleaner CLK_OUT10
+IBUFDS diff_clnr_osc        (	.O(clnr_osc),	        .I(CLNR_OSC_P),         .IB(CLNR_OSC_N) );        // 100 MHz VCXO
+IBUFDS diff_fpga_250_td     (	.O(fpga_clk250_td),	    .I(FPGA_CLK250_TD_P),   .IB(FPGA_CLK250_TD_N) );  // Cleaner CLK_OUT10
 
-// OBUFDS diff_ext_sig1        (	.I(ext_sig[1]),	        .O(EXT_SIG_P[1]),       .OB(EXT_SIG_N[1]) );        // LVDS 2.5 voltage
-// OBUFDS diff_ext_sig2        (	.I(ext_sig[2]),	        .O(EXT_SIG_P[2]),       .OB(EXT_SIG_N[2]) );        // LVDS 2.5 voltage
-
-IBUFDS diff_som_in_clk0     (	.O(som_in_clk[0]),	    .I(SOM_IN_CLK_P[0]),    .IB(SOM_IN_CLK_N[0]) );     // Cleaner CLK_OUT1
-IBUFDS diff_som_in_clk1     (	.O(som_in_clk[1]),	    .I(SOM_IN_CLK_P[1]),    .IB(SOM_IN_CLK_N[1]) );     // Cleaner CLK_OUT0
+assign EXT_LVDS_OUT_P = EXT_LVDS_IN_P;
+assign EXT_LVDS_OUT_N = EXT_LVDS_IN_N;
+//IBUFDS diff_ext_lvds_in     (	.O(ext_lvds_in),	    .I(EXT_LVDS_IN_P),      .IB(EXT_LVDS_IN_N) );     // LVDS 2.5 voltage
+//OBUFDS diff_ext_lvds_out    (	.I(ext_lvds_out),	    .O(EXT_LVDS_OUT_P),     .OB(EXT_LVDS_OUT_N) );    // LVDS 2.5 voltage
+// assign ext_lvds_out = ext_lvds_in;
 
 subsystem_clock clock_subsystem (
     .clk_osc_100( clnr_osc ), // oscillator 100MHz
     .clk_cc_250( fpga_clk250_td ), // clock cleaner 250 MHz output (TD_250)
-    .clk_cc_som( som_in_clk ),
 
     .soc_ready( soc_ready ),
     .cc_locked( LMK_STAT_HOLDOVER ),
@@ -328,7 +328,7 @@ subsystem_led #(
     .clk( clk ),
     .rst( rst ),
     .led_in( {LMK_STAT_LD, LMK_STAT_HOLDOVER, ctrl_adc_testpat, adc_ready} ), // LED position order: top, middle top, middle bottom, bottom
-    .led_out( LED_DSP ),
+    .led_out( led_output ),
     .ready( led_ready )
 );
 
@@ -384,7 +384,7 @@ subsystem_stream stream_subsystem (
     .data(adc_data),
     .valid(adc_data_valid),
     .timestamp( ts_data ),
-    .block( {CONTROL, 1'b0} ),
+    .block( {TTL_INPUT, 1'b0} ),
     .ena( stream_ena ),
 
     .ch0_sel( stream_ch0 ),
@@ -407,7 +407,7 @@ subsystem_capture #(
     .rst( rst ),
 
     .ena( 1'b1 ),
-    .start( {|CONTROL} ),
+    .start( {|TTL_INPUT} ),
 
     .in_timestamp( ts_data ),
     .sample_valid( adc_data_valid ),

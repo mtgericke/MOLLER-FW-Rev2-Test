@@ -54,19 +54,14 @@ set_property -dict {PACKAGE_PIN A13 IOSTANDARD LVCMOS33} [get_ports {LED_DSP[2]}
 set_property -dict {PACKAGE_PIN H14 IOSTANDARD LVCMOS33} [get_ports {LED_DSP[1]}]
 set_property -dict {PACKAGE_PIN H13 IOSTANDARD LVCMOS33} [get_ports {LED_DSP[0]}]
 
-# Incompatible with LVDS, in HD bank
-# set_property -dict {PACKAGE_PIN G10 IOSTANDARD LVDS_25} [get_ports {EXT_SIG_P[2]}]
-# set_property -dict {PACKAGE_PIN F10 IOSTANDARD LVDS_25} [get_ports {EXT_SIG_N[2]}]
-# set_property -dict {PACKAGE_PIN H12 IOSTANDARD LVDS_25} [get_ports {EXT_SIG_P[1]}]
-# set_property -dict {PACKAGE_PIN G11 IOSTANDARD LVDS_25} [get_ports {EXT_SIG_N[1]}
+# Incompatible with normal LVDS, in HD bank
+set_property -dict {PACKAGE_PIN G10 IOSTANDARD LVCMOS25} [get_ports {EXT_LVDS_IN_P}]
+set_property -dict {PACKAGE_PIN F10 IOSTANDARD LVCMOS25} [get_ports {EXT_LVDS_IN_N}]
+set_property -dict {PACKAGE_PIN H12 IOSTANDARD LVCMOS25} [get_ports {EXT_LVDS_OUT_P}]
+set_property -dict {PACKAGE_PIN G11 IOSTANDARD LVCMOS25} [get_ports {EXT_LVDS_OUT_N}]
 
-set_property -dict {PACKAGE_PIN G10 IOSTANDARD LVCMOS25} [get_ports {EXT_SIG_P[2]}]
-set_property -dict {PACKAGE_PIN F10 IOSTANDARD LVCMOS25} [get_ports {EXT_SIG_N[2]}]
-set_property -dict {PACKAGE_PIN H12 IOSTANDARD LVCMOS25} [get_ports {EXT_SIG_P[1]}]
-set_property -dict {PACKAGE_PIN G11 IOSTANDARD LVCMOS25} [get_ports {EXT_SIG_N[1]}]
-
-set_property -dict {PACKAGE_PIN G13 IOSTANDARD LVCMOS33} [get_ports {CONTROL[0]}]
-set_property -dict {PACKAGE_PIN F13 IOSTANDARD LVCMOS33} [get_ports {CONTROL[1]}]
+set_property -dict {PACKAGE_PIN G13 IOSTANDARD LVCMOS33} [get_ports {TTL_INPUT[0]}]
+set_property -dict {PACKAGE_PIN F13 IOSTANDARD LVCMOS33} [get_ports {TTL_INPUT[1]}]
 
 set_property -dict {PACKAGE_PIN F15 IOSTANDARD LVCMOS33} [get_ports {LMK_UWIRE_CLK}]
 set_property -dict {PACKAGE_PIN G15 IOSTANDARD LVCMOS33} [get_ports {LMK_UWIRE_DATA}]
@@ -82,10 +77,9 @@ set_property -dict {PACKAGE_PIN K12 IOSTANDARD LVCMOS25} [get_ports {SEL_TI_MGTn
 set_property -dict {PACKAGE_PIN AH11 IOSTANDARD LVCMOS18} [get_ports {ADC_PDn}]
 
 set_property -dict {PACKAGE_PIN J10 IOSTANDARD LVCMOS25} [get_ports {ADC_CNVT_SEL}]
-# set_property -dict {PACKAGE_PIN J11 IOSTANDARD LVCMOS25} [get_ports {TACH1}]
-# set_property -dict {PACKAGE_PIN H11 IOSTANDARD LVCMOS25} [get_ports {TACH2}]
-# set_property -dict {PACKAGE_PIN J12 IOSTANDARD LVCMOS25} [get_ports {TACH3}]
-
+set_property -dict {PACKAGE_PIN J11 IOSTANDARD LVCMOS25} [get_ports {TACH1}]
+set_property -dict {PACKAGE_PIN H11 IOSTANDARD LVCMOS25} [get_ports {TACH2}]
+set_property -dict {PACKAGE_PIN J12 IOSTANDARD LVCMOS25} [get_ports {TACH3}]
 
 set_property -dict {PACKAGE_PIN W7  IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {ADC_DCO_P[12]}]
 set_property -dict {PACKAGE_PIN W6  IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {ADC_DCO_N[12]}]
@@ -171,11 +165,11 @@ set_property -dict {PACKAGE_PIN AB1 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get
 set_property -dict {PACKAGE_PIN AA3 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {ADC_DA_P[6]}]
 set_property -dict {PACKAGE_PIN AA2 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {ADC_DA_N[6]}]
 
-set_property -dict {PACKAGE_PIN V7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_P[0]}]
-set_property -dict {PACKAGE_PIN V6 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_N[0]}]
+# set_property -dict {PACKAGE_PIN V7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_P[0]}]
+# set_property -dict {PACKAGE_PIN V6 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_N[0]}]
 
-set_property -dict {PACKAGE_PIN AC7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_P[1]}]
-set_property -dict {PACKAGE_PIN AD7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_N[1]}]
+# set_property -dict {PACKAGE_PIN AC7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_P[1]}]
+# set_property -dict {PACKAGE_PIN AD7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_N[1]}]
 
 set_property -dict {PACKAGE_PIN AF10 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {LVDS_NIM_P[0]}]
 set_property -dict {PACKAGE_PIN AG10 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {LVDS_NIM_N[0]}]
