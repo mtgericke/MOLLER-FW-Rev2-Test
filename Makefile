@@ -268,7 +268,6 @@ petalinux-app: ## Build petalinux app only
 sdcard-copy: ## Copy Petalinux to sdcard
 	cp sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot /media/${USER}/${SDCARD_BOOT_LABEL}
 	cp sw/linux/project-spec/configs/extlinux.conf /media/${USER}/${SDCARD_BOOT_LABEL}/extlinux/extlinux.conf
-
 	sync
 	sudo umount /media/${USER}/${SDCARD_BOOT_LABEL}
 	sudo umount /media/${USER}/${SDCARD_ROOTFS_LABEL}

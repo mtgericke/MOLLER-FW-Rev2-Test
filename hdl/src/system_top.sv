@@ -48,10 +48,10 @@ module system_top
     input wire [NUM_ADC_CH:1] ADC_DA_P,
     input wire [NUM_ADC_CH:1] ADC_DA_N,
 
-    // TODO: Future revision should move these to fabric pins
-    // input wire TACH3, // PS_MIO44
-    // input wire TACH2, // PS_MIO42
-    // input wire TACH1, // PS_MIO43
+    // @TODO: Output these for diagnostics
+    input wire TACH3,
+    input wire TACH2,
+    input wire TACH1,
 
     // LEMO NIM Inputs, Labelled NIM0/1
     input wire [1:0] LVDS_NIM_P,
