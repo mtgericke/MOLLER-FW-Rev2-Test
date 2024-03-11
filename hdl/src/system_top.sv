@@ -92,10 +92,18 @@ module system_top
     input wire MGT_B228_REFCLK1_P,
     input wire MGT_B228_REFCLK1_N,
 
+    // SFP
     output wire MGT_B228_TX0_P,
     output wire MGT_B228_TX0_N,
     input wire MGT_B228_RX0_P,
     input wire MGT_B228_RX0_N
+
+    /*
+    output wire MGT_B228_TX1_P,
+    output wire MGT_B228_TX1_N,
+    input wire MGT_B228_RX1_P,
+    input wire MGT_B228_RX1_N
+    */
 
     // input wire MGT_B229_REFCLK1_P,
     // input wire MGT_B229_REFCLK1_N,
@@ -132,10 +140,6 @@ module system_top
     input wire MGT_B229_RX3_N,
 
 
-    output wire MGT_B228_TX1_P,
-    output wire MGT_B228_TX1_N,
-    input wire MGT_B228_RX1_P,
-    input wire MGT_B228_RX1_N,
 
     output wire MGT_B228_TX2_P,
     output wire MGT_B228_TX2_N,
@@ -474,14 +478,24 @@ Mercury_XU1 bd (
     .adc_fifo_tvalid( adc_fifo_tvalid ),
 
     // technically QSFP, but we are using one port
-    .sfp_data_refclk_clk_n(MGT_B228_REFCLK1_N),
-    .sfp_data_refclk_clk_p(MGT_B228_REFCLK1_P),
-    .sfp_data_rx_gt_port_0_n(MGT_B228_RX0_N),
-    .sfp_data_rx_gt_port_0_p(MGT_B228_RX0_P),
-    .sfp_data_tx_gt_port_0_n(MGT_B228_TX0_N),
-    .sfp_data_tx_gt_port_0_p(MGT_B228_TX0_P),
-    .sfp_reset(~LMK_STAT_LD),
+    .sfp_refclk_clk_n(MGT_B228_REFCLK1_N),
+    .sfp_refclk_clk_p(MGT_B228_REFCLK1_P),
 
+    /*
+    .sfp_data_rx_gt_port_0_n(MGT_B228_RX1_N),
+    .sfp_data_rx_gt_port_0_p(MGT_B228_RX1_P),
+    .sfp_data_tx_gt_port_0_n(MGT_B228_TX1_N),
+    .sfp_data_tx_gt_port_0_p(MGT_B228_TX1_P),
+    */
+
+    .sfp_gem_rxn(MGT_B228_RX0_N),
+    .sfp_gem_rxp(MGT_B228_RX0_P),
+    .sfp_gem_txn(MGT_B228_TX0_N),
+    .sfp_gem_txp(MGT_B228_TX0_P),
+
+    .PHY_RESET(rst),
+    /*
+    .sfp_reset(~LMK_STAT_LD),
     // Comblock 10g UDP client input stream
     .udp_tx_ack(),
     .udp_tx_cts(),
@@ -491,6 +505,7 @@ Mercury_XU1 bd (
     .udp_tx_nak(),
     .udp_tx_sof(1'b0),
     .udp_tx_clk(clk_udp_tx),
+    */
 
     // Moved to internal regmap control
     //.udp_tx_dest_ip_addr(128'h00000000c0a80164), // 0xc0a80164 = 192.168.1.100

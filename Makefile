@@ -266,6 +266,7 @@ petalinux-app: ## Build petalinux app only
 	bash -l -c "cd /home/xil/sw/linux; petalinux-build -c moller"
 
 sdcard-copy: ## Copy Petalinux to sdcard
+	mkdir -p /media/${USER}/${SDCARD_BOOT_LABEL}/extlinux
 	cp sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot /media/${USER}/${SDCARD_BOOT_LABEL}
 	cp sw/linux/project-spec/configs/extlinux.conf /media/${USER}/${SDCARD_BOOT_LABEL}/extlinux/extlinux.conf
 	sync
@@ -278,6 +279,7 @@ create-zip: ## Make a zip of the required files
 	zip ../../../../moller_$(shell date +%Y%m%d).zip BOOT.BIN extlinux.conf Image rootfs.cpio.gz.u-boot
 
 unzip-to-sdcard:
+	mkdir -p /media/${USER}/${SDCARD_BOOT_LABEL}/extlinux
 	unzip -p ${SDCARD_ZIP} BOOT.BIN >/media/${USER}/${SDCARD_BOOT_LABEL}/BOOT.BIN
 	unzip -p ${SDCARD_ZIP} extlinux.conf >/media/${USER}/${SDCARD_BOOT_LABEL}/extlinux/extlinux.conf
 	unzip -p ${SDCARD_ZIP} Image >/media/${USER}/${SDCARD_BOOT_LABEL}/Image

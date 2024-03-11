@@ -9,7 +9,7 @@ if {[file exists scripts/settings.tcl] } { source scripts/settings.tcl }
 if {![info exists vivado_dir]} { set vivado_dir "Vivado/${module_name}" }
 
 # Create project
-create_project ${project_name} ${vivado_dir} -part ${part}
+create_project ${project_name} ${vivado_dir} -force -part ${part}
 
 # Set project directory
 set proj_dir [get_property directory [current_project]]

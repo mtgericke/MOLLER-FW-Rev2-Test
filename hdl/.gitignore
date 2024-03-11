@@ -111,15 +111,6 @@ src/bd/Mercury_XU1/Mercury_XU1.bxml
 # Keep the block diagram itself
 !src/bd/Mercury_XU1/Mercury_XU1.bd
 
-src/moller_gth/ip/moller_gth/*
-!src/moller_gth/ip/moller_gth/moller_gth.xci
-
-src/moller_gth/ip/moller_gth_in_system_ibert_0/*
-!src/moller_gth/ip/moller_gth_in_system_ibert_0/moller_gth_in_system_ibert_0.xci
-
-src/moller_gth/ip/moller_gth_vio_0/*
-!src/moller_gth/ip/moller_gth_vio_0/moller_gth_vio_0.xci
-
 # Gitkeep files should stay
 !.gitkeep
 

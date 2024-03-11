@@ -311,4 +311,3 @@ set_property -dict {PACKAGE_PIN R3} [get_ports {MGT_B228_RX0_N}]
 
 # Fix for IDELAY blocks in moller TI causing issue with fixed IDELAY blocks in ADC subsystem
 set_property UNAVAILABLE_DURING_CALIBRATION TRUE [get_ports ADC_DB_P[16]]
-

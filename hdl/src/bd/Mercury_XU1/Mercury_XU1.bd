@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x95537910FEECCA0F",
+      "boundary_crc": "0xF954924363EF58BD",
       "device": "xczu6cg-ffvc900-1-e",
       "name": "Mercury_XU1",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
@@ -23,23 +23,17 @@
       "axcache_coherent": "",
       "axprot_unsecure": "",
       "smartconnect_1": "",
-      "xxv_ethernet_0": "",
-      "tx_config": "",
-      "rx_config": "",
-      "testmode": "",
-      "zero": "",
-      "clksel": "",
-      "xlconstant_2": "",
-      "COM5501_0": "",
-      "xlconstant_3": "",
-      "util_vector_logic_0": "",
       "ti_zero": "",
-      "mollerTI_0": "",
-      "tcp_udp_client_0": "",
-      "xlconcat_0": "",
-      "xlconstant_1": "",
       "moller_regmap": "",
-      "xlconstant_4": ""
+      "xlconstant_5": "",
+      "xlconstant_8": "",
+      "xlconstant_9": "",
+      "xlslice_0": "",
+      "xlconstant_6": "",
+      "xlconstant_7": "",
+      "gig_ethernet_pcs_pma_0": "",
+      "mollerTI_0": "",
+      "util_vector_logic_0": ""
     },
     "interface_ports": {
       "run_fifo": {
@@ -138,7 +132,7 @@
           }
         }
       },
-      "sfp_data_refclk": {
+      "sfp_refclk": {
         "mode": "Slave",
         "vlnv": "xilinx.com:interface:diff_clock_rtl:1.0",
         "parameters": {
@@ -151,13 +145,9 @@
           }
         }
       },
-      "sfp_data_rx": {
-        "mode": "Slave",
-        "vlnv": "xilinx.com:display_xxv_ethernet:gt_ports:2.0"
-      },
-      "sfp_data_tx": {
+      "sfp_gem": {
         "mode": "Master",
-        "vlnv": "xilinx.com:display_xxv_ethernet:gt_ports:2.0"
+        "vlnv": "xilinx.com:interface:sfp_rtl:1.0"
       }
     },
     "ports": {
@@ -361,76 +351,6 @@
         "left": "143",
         "right": "0"
       },
-      "sfp_reset": {
-        "type": "rst",
-        "direction": "I",
-        "parameters": {
-          "INSERT_VIP": {
-            "value": "0",
-            "value_src": "default"
-          },
-          "POLARITY": {
-            "value": "ACTIVE_HIGH"
-          }
-        }
-      },
-      "udp_tx_nak": {
-        "direction": "O"
-      },
-      "udp_tx_dest_ipv4_6n": {
-        "direction": "I"
-      },
-      "udp_tx_eof": {
-        "direction": "I"
-      },
-      "udp_tx_sof": {
-        "direction": "I"
-      },
-      "udp_tx_data_valid": {
-        "direction": "I",
-        "left": "7",
-        "right": "0"
-      },
-      "udp_tx_ack": {
-        "direction": "O"
-      },
-      "udp_tx_data": {
-        "direction": "I",
-        "left": "63",
-        "right": "0"
-      },
-      "udp_tx_cts": {
-        "direction": "O"
-      },
-      "udp_tx_clk": {
-        "type": "clk",
-        "direction": "O",
-        "parameters": {
-          "ASSOCIATED_RESET": {
-            "value": "sfp_reset"
-          },
-          "CLK_DOMAIN": {
-            "value": "Mercury_XU1_xxv_ethernet_0_0_tx_mii_clk_0",
-            "value_src": "default_prop"
-          },
-          "FREQ_HZ": {
-            "value": "156250000",
-            "value_src": "user_prop"
-          },
-          "FREQ_TOLERANCE_HZ": {
-            "value": "0",
-            "value_src": "default"
-          },
-          "INSERT_VIP": {
-            "value": "0",
-            "value_src": "default"
-          },
-          "PHASE": {
-            "value": "0",
-            "value_src": "user_prop"
-          }
-        }
-      },
       "TCSOUT": {
         "direction": "O",
         "left": "16",
@@ -468,6 +388,21 @@
         "direction": "O",
         "left": "0",
         "right": "0"
+      },
+      "PHY_RESET": {
+        "direction": "I",
+        "left": "0",
+        "right": "0",
+        "parameters": {
+          "PortType": {
+            "value": "undef",
+            "value_src": "ip_prop"
+          },
+          "PortType.PROP_SRC": {
+            "value": "false",
+            "value_src": "ip_prop"
+          }
+        }
       }
     },
     "components": {
@@ -969,11 +904,20 @@
           "PSU_MIO_44_SLEW": {
             "value": "fast"
           },
+          "PSU_MIO_45_DRIVE_STRENGTH": {
+            "value": "12"
+          },
           "PSU_MIO_45_INPUT_TYPE": {
             "value": "cmos"
           },
+          "PSU_MIO_45_POLARITY": {
+            "value": "Default"
+          },
           "PSU_MIO_45_PULLUPDOWN": {
             "value": "pullup"
+          },
+          "PSU_MIO_45_SLEW": {
+            "value": "fast"
           },
           "PSU_MIO_46_DRIVE_STRENGTH": {
             "value": "12"
@@ -1354,10 +1298,10 @@
             "value": "fast"
           },
           "PSU_MIO_TREE_PERIPHERALS": {
-            "value": "Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Feedback Clk####I2C 0#I2C 0##SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0####Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#UART 0#UART 0#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#SD 1#SD 1#SD 1#SD 1#SD 1#SD 1#SD 1#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#MDIO 0#MDIO 0"
+            "value": "Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Feedback Clk####I2C 0#I2C 0##SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0####Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#UART 0#UART 0#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#SD 1#SD 1#SD 1#SD 1#SD 1#SD 1#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#MDIO 0#MDIO 0"
           },
           "PSU_MIO_TREE_SIGNALS": {
-            "value": "sclk_out#miso_mo1#mo2#mo3#mosi_mi0#n_ss_out#clk_for_lpbk####scl_out#sda_out##sdio0_data_out[0]#sdio0_data_out[1]#sdio0_data_out[2]#sdio0_data_out[3]#sdio0_data_out[4]#sdio0_data_out[5]#sdio0_data_out[6]#sdio0_data_out[7]#sdio0_cmd_out#sdio0_clk_out####rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#rxd#txd#gpio1[40]#gpio1[41]#gpio1[42]#gpio1[43]#gpio1[44]#sdio1_cd_n#sdio1_data_out[0]#sdio1_data_out[1]#sdio1_data_out[2]#sdio1_data_out[3]#sdio1_cmd_out#sdio1_clk_out#ulpi_clk_in#ulpi_dir#ulpi_tx_data[2]#ulpi_nxt#ulpi_tx_data[0]#ulpi_tx_data[1]#ulpi_stp#ulpi_tx_data[3]#ulpi_tx_data[4]#ulpi_tx_data[5]#ulpi_tx_data[6]#ulpi_tx_data[7]#rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#gem0_mdc#gem0_mdio_out"
+            "value": "sclk_out#miso_mo1#mo2#mo3#mosi_mi0#n_ss_out#clk_for_lpbk####scl_out#sda_out##sdio0_data_out[0]#sdio0_data_out[1]#sdio0_data_out[2]#sdio0_data_out[3]#sdio0_data_out[4]#sdio0_data_out[5]#sdio0_data_out[6]#sdio0_data_out[7]#sdio0_cmd_out#sdio0_clk_out####rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#rxd#txd#gpio1[40]#gpio1[41]#gpio1[42]#gpio1[43]#gpio1[44]#gpio1[45]#sdio1_data_out[0]#sdio1_data_out[1]#sdio1_data_out[2]#sdio1_data_out[3]#sdio1_cmd_out#sdio1_clk_out#ulpi_clk_in#ulpi_dir#ulpi_tx_data[2]#ulpi_nxt#ulpi_tx_data[0]#ulpi_tx_data[1]#ulpi_stp#ulpi_tx_data[3]#ulpi_tx_data[4]#ulpi_tx_data[5]#ulpi_tx_data[6]#ulpi_tx_data[7]#rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#gem0_mdc#gem0_mdio_out"
           },
           "PSU_SD0_INTERNAL_BUS_WIDTH": {
             "value": "8"
@@ -2274,7 +2218,22 @@
           "PSU__ENET0__TSU__ENABLE": {
             "value": "0"
           },
+          "PSU__ENET1__FIFO__ENABLE": {
+            "value": "0"
+          },
+          "PSU__ENET1__GRP_MDIO__ENABLE": {
+            "value": "1"
+          },
+          "PSU__ENET1__GRP_MDIO__IO": {
+            "value": "EMIO"
+          },
           "PSU__ENET1__PERIPHERAL__ENABLE": {
+            "value": "1"
+          },
+          "PSU__ENET1__PERIPHERAL__IO": {
+            "value": "EMIO"
+          },
+          "PSU__ENET1__PTP__ENABLE": {
             "value": "0"
           },
           "PSU__ENET2__PERIPHERAL__ENABLE": {
@@ -2379,6 +2338,12 @@
           "PSU__GEM0_ROUTE_THROUGH_FPD": {
             "value": "0"
           },
+          "PSU__GEM1_COHERENCY": {
+            "value": "0"
+          },
+          "PSU__GEM1_ROUTE_THROUGH_FPD": {
+            "value": "0"
+          },
           "PSU__GEM3_COHERENCY": {
             "value": "0"
           },
@@ -2434,10 +2399,13 @@
             "value": "0"
           },
           "PSU__GPIO_EMIO_WIDTH": {
-            "value": "1"
+            "value": "95"
           },
           "PSU__GPIO_EMIO__PERIPHERAL__ENABLE": {
-            "value": "0"
+            "value": "1"
+          },
+          "PSU__GPIO_EMIO__PERIPHERAL__IO": {
+            "value": "95"
           },
           "PSU__GPIO_EMIO__WIDTH": {
             "value": "[94:0]"
@@ -2848,7 +2816,7 @@
             "value": "SA:0xFF980000; SIZE:64; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware| SA:0xFF5E0000; SIZE:2560; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware| SA:0xFFCC0000; SIZE:64; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware| SA:0xFF180000; SIZE:768; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware| SA:0xFF410000; SIZE:640; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware| SA:0xFFA70000; SIZE:64; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware| SA:0xFF9A0000; SIZE:64; UNIT:KB; RegionTZ:Secure; WrAllowed:Read/Write; subsystemId:PMU Firmware|SA:0xFF5E0000 ; SIZE:2560; UNIT:KB; RegionTZ:Secure ; WrAllowed:Read/Write; subsystemId:Secure Subsystem|SA:0xFFCC0000 ; SIZE:64; UNIT:KB; RegionTZ:Secure ; WrAllowed:Read/Write; subsystemId:Secure Subsystem|SA:0xFF180000 ; SIZE:768; UNIT:KB; RegionTZ:Secure ; WrAllowed:Read/Write; subsystemId:Secure Subsystem|SA:0xFF9A0000 ; SIZE:64; UNIT:KB; RegionTZ:Secure ; WrAllowed:Read/Write; subsystemId:Secure Subsystem"
           },
           "PSU__PROTECTION__MASTERS": {
-            "value": "USB1:NonSecure;0|USB0:NonSecure;1|S_AXI_LPD:NA;0|S_AXI_HPC1_FPD:NA;0|S_AXI_HPC0_FPD:NA;1|S_AXI_HP3_FPD:NA;0|S_AXI_HP2_FPD:NA;0|S_AXI_HP1_FPD:NA;0|S_AXI_HP0_FPD:NA;0|S_AXI_ACP:NA;0|S_AXI_ACE:NA;0|SD1:NonSecure;1|SD0:NonSecure;1|SATA1:NonSecure;0|SATA0:NonSecure;0|RPU1:Secure;1|RPU0:Secure;1|QSPI:NonSecure;1|PMU:NA;1|PCIe:NonSecure;0|NAND:NonSecure;0|LDMA:NonSecure;1|GPU:NonSecure;1|GEM3:NonSecure;1|GEM2:NonSecure;0|GEM1:NonSecure;0|GEM0:NonSecure;1|FDMA:NonSecure;1|DP:NonSecure;0|DAP:NA;1|Coresight:NA;1|CSU:NA;1|APU:NA;1"
+            "value": "USB1:NonSecure;0|USB0:NonSecure;1|S_AXI_LPD:NA;0|S_AXI_HPC1_FPD:NA;0|S_AXI_HPC0_FPD:NA;1|S_AXI_HP3_FPD:NA;0|S_AXI_HP2_FPD:NA;0|S_AXI_HP1_FPD:NA;0|S_AXI_HP0_FPD:NA;0|S_AXI_ACP:NA;0|S_AXI_ACE:NA;0|SD1:NonSecure;1|SD0:NonSecure;1|SATA1:NonSecure;0|SATA0:NonSecure;0|RPU1:Secure;1|RPU0:Secure;1|QSPI:NonSecure;1|PMU:NA;1|PCIe:NonSecure;0|NAND:NonSecure;0|LDMA:NonSecure;1|GPU:NonSecure;1|GEM3:NonSecure;1|GEM2:NonSecure;0|GEM1:NonSecure;1|GEM0:NonSecure;1|FDMA:NonSecure;1|DP:NonSecure;0|DAP:NA;1|Coresight:NA;1|CSU:NA;1|APU:NA;1"
           },
           "PSU__PROTECTION__MASTERS_TZ": {
             "value": "GEM0:NonSecure|SD1:NonSecure|GEM2:NonSecure|GEM1:NonSecure|GEM3:NonSecure|PCIe:NonSecure|DP:NonSecure|NAND:NonSecure|GPU:NonSecure|USB1:NonSecure|USB0:NonSecure|LDMA:NonSecure|FDMA:NonSecure|QSPI:NonSecure|SD0:NonSecure"
@@ -2860,7 +2828,7 @@
             "value": "NONE"
           },
           "PSU__PROTECTION__SLAVES": {
-            "value": "LPD;USB3_1_XHCI;FE300000;FE3FFFFF;0|LPD;USB3_1;FF9E0000;FF9EFFFF;0|LPD;USB3_0_XHCI;FE200000;FE2FFFFF;1|LPD;USB3_0;FF9D0000;FF9DFFFF;1|LPD;UART1;FF010000;FF01FFFF;0|LPD;UART0;FF000000;FF00FFFF;1|LPD;TTC3;FF140000;FF14FFFF;0|LPD;TTC2;FF130000;FF13FFFF;0|LPD;TTC1;FF120000;FF12FFFF;0|LPD;TTC0;FF110000;FF11FFFF;1|FPD;SWDT1;FD4D0000;FD4DFFFF;0|LPD;SWDT0;FF150000;FF15FFFF;0|LPD;SPI1;FF050000;FF05FFFF;0|LPD;SPI0;FF040000;FF04FFFF;0|FPD;SMMU_REG;FD5F0000;FD5FFFFF;1|FPD;SMMU;FD800000;FDFFFFFF;1|FPD;SIOU;FD3D0000;FD3DFFFF;1|FPD;SERDES;FD400000;FD47FFFF;1|LPD;SD1;FF170000;FF17FFFF;1|LPD;SD0;FF160000;FF16FFFF;1|FPD;SATA;FD0C0000;FD0CFFFF;0|LPD;RTC;FFA60000;FFA6FFFF;1|LPD;RSA_CORE;FFCE0000;FFCEFFFF;1|LPD;RPU;FF9A0000;FF9AFFFF;1|LPD;R5_TCM_RAM_GLOBAL;FFE00000;FFE3FFFF;1|LPD;R5_1_Instruction_Cache;FFEC0000;FFECFFFF;1|LPD;R5_1_Data_Cache;FFED0000;FFEDFFFF;1|LPD;R5_1_BTCM_GLOBAL;FFEB0000;FFEBFFFF;1|LPD;R5_1_ATCM_GLOBAL;FFE90000;FFE9FFFF;1|LPD;R5_0_Instruction_Cache;FFE40000;FFE4FFFF;1|LPD;R5_0_Data_Cache;FFE50000;FFE5FFFF;1|LPD;R5_0_BTCM_GLOBAL;FFE20000;FFE2FFFF;1|LPD;R5_0_ATCM_GLOBAL;FFE00000;FFE0FFFF;1|LPD;QSPI_Linear_Address;C0000000;DFFFFFFF;1|LPD;QSPI;FF0F0000;FF0FFFFF;1|LPD;PMU_RAM;FFDC0000;FFDDFFFF;1|LPD;PMU_GLOBAL;FFD80000;FFDBFFFF;1|FPD;PCIE_MAIN;FD0E0000;FD0EFFFF;0|FPD;PCIE_LOW;E0000000;EFFFFFFF;0|FPD;PCIE_HIGH2;8000000000;BFFFFFFFFF;0|FPD;PCIE_HIGH1;600000000;7FFFFFFFF;0|FPD;PCIE_DMA;FD0F0000;FD0FFFFF;0|FPD;PCIE_ATTRIB;FD480000;FD48FFFF;0|LPD;OCM_XMPU_CFG;FFA70000;FFA7FFFF;1|LPD;OCM_SLCR;FF960000;FF96FFFF;1|OCM;OCM;FFFC0000;FFFFFFFF;1|LPD;NAND;FF100000;FF10FFFF;0|LPD;MBISTJTAG;FFCF0000;FFCFFFFF;1|LPD;LPD_XPPU_SINK;FF9C0000;FF9CFFFF;1|LPD;LPD_XPPU;FF980000;FF98FFFF;1|LPD;LPD_SLCR_SECURE;FF4B0000;FF4DFFFF;1|LPD;LPD_SLCR;FF410000;FF4AFFFF;1|LPD;LPD_GPV;FE100000;FE1FFFFF;1|LPD;LPD_DMA_7;FFAF0000;FFAFFFFF;1|LPD;LPD_DMA_6;FFAE0000;FFAEFFFF;1|LPD;LPD_DMA_5;FFAD0000;FFADFFFF;1|LPD;LPD_DMA_4;FFAC0000;FFACFFFF;1|LPD;LPD_DMA_3;FFAB0000;FFABFFFF;1|LPD;LPD_DMA_2;FFAA0000;FFAAFFFF;1|LPD;LPD_DMA_1;FFA90000;FFA9FFFF;1|LPD;LPD_DMA_0;FFA80000;FFA8FFFF;1|LPD;IPI_CTRL;FF380000;FF3FFFFF;1|LPD;IOU_SLCR;FF180000;FF23FFFF;1|LPD;IOU_SECURE_SLCR;FF240000;FF24FFFF;1|LPD;IOU_SCNTRS;FF260000;FF26FFFF;1|LPD;IOU_SCNTR;FF250000;FF25FFFF;1|LPD;IOU_GPV;FE000000;FE0FFFFF;1|LPD;I2C1;FF030000;FF03FFFF;0|LPD;I2C0;FF020000;FF02FFFF;1|FPD;GPU;FD4B0000;FD4BFFFF;0|LPD;GPIO;FF0A0000;FF0AFFFF;1|LPD;GEM3;FF0E0000;FF0EFFFF;1|LPD;GEM2;FF0D0000;FF0DFFFF;0|LPD;GEM1;FF0C0000;FF0CFFFF;0|LPD;GEM0;FF0B0000;FF0BFFFF;1|FPD;FPD_XMPU_SINK;FD4F0000;FD4FFFFF;1|FPD;FPD_XMPU_CFG;FD5D0000;FD5DFFFF;1|FPD;FPD_SLCR_SECURE;FD690000;FD6CFFFF;1|FPD;FPD_SLCR;FD610000;FD68FFFF;1|FPD;FPD_DMA_CH7;FD570000;FD57FFFF;1|FPD;FPD_DMA_CH6;FD560000;FD56FFFF;1|FPD;FPD_DMA_CH5;FD550000;FD55FFFF;1|FPD;FPD_DMA_CH4;FD540000;FD54FFFF;1|FPD;FPD_DMA_CH3;FD530000;FD53FFFF;1|FPD;FPD_DMA_CH2;FD520000;FD52FFFF;1|FPD;FPD_DMA_CH1;FD510000;FD51FFFF;1|FPD;FPD_DMA_CH0;FD500000;FD50FFFF;1|LPD;EFUSE;FFCC0000;FFCCFFFF;1|FPD;Display Port;FD4A0000;FD4AFFFF;0|FPD;DPDMA;FD4C0000;FD4CFFFF;0|FPD;DDR_XMPU5_CFG;FD050000;FD05FFFF;1|FPD;DDR_XMPU4_CFG;FD040000;FD04FFFF;1|FPD;DDR_XMPU3_CFG;FD030000;FD03FFFF;1|FPD;DDR_XMPU2_CFG;FD020000;FD02FFFF;1|FPD;DDR_XMPU1_CFG;FD010000;FD01FFFF;1|FPD;DDR_XMPU0_CFG;FD000000;FD00FFFF;1|FPD;DDR_QOS_CTRL;FD090000;FD09FFFF;1|FPD;DDR_PHY;FD080000;FD08FFFF;1|DDR;DDR_LOW;0;7FFFFFFF;1|DDR;DDR_HIGH;800000000;800000000;0|FPD;DDDR_CTRL;FD070000;FD070FFF;1|LPD;Coresight;FE800000;FEFFFFFF;1|LPD;CSU_DMA;FFC80000;FFC9FFFF;1|LPD;CSU;FFCA0000;FFCAFFFF;1|LPD;CRL_APB;FF5E0000;FF85FFFF;1|FPD;CRF_APB;FD1A0000;FD2DFFFF;1|FPD;CCI_REG;FD5E0000;FD5EFFFF;1|LPD;CAN1;FF070000;FF07FFFF;0|LPD;CAN0;FF060000;FF06FFFF;0|FPD;APU;FD5C0000;FD5CFFFF;1|LPD;APM_INTC_IOU;FFA20000;FFA2FFFF;1|LPD;APM_FPD_LPD;FFA30000;FFA3FFFF;1|FPD;APM_5;FD490000;FD49FFFF;1|FPD;APM_0;FD0B0000;FD0BFFFF;1|LPD;APM2;FFA10000;FFA1FFFF;1|LPD;APM1;FFA00000;FFA0FFFF;1|LPD;AMS;FFA50000;FFA5FFFF;1|FPD;AFI_5;FD3B0000;FD3BFFFF;1|FPD;AFI_4;FD3A0000;FD3AFFFF;1|FPD;AFI_3;FD390000;FD39FFFF;1|FPD;AFI_2;FD380000;FD38FFFF;1|FPD;AFI_1;FD370000;FD37FFFF;1|FPD;AFI_0;FD360000;FD36FFFF;1|LPD;AFIFM6;FF9B0000;FF9BFFFF;1|FPD;ACPU_GIC;F9010000;F907FFFF;1"
+            "value": "LPD;USB3_1_XHCI;FE300000;FE3FFFFF;0|LPD;USB3_1;FF9E0000;FF9EFFFF;0|LPD;USB3_0_XHCI;FE200000;FE2FFFFF;1|LPD;USB3_0;FF9D0000;FF9DFFFF;1|LPD;UART1;FF010000;FF01FFFF;0|LPD;UART0;FF000000;FF00FFFF;1|LPD;TTC3;FF140000;FF14FFFF;0|LPD;TTC2;FF130000;FF13FFFF;0|LPD;TTC1;FF120000;FF12FFFF;0|LPD;TTC0;FF110000;FF11FFFF;1|FPD;SWDT1;FD4D0000;FD4DFFFF;0|LPD;SWDT0;FF150000;FF15FFFF;0|LPD;SPI1;FF050000;FF05FFFF;0|LPD;SPI0;FF040000;FF04FFFF;0|FPD;SMMU_REG;FD5F0000;FD5FFFFF;1|FPD;SMMU;FD800000;FDFFFFFF;1|FPD;SIOU;FD3D0000;FD3DFFFF;1|FPD;SERDES;FD400000;FD47FFFF;1|LPD;SD1;FF170000;FF17FFFF;1|LPD;SD0;FF160000;FF16FFFF;1|FPD;SATA;FD0C0000;FD0CFFFF;0|LPD;RTC;FFA60000;FFA6FFFF;1|LPD;RSA_CORE;FFCE0000;FFCEFFFF;1|LPD;RPU;FF9A0000;FF9AFFFF;1|LPD;R5_TCM_RAM_GLOBAL;FFE00000;FFE3FFFF;1|LPD;R5_1_Instruction_Cache;FFEC0000;FFECFFFF;1|LPD;R5_1_Data_Cache;FFED0000;FFEDFFFF;1|LPD;R5_1_BTCM_GLOBAL;FFEB0000;FFEBFFFF;1|LPD;R5_1_ATCM_GLOBAL;FFE90000;FFE9FFFF;1|LPD;R5_0_Instruction_Cache;FFE40000;FFE4FFFF;1|LPD;R5_0_Data_Cache;FFE50000;FFE5FFFF;1|LPD;R5_0_BTCM_GLOBAL;FFE20000;FFE2FFFF;1|LPD;R5_0_ATCM_GLOBAL;FFE00000;FFE0FFFF;1|LPD;QSPI_Linear_Address;C0000000;DFFFFFFF;1|LPD;QSPI;FF0F0000;FF0FFFFF;1|LPD;PMU_RAM;FFDC0000;FFDDFFFF;1|LPD;PMU_GLOBAL;FFD80000;FFDBFFFF;1|FPD;PCIE_MAIN;FD0E0000;FD0EFFFF;0|FPD;PCIE_LOW;E0000000;EFFFFFFF;0|FPD;PCIE_HIGH2;8000000000;BFFFFFFFFF;0|FPD;PCIE_HIGH1;600000000;7FFFFFFFF;0|FPD;PCIE_DMA;FD0F0000;FD0FFFFF;0|FPD;PCIE_ATTRIB;FD480000;FD48FFFF;0|LPD;OCM_XMPU_CFG;FFA70000;FFA7FFFF;1|LPD;OCM_SLCR;FF960000;FF96FFFF;1|OCM;OCM;FFFC0000;FFFFFFFF;1|LPD;NAND;FF100000;FF10FFFF;0|LPD;MBISTJTAG;FFCF0000;FFCFFFFF;1|LPD;LPD_XPPU_SINK;FF9C0000;FF9CFFFF;1|LPD;LPD_XPPU;FF980000;FF98FFFF;1|LPD;LPD_SLCR_SECURE;FF4B0000;FF4DFFFF;1|LPD;LPD_SLCR;FF410000;FF4AFFFF;1|LPD;LPD_GPV;FE100000;FE1FFFFF;1|LPD;LPD_DMA_7;FFAF0000;FFAFFFFF;1|LPD;LPD_DMA_6;FFAE0000;FFAEFFFF;1|LPD;LPD_DMA_5;FFAD0000;FFADFFFF;1|LPD;LPD_DMA_4;FFAC0000;FFACFFFF;1|LPD;LPD_DMA_3;FFAB0000;FFABFFFF;1|LPD;LPD_DMA_2;FFAA0000;FFAAFFFF;1|LPD;LPD_DMA_1;FFA90000;FFA9FFFF;1|LPD;LPD_DMA_0;FFA80000;FFA8FFFF;1|LPD;IPI_CTRL;FF380000;FF3FFFFF;1|LPD;IOU_SLCR;FF180000;FF23FFFF;1|LPD;IOU_SECURE_SLCR;FF240000;FF24FFFF;1|LPD;IOU_SCNTRS;FF260000;FF26FFFF;1|LPD;IOU_SCNTR;FF250000;FF25FFFF;1|LPD;IOU_GPV;FE000000;FE0FFFFF;1|LPD;I2C1;FF030000;FF03FFFF;0|LPD;I2C0;FF020000;FF02FFFF;1|FPD;GPU;FD4B0000;FD4BFFFF;0|LPD;GPIO;FF0A0000;FF0AFFFF;1|LPD;GEM3;FF0E0000;FF0EFFFF;1|LPD;GEM2;FF0D0000;FF0DFFFF;0|LPD;GEM1;FF0C0000;FF0CFFFF;1|LPD;GEM0;FF0B0000;FF0BFFFF;1|FPD;FPD_XMPU_SINK;FD4F0000;FD4FFFFF;1|FPD;FPD_XMPU_CFG;FD5D0000;FD5DFFFF;1|FPD;FPD_SLCR_SECURE;FD690000;FD6CFFFF;1|FPD;FPD_SLCR;FD610000;FD68FFFF;1|FPD;FPD_DMA_CH7;FD570000;FD57FFFF;1|FPD;FPD_DMA_CH6;FD560000;FD56FFFF;1|FPD;FPD_DMA_CH5;FD550000;FD55FFFF;1|FPD;FPD_DMA_CH4;FD540000;FD54FFFF;1|FPD;FPD_DMA_CH3;FD530000;FD53FFFF;1|FPD;FPD_DMA_CH2;FD520000;FD52FFFF;1|FPD;FPD_DMA_CH1;FD510000;FD51FFFF;1|FPD;FPD_DMA_CH0;FD500000;FD50FFFF;1|LPD;EFUSE;FFCC0000;FFCCFFFF;1|FPD;Display Port;FD4A0000;FD4AFFFF;0|FPD;DPDMA;FD4C0000;FD4CFFFF;0|FPD;DDR_XMPU5_CFG;FD050000;FD05FFFF;1|FPD;DDR_XMPU4_CFG;FD040000;FD04FFFF;1|FPD;DDR_XMPU3_CFG;FD030000;FD03FFFF;1|FPD;DDR_XMPU2_CFG;FD020000;FD02FFFF;1|FPD;DDR_XMPU1_CFG;FD010000;FD01FFFF;1|FPD;DDR_XMPU0_CFG;FD000000;FD00FFFF;1|FPD;DDR_QOS_CTRL;FD090000;FD09FFFF;1|FPD;DDR_PHY;FD080000;FD08FFFF;1|DDR;DDR_LOW;0;7FFFFFFF;1|DDR;DDR_HIGH;800000000;800000000;0|FPD;DDDR_CTRL;FD070000;FD070FFF;1|LPD;Coresight;FE800000;FEFFFFFF;1|LPD;CSU_DMA;FFC80000;FFC9FFFF;1|LPD;CSU;FFCA0000;FFCAFFFF;1|LPD;CRL_APB;FF5E0000;FF85FFFF;1|FPD;CRF_APB;FD1A0000;FD2DFFFF;1|FPD;CCI_REG;FD5E0000;FD5EFFFF;1|LPD;CAN1;FF070000;FF07FFFF;0|LPD;CAN0;FF060000;FF06FFFF;0|FPD;APU;FD5C0000;FD5CFFFF;1|LPD;APM_INTC_IOU;FFA20000;FFA2FFFF;1|LPD;APM_FPD_LPD;FFA30000;FFA3FFFF;1|FPD;APM_5;FD490000;FD49FFFF;1|FPD;APM_0;FD0B0000;FD0BFFFF;1|LPD;APM2;FFA10000;FFA1FFFF;1|LPD;APM1;FFA00000;FFA0FFFF;1|LPD;AMS;FFA50000;FFA5FFFF;1|FPD;AFI_5;FD3B0000;FD3BFFFF;1|FPD;AFI_4;FD3A0000;FD3AFFFF;1|FPD;AFI_3;FD390000;FD39FFFF;1|FPD;AFI_2;FD380000;FD38FFFF;1|FPD;AFI_1;FD370000;FD37FFFF;1|FPD;AFI_0;FD360000;FD36FFFF;1|LPD;AFIFM6;FF9B0000;FF9BFFFF;1|FPD;ACPU_GIC;F9010000;F907FFFF;1"
           },
           "PSU__PROTECTION__SUBSYSTEMS": {
             "value": "PMU Firmware:PMU|Secure Subsystem:"
@@ -3844,146 +3812,6 @@
           }
         }
       },
-      "xxv_ethernet_0": {
-        "vlnv": "xilinx.com:ip:xxv_ethernet:3.3",
-        "xci_name": "Mercury_XU1_xxv_ethernet_0_0",
-        "xci_path": "ip/Mercury_XU1_xxv_ethernet_0_0/Mercury_XU1_xxv_ethernet_0_0.xci",
-        "inst_hier_path": "xxv_ethernet_0",
-        "parameters": {
-          "ADD_GT_CNTRL_STS_PORTS": {
-            "value": "0"
-          },
-          "BASE_R_KR": {
-            "value": "BASE-R"
-          },
-          "CORE": {
-            "value": "Ethernet PCS/PMA 64-bit"
-          },
-          "DATA_PATH_INTERFACE": {
-            "value": "MII"
-          },
-          "ENABLE_PIPELINE_REG": {
-            "value": "1"
-          },
-          "ENABLE_TIME_STAMPING": {
-            "value": "0"
-          },
-          "GT_GROUP_SELECT": {
-            "value": "Quad_X1Y3"
-          },
-          "INCLUDE_AXI4_INTERFACE": {
-            "value": "0"
-          },
-          "INCLUDE_SHARED_LOGIC": {
-            "value": "1"
-          },
-          "LANE1_GT_LOC": {
-            "value": "X1Y14"
-          }
-        }
-      },
-      "tx_config": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "Mercury_XU1_xlconstant_1_2",
-        "xci_path": "ip/Mercury_XU1_xlconstant_1_2/Mercury_XU1_xlconstant_1_2.xci",
-        "inst_hier_path": "tx_config",
-        "parameters": {
-          "CONST_VAL": {
-            "value": "0x03"
-          },
-          "CONST_WIDTH": {
-            "value": "8"
-          }
-        }
-      },
-      "rx_config": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "Mercury_XU1_xlconstant_1_3",
-        "xci_path": "ip/Mercury_XU1_xlconstant_1_3/Mercury_XU1_xlconstant_1_3.xci",
-        "inst_hier_path": "rx_config",
-        "parameters": {
-          "CONST_VAL": {
-            "value": "0x0F"
-          },
-          "CONST_WIDTH": {
-            "value": "8"
-          }
-        }
-      },
-      "testmode": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "Mercury_XU1_pd_0",
-        "xci_path": "ip/Mercury_XU1_pd_0/Mercury_XU1_pd_0.xci",
-        "inst_hier_path": "testmode",
-        "parameters": {
-          "CONST_VAL": {
-            "value": "0x00"
-          },
-          "CONST_WIDTH": {
-            "value": "2"
-          }
-        }
-      },
-      "zero": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "Mercury_XU1_testmode_0",
-        "xci_path": "ip/Mercury_XU1_testmode_0/Mercury_XU1_testmode_0.xci",
-        "inst_hier_path": "zero",
-        "parameters": {
-          "CONST_VAL": {
-            "value": "0x00"
-          },
-          "CONST_WIDTH": {
-            "value": "1"
-          }
-        }
-      },
-      "clksel": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "Mercury_XU1_xlconstant_1_4",
-        "xci_path": "ip/Mercury_XU1_xlconstant_1_4/Mercury_XU1_xlconstant_1_4.xci",
-        "inst_hier_path": "clksel",
-        "parameters": {
-          "CONST_VAL": {
-            "value": "0b101"
-          },
-          "CONST_WIDTH": {
-            "value": "3"
-          }
-        }
-      },
-      "xlconstant_2": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "Mercury_XU1_xlconstant_2_0",
-        "xci_path": "ip/Mercury_XU1_xlconstant_2_0/Mercury_XU1_xlconstant_2_0.xci",
-        "inst_hier_path": "xlconstant_2"
-      },
-      "COM5501_0": {
-        "vlnv": "COMBLOCK:user.org:COM5501_MAC:1.0",
-        "xci_name": "Mercury_XU1_COM5501_0_0",
-        "xci_path": "ip/Mercury_XU1_COM5501_0_0/Mercury_XU1_COM5501_0_0.xci",
-        "inst_hier_path": "COM5501_0"
-      },
-      "xlconstant_3": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "Mercury_XU1_xlconstant_3_0",
-        "xci_path": "ip/Mercury_XU1_xlconstant_3_0/Mercury_XU1_xlconstant_3_0.xci",
-        "inst_hier_path": "xlconstant_3"
-      },
-      "util_vector_logic_0": {
-        "vlnv": "xilinx.com:ip:util_vector_logic:2.0",
-        "xci_name": "Mercury_XU1_util_vector_logic_0_0",
-        "xci_path": "ip/Mercury_XU1_util_vector_logic_0_0/Mercury_XU1_util_vector_logic_0_0.xci",
-        "inst_hier_path": "util_vector_logic_0",
-        "parameters": {
-          "C_OPERATION": {
-            "value": "not"
-          },
-          "C_SIZE": {
-            "value": "1"
-          }
-        }
-      },
       "ti_zero": {
         "vlnv": "xilinx.com:ip:xlconstant:1.1",
         "xci_name": "Mercury_XU1_xlconstant_4_0",
@@ -3995,64 +3823,164 @@
           }
         }
       },
-      "mollerTI_0": {
-        "vlnv": "user.org:user:mollerTI:1.0",
-        "xci_name": "Mercury_XU1_mollerTI_0_0",
-        "xci_path": "ip/Mercury_XU1_mollerTI_0_0/Mercury_XU1_mollerTI_0_0.xci",
-        "inst_hier_path": "mollerTI_0"
-      },
-      "tcp_udp_client_0": {
-        "vlnv": "COMBLOCK:user:tcp_udp_client:1.0",
-        "xci_name": "Mercury_XU1_tcp_udp_client_0_0",
-        "xci_path": "ip/Mercury_XU1_tcp_udp_client_0_0/Mercury_XU1_tcp_udp_client_0_0.xci",
-        "inst_hier_path": "tcp_udp_client_0"
-      },
-      "xlconcat_0": {
-        "vlnv": "xilinx.com:ip:xlconcat:2.1",
-        "xci_name": "Mercury_XU1_xlconcat_0_0",
-        "xci_path": "ip/Mercury_XU1_xlconcat_0_0/Mercury_XU1_xlconcat_0_0.xci",
-        "inst_hier_path": "xlconcat_0",
-        "parameters": {
-          "IN0_WIDTH": {
-            "value": "32"
-          },
-          "IN1_WIDTH": {
-            "value": "96"
-          }
-        }
-      },
-      "xlconstant_1": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "Mercury_XU1_xlconstant_1_5",
-        "xci_path": "ip/Mercury_XU1_xlconstant_1_5/Mercury_XU1_xlconstant_1_5.xci",
-        "inst_hier_path": "xlconstant_1",
-        "parameters": {
-          "CONST_VAL": {
-            "value": "0"
-          },
-          "CONST_WIDTH": {
-            "value": "96"
-          }
-        }
-      },
       "moller_regmap": {
         "vlnv": "TRIUMF:user:moller_regmap:1.2",
         "xci_name": "Mercury_XU1_moller_regmap_0",
         "xci_path": "ip/Mercury_XU1_moller_regmap_0/Mercury_XU1_moller_regmap_0.xci",
         "inst_hier_path": "moller_regmap"
       },
-      "xlconstant_4": {
+      "xlconstant_5": {
         "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "Mercury_XU1_xlconstant_4_1",
-        "xci_path": "ip/Mercury_XU1_xlconstant_4_1/Mercury_XU1_xlconstant_4_1.xci",
-        "inst_hier_path": "xlconstant_4"
+        "xci_name": "Mercury_XU1_xlconstant_5_0",
+        "xci_path": "ip/Mercury_XU1_xlconstant_5_0/Mercury_XU1_xlconstant_5_0.xci",
+        "inst_hier_path": "xlconstant_5"
+      },
+      "xlconstant_8": {
+        "vlnv": "xilinx.com:ip:xlconstant:1.1",
+        "xci_name": "Mercury_XU1_xlconstant_5_1",
+        "xci_path": "ip/Mercury_XU1_xlconstant_5_1/Mercury_XU1_xlconstant_5_1.xci",
+        "inst_hier_path": "xlconstant_8",
+        "parameters": {
+          "CONST_VAL": {
+            "value": "0"
+          }
+        }
+      },
+      "xlconstant_9": {
+        "vlnv": "xilinx.com:ip:xlconstant:1.1",
+        "xci_name": "Mercury_XU1_xlconstant_6_1",
+        "xci_path": "ip/Mercury_XU1_xlconstant_6_1/Mercury_XU1_xlconstant_6_1.xci",
+        "inst_hier_path": "xlconstant_9",
+        "parameters": {
+          "CONST_VAL": {
+            "value": "55297"
+          },
+          "CONST_WIDTH": {
+            "value": "16"
+          }
+        }
+      },
+      "xlslice_0": {
+        "vlnv": "xilinx.com:ip:xlslice:1.0",
+        "xci_name": "Mercury_XU1_xlslice_0_0",
+        "xci_path": "ip/Mercury_XU1_xlslice_0_0/Mercury_XU1_xlslice_0_0.xci",
+        "inst_hier_path": "xlslice_0",
+        "parameters": {
+          "DIN_WIDTH": {
+            "value": "95"
+          }
+        }
+      },
+      "xlconstant_6": {
+        "vlnv": "xilinx.com:ip:xlconstant:1.1",
+        "xci_name": "Mercury_XU1_xlconstant_6_0",
+        "xci_path": "ip/Mercury_XU1_xlconstant_6_0/Mercury_XU1_xlconstant_6_0.xci",
+        "inst_hier_path": "xlconstant_6",
+        "parameters": {
+          "CONST_VAL": {
+            "value": "9"
+          },
+          "CONST_WIDTH": {
+            "value": "5"
+          }
+        }
+      },
+      "xlconstant_7": {
+        "vlnv": "xilinx.com:ip:xlconstant:1.1",
+        "xci_name": "Mercury_XU1_xlconstant_7_0",
+        "xci_path": "ip/Mercury_XU1_xlconstant_7_0/Mercury_XU1_xlconstant_7_0.xci",
+        "inst_hier_path": "xlconstant_7",
+        "parameters": {
+          "CONST_VAL": {
+            "value": "0"
+          },
+          "CONST_WIDTH": {
+            "value": "5"
+          }
+        }
+      },
+      "gig_ethernet_pcs_pma_0": {
+        "vlnv": "xilinx.com:ip:gig_ethernet_pcs_pma:16.2",
+        "xci_name": "Mercury_XU1_gig_ethernet_pcs_pma_0_0",
+        "xci_path": "ip/Mercury_XU1_gig_ethernet_pcs_pma_0_0/Mercury_XU1_gig_ethernet_pcs_pma_0_0.xci",
+        "inst_hier_path": "gig_ethernet_pcs_pma_0",
+        "parameters": {
+          "Auto_Negotiation": {
+            "value": "true"
+          },
+          "DrpClkRate": {
+            "value": "49.9995"
+          },
+          "EMAC_IF_TEMAC": {
+            "value": "GEM"
+          },
+          "Ext_Management_Interface": {
+            "value": "false"
+          },
+          "GT_Location": {
+            "value": "X1Y4"
+          },
+          "GTinEx": {
+            "value": "false"
+          },
+          "RefClkRate": {
+            "value": "156.25"
+          },
+          "Standard": {
+            "value": "1000BASEX"
+          },
+          "SupportLevel": {
+            "value": "Include_Shared_Logic_in_Core"
+          },
+          "TransceiverControl": {
+            "value": "false"
+          }
+        }
+      },
+      "mollerTI_0": {
+        "vlnv": "user.org:user:mollerTI:1.0",
+        "xci_name": "Mercury_XU1_mollerTI_0_0",
+        "xci_path": "ip/Mercury_XU1_mollerTI_0_0/Mercury_XU1_mollerTI_0_0.xci",
+        "inst_hier_path": "mollerTI_0"
+      },
+      "util_vector_logic_0": {
+        "vlnv": "xilinx.com:ip:util_vector_logic:2.0",
+        "xci_name": "Mercury_XU1_util_vector_logic_0_0",
+        "xci_path": "ip/Mercury_XU1_util_vector_logic_0_0/Mercury_XU1_util_vector_logic_0_0.xci",
+        "inst_hier_path": "util_vector_logic_0",
+        "parameters": {
+          "C_OPERATION": {
+            "value": "or"
+          },
+          "C_SIZE": {
+            "value": "1"
+          }
+        }
       }
     },
     "interface_nets": {
-      "sfp_data_refclk_1": {
+      "zynq_ultra_ps_e_MDIO_ENET1": {
         "interface_ports": [
-          "sfp_data_refclk",
-          "xxv_ethernet_0/gt_ref_clk"
+          "gig_ethernet_pcs_pma_0/mdio_pcs_pma",
+          "zynq_ultra_ps_e/MDIO_ENET1"
+        ]
+      },
+      "S_AXIS_0_1": {
+        "interface_ports": [
+          "run_fifo",
+          "run_fifo/S_AXIS"
+        ]
+      },
+      "run_fifo_M_AXIS": {
+        "interface_ports": [
+          "run_fifo/M_AXIS",
+          "packet_switch/S00_AXIS"
+        ]
+      },
+      "zynq_ultra_ps_e_M_AXI_HPM0_LPD": {
+        "interface_ports": [
+          "smartconnect_0/S00_AXI",
+          "zynq_ultra_ps_e/M_AXI_HPM0_LPD"
         ]
       },
       "smartconnect_1_M00_AXI": {
@@ -4067,34 +3995,10 @@
           "adc_fifo/S_AXIS"
         ]
       },
-      "adc_fifo_M_AXIS": {
+      "priority_switch_M00_AXIS": {
         "interface_ports": [
-          "adc_fifo/M_AXIS",
-          "packet_switch/S01_AXIS"
-        ]
-      },
-      "rx_10g": {
-        "interface_ports": [
-          "sfp_data_rx",
-          "xxv_ethernet_0/gt_rx"
-        ]
-      },
-      "mollerTI_0_C2H": {
-        "interface_ports": [
-          "ti_fifo/S_AXIS",
-          "mollerTI_0/C2H"
-        ]
-      },
-      "axi_dma_0_M_AXI_SG": {
-        "interface_ports": [
-          "axi_dma_0/M_AXI_SG",
-          "smartconnect_2/S01_AXI"
-        ]
-      },
-      "smartconnect_0_M00_AXI": {
-        "interface_ports": [
-          "smartconnect_0/M00_AXI",
-          "moller_regmap/S00_AXI"
+          "packet_switch/M00_AXIS",
+          "axi_dma_0/S_AXIS_S2MM"
         ]
       },
       "ti_fifo_M_AXIS": {
@@ -4109,40 +4013,34 @@
           "zynq_ultra_ps_e/S_AXI_HPC0_FPD"
         ]
       },
-      "axi_dma_0_M_AXI_S2MM": {
+      "mollerTI_0_C2H": {
         "interface_ports": [
-          "axi_dma_0/M_AXI_S2MM",
-          "smartconnect_2/S00_AXI"
+          "ti_fifo/S_AXIS",
+          "mollerTI_0/C2H"
         ]
       },
-      "run_fifo_M_AXIS": {
+      "gig_ethernet_pcs_pma_0_sfp": {
         "interface_ports": [
-          "run_fifo/M_AXIS",
-          "packet_switch/S00_AXIS"
+          "sfp_gem",
+          "gig_ethernet_pcs_pma_0/sfp"
         ]
       },
-      "xxv_ethernet_0_gt_tx": {
+      "adc_fifo_M_AXIS": {
         "interface_ports": [
-          "sfp_data_tx",
-          "xxv_ethernet_0/gt_tx"
+          "adc_fifo/M_AXIS",
+          "packet_switch/S01_AXIS"
         ]
       },
-      "zynq_ultra_ps_e_M_AXI_HPM0_LPD": {
+      "smartconnect_0_M00_AXI": {
         "interface_ports": [
-          "smartconnect_0/S00_AXI",
-          "zynq_ultra_ps_e/M_AXI_HPM0_LPD"
+          "smartconnect_0/M00_AXI",
+          "moller_regmap/S00_AXI"
         ]
       },
-      "priority_switch_M00_AXIS": {
+      "zynq_ultra_ps_e_M_AXI_HPM0_FPD": {
         "interface_ports": [
-          "packet_switch/M00_AXIS",
-          "axi_dma_0/S_AXIS_S2MM"
-        ]
-      },
-      "S_AXIS_0_1": {
-        "interface_ports": [
-          "run_fifo",
-          "run_fifo/S_AXIS"
+          "zynq_ultra_ps_e/M_AXI_HPM0_FPD",
+          "smartconnect_1/S00_AXI"
         ]
       },
       "smartconnect_0_M01_AXI": {
@@ -4151,10 +4049,28 @@
           "smartconnect_0/M01_AXI"
         ]
       },
-      "zynq_ultra_ps_e_M_AXI_HPM0_FPD": {
+      "axi_dma_0_M_AXI_S2MM": {
         "interface_ports": [
-          "zynq_ultra_ps_e/M_AXI_HPM0_FPD",
-          "smartconnect_1/S00_AXI"
+          "axi_dma_0/M_AXI_S2MM",
+          "smartconnect_2/S00_AXI"
+        ]
+      },
+      "sfp_data_refclk_1": {
+        "interface_ports": [
+          "sfp_refclk",
+          "gig_ethernet_pcs_pma_0/gtrefclk_in"
+        ]
+      },
+      "axi_dma_0_M_AXI_SG": {
+        "interface_ports": [
+          "axi_dma_0/M_AXI_SG",
+          "smartconnect_2/S01_AXI"
+        ]
+      },
+      "zynq_ultra_ps_e_GMII_ENET1": {
+        "interface_ports": [
+          "gig_ethernet_pcs_pma_0/gmii_gem_pcs_pma",
+          "zynq_ultra_ps_e/GMII_ENET1"
         ]
       }
     },
@@ -4278,8 +4194,8 @@
           "adc_fifo/s_axis_aclk",
           "ti_fifo/s_axis_aclk",
           "smartconnect_0/aclk1",
-          "mollerTI_0/s_axi_aclk",
-          "moller_regmap/s00_axi_aclk"
+          "moller_regmap/s00_axi_aclk",
+          "mollerTI_0/s_axi_aclk"
         ]
       },
       "rst_125_1": {
@@ -4288,8 +4204,8 @@
           "run_fifo/s_axis_aresetn",
           "adc_fifo/s_axis_aresetn",
           "ti_fifo/s_axis_aresetn",
-          "mollerTI_0/s_axi_aresetn",
-          "moller_regmap/s00_axi_aresetn"
+          "moller_regmap/s00_axi_aresetn",
+          "mollerTI_0/s_axi_aresetn"
         ]
       },
       "status_clk_lockdetect_0_1": {
@@ -4384,279 +4300,10 @@
           "moller_regmap/adc_delay_value"
         ]
       },
-      "xlconstant_1_dout": {
-        "ports": [
-          "tx_config/dout",
-          "COM5501_0/MAC_TX_CONFIG"
-        ]
-      },
-      "rx_config_dout": {
-        "ports": [
-          "rx_config/dout",
-          "COM5501_0/MAC_RX_CONFIG"
-        ]
-      },
-      "COM5501_0_XGMII_TXC": {
-        "ports": [
-          "COM5501_0/XGMII_TXC",
-          "xxv_ethernet_0/tx_mii_c_0"
-        ]
-      },
-      "COM5501_0_XGMII_TXD": {
-        "ports": [
-          "COM5501_0/XGMII_TXD",
-          "xxv_ethernet_0/tx_mii_d_0"
-        ]
-      },
-      "xxv_ethernet_0_rx_mii_c_0": {
-        "ports": [
-          "xxv_ethernet_0/rx_mii_c_0",
-          "COM5501_0/XGMII_RXC"
-        ]
-      },
-      "xxv_ethernet_0_rx_mii_d_0": {
-        "ports": [
-          "xxv_ethernet_0/rx_mii_d_0",
-          "COM5501_0/XGMII_RXD"
-        ]
-      },
-      "pd1_dout": {
-        "ports": [
-          "testmode/dout",
-          "COM5501_0/TEST_MODE"
-        ]
-      },
-      "testmode1_dout": {
-        "ports": [
-          "zero/dout",
-          "COM5501_0/MDIO_IN",
-          "COM5501_0/PHY_CONFIG_CHANGE",
-          "COM5501_0/PHY_RESET",
-          "COM5501_0/POWER_DOWN"
-        ]
-      },
-      "xxv_ethernet_0_tx_mii_clk_0": {
-        "ports": [
-          "xxv_ethernet_0/tx_mii_clk_0",
-          "udp_tx_clk",
-          "COM5501_0/CLK",
-          "COM5501_0/CLK156g",
-          "xxv_ethernet_0/rx_core_clk_0",
-          "tcp_udp_client_0/clk"
-        ]
-      },
       "zynq_ultra_ps_e_pl_clk1": {
         "ports": [
           "zynq_ultra_ps_e/pl_clk1",
-          "xxv_ethernet_0/dclk"
-        ]
-      },
-      "xlconstant_1_dout1": {
-        "ports": [
-          "clksel/dout",
-          "xxv_ethernet_0/txoutclksel_in_0",
-          "xxv_ethernet_0/rxoutclksel_in_0"
-        ]
-      },
-      "SYNC_RESET_0_1": {
-        "ports": [
-          "sfp_reset",
-          "COM5501_0/SYNC_RESET",
-          "tcp_udp_client_0/sync_reset"
-        ]
-      },
-      "user_rx_reset_0": {
-        "ports": [
-          "xxv_ethernet_0/user_rx_reset_0"
-        ]
-      },
-      "stat_rx_status_0": {
-        "ports": [
-          "xxv_ethernet_0/stat_rx_status_0"
-        ]
-      },
-      "user_tx_reset_0": {
-        "ports": [
-          "xxv_ethernet_0/user_tx_reset_0"
-        ]
-      },
-      "gtpowergood_out_0": {
-        "ports": [
-          "xxv_ethernet_0/gtpowergood_out_0"
-        ]
-      },
-      "N_RX_FRAMES": {
-        "ports": [
-          "COM5501_0/N_RX_FRAMES"
-        ]
-      },
-      "N_TX_FRAMES": {
-        "ports": [
-          "COM5501_0/N_TX_FRAMES"
-        ]
-      },
-      "DEBUG3": {
-        "ports": [
-          "COM5501_0/DEBUG3"
-        ]
-      },
-      "DEBUG2": {
-        "ports": [
-          "COM5501_0/DEBUG2"
-        ]
-      },
-      "DEBUG1": {
-        "ports": [
-          "COM5501_0/DEBUG1"
-        ]
-      },
-      "RX_IPG": {
-        "ports": [
-          "COM5501_0/RX_IPG"
-        ]
-      },
-      "N_RX_LENGTH_ERRORS": {
-        "ports": [
-          "COM5501_0/N_RX_LENGTH_ERRORS"
-        ]
-      },
-      "N_RX_WRONG_ADDR": {
-        "ports": [
-          "COM5501_0/N_RX_WRONG_ADDR"
-        ]
-      },
-      "N_RX_FRAMES_TOO_LONG": {
-        "ports": [
-          "COM5501_0/N_RX_FRAMES_TOO_LONG"
-        ]
-      },
-      "N_RX_FRAMES_TOO_SHORT": {
-        "ports": [
-          "COM5501_0/N_RX_FRAMES_TOO_SHORT"
-        ]
-      },
-      "N_RX_BAD_CRCS": {
-        "ports": [
-          "COM5501_0/N_RX_BAD_CRCS"
-        ]
-      },
-      "TP": {
-        "ports": [
-          "COM5501_0/TP"
-        ]
-      },
-      "COM5501_0_MAC_TX_CTS": {
-        "ports": [
-          "COM5501_0/MAC_TX_CTS",
-          "tcp_udp_client_0/mac_tx_cts"
-        ]
-      },
-      "tcp_udp_client_0_mac_tx_data_valid": {
-        "ports": [
-          "tcp_udp_client_0/mac_tx_data_valid",
-          "COM5501_0/MAC_TX_DATA_VALID"
-        ]
-      },
-      "tcp_udp_client_0_mac_tx_data": {
-        "ports": [
-          "tcp_udp_client_0/mac_tx_data",
-          "COM5501_0/MAC_TX_DATA"
-        ]
-      },
-      "tcp_udp_client_0_mac_tx_eof": {
-        "ports": [
-          "tcp_udp_client_0/mac_tx_eof",
-          "COM5501_0/MAC_TX_EOF"
-        ]
-      },
-      "COM5501_0_MAC_RX_DATA_VALID": {
-        "ports": [
-          "COM5501_0/MAC_RX_DATA_VALID",
-          "tcp_udp_client_0/mac_rx_data_valid"
-        ]
-      },
-      "COM5501_0_MAC_RX_DATA": {
-        "ports": [
-          "COM5501_0/MAC_RX_DATA",
-          "tcp_udp_client_0/mac_rx_data"
-        ]
-      },
-      "COM5501_0_MAC_RX_EOF": {
-        "ports": [
-          "COM5501_0/MAC_RX_EOF",
-          "tcp_udp_client_0/mac_rx_eof"
-        ]
-      },
-      "COM5501_0_MAC_RX_SOF": {
-        "ports": [
-          "COM5501_0/MAC_RX_SOF",
-          "tcp_udp_client_0/mac_rx_sof"
-        ]
-      },
-      "COM5501_0_MAC_RX_FRAME_VALID": {
-        "ports": [
-          "COM5501_0/MAC_RX_FRAME_VALID",
-          "tcp_udp_client_0/mac_rx_frame_valid"
-        ]
-      },
-      "tcp_udp_client_0_udp_tx_nak": {
-        "ports": [
-          "tcp_udp_client_0/udp_tx_nak",
-          "udp_tx_nak"
-        ]
-      },
-      "udp_tx_eof_0_1": {
-        "ports": [
-          "udp_tx_eof",
-          "tcp_udp_client_0/udp_tx_eof"
-        ]
-      },
-      "udp_tx_sof_0_1": {
-        "ports": [
-          "udp_tx_sof",
-          "tcp_udp_client_0/udp_tx_sof"
-        ]
-      },
-      "udp_tx_data_valid_0_1": {
-        "ports": [
-          "udp_tx_data_valid",
-          "tcp_udp_client_0/udp_tx_data_valid"
-        ]
-      },
-      "tcp_udp_client_0_udp_tx_ack": {
-        "ports": [
-          "tcp_udp_client_0/udp_tx_ack",
-          "udp_tx_ack"
-        ]
-      },
-      "udp_tx_data_0_1": {
-        "ports": [
-          "udp_tx_data",
-          "tcp_udp_client_0/udp_tx_data"
-        ]
-      },
-      "tcp_udp_client_0_udp_tx_cts": {
-        "ports": [
-          "tcp_udp_client_0/udp_tx_cts",
-          "udp_tx_cts"
-        ]
-      },
-      "xlconstant_2_dout": {
-        "ports": [
-          "xlconstant_2/dout",
-          "tcp_udp_client_0/dynamic_ipv4"
-        ]
-      },
-      "xlconstant_3_dout": {
-        "ports": [
-          "xlconstant_3/dout",
-          "COM5501_0/MAC_RX_CTS"
-        ]
-      },
-      "COM5501_0_RESET_N": {
-        "ports": [
-          "COM5501_0/RESET_N",
-          "util_vector_logic_0/Op1"
+          "gig_ethernet_pcs_pma_0/independent_clock_bufg"
         ]
       },
       "TI1RX_P_1": {
@@ -4803,55 +4450,125 @@
           "adc_ctrl_clear_counters"
         ]
       },
-      "Net2": {
+      "xlconstant_8_dout": {
         "ports": [
-          "moller_regmap/mac_addr",
-          "COM5501_0/MAC_ADDR",
-          "tcp_udp_client_0/mac_addr"
+          "xlconstant_8/dout",
+          "gig_ethernet_pcs_pma_0/configuration_valid",
+          "gig_ethernet_pcs_pma_0/an_adv_config_val",
+          "gig_ethernet_pcs_pma_0/an_restart_config"
         ]
       },
-      "moller_regmap_udp_dst_port": {
+      "xlconstant_7_dout": {
         "ports": [
-          "moller_regmap/udp_dst_port",
-          "tcp_udp_client_0/udp_tx_dest_port_no"
+          "xlconstant_7/dout",
+          "gig_ethernet_pcs_pma_0/configuration_vector"
         ]
       },
-      "moller_regmap_udp_src_port": {
+      "xlconstant_6_dout": {
         "ports": [
-          "moller_regmap/udp_src_port",
-          "tcp_udp_client_0/udp_tx_source_port_no"
+          "xlconstant_6/dout",
+          "gig_ethernet_pcs_pma_0/phyaddr"
         ]
       },
-      "xlconcat_0_dout": {
+      "xlconstant_5_dout": {
         "ports": [
-          "xlconcat_0/dout",
-          "tcp_udp_client_0/udp_tx_dest_ip_addr"
+          "xlconstant_5/dout",
+          "gig_ethernet_pcs_pma_0/signal_detect"
         ]
       },
-      "moller_regmap_udp_dest_ip": {
+      "zynq_ultra_ps_e_emio_gpio_o": {
         "ports": [
-          "moller_regmap/udp_dest_ip",
-          "xlconcat_0/In0"
+          "zynq_ultra_ps_e/emio_gpio_o",
+          "xlslice_0/Din"
         ]
       },
-      "xlconstant_1_dout2": {
+      "status_vector": {
         "ports": [
-          "xlconstant_1/dout",
-          "xlconcat_0/In1"
+          "gig_ethernet_pcs_pma_0/status_vector"
+        ],
+        "hdl_attributes": {
+          "DEBUG": {
+            "value": "true"
+          },
+          "MARK_DEBUG": {
+            "value": "true"
+          }
+        }
+      },
+      "mmcm_locked_out": {
+        "ports": [
+          "gig_ethernet_pcs_pma_0/mmcm_locked_out"
+        ],
+        "hdl_attributes": {
+          "DEBUG": {
+            "value": "true"
+          },
+          "MARK_DEBUG": {
+            "value": "true"
+          }
+        }
+      },
+      "pma_reset_out": {
+        "ports": [
+          "gig_ethernet_pcs_pma_0/pma_reset_out"
+        ],
+        "hdl_attributes": {
+          "DEBUG": {
+            "value": "true"
+          },
+          "MARK_DEBUG": {
+            "value": "true"
+          }
+        }
+      },
+      "resetdone": {
+        "ports": [
+          "gig_ethernet_pcs_pma_0/resetdone"
+        ],
+        "hdl_attributes": {
+          "DEBUG": {
+            "value": "true"
+          },
+          "MARK_DEBUG": {
+            "value": "true"
+          }
+        }
+      },
+      "gtpowergood": {
+        "ports": [
+          "gig_ethernet_pcs_pma_0/gtpowergood"
+        ],
+        "hdl_attributes": {
+          "DEBUG": {
+            "value": "true"
+          },
+          "MARK_DEBUG": {
+            "value": "true"
+          }
+        }
+      },
+      "xlslice_0_Dout": {
+        "ports": [
+          "xlslice_0/Dout",
+          "util_vector_logic_0/Op2"
         ]
       },
-      "xlconstant_4_dout1": {
+      "util_vector_logic_0_Res": {
         "ports": [
-          "xlconstant_4/dout",
-          "tcp_udp_client_0/udp_tx_dest_ipv4_6n"
+          "util_vector_logic_0/Res",
+          "gig_ethernet_pcs_pma_0/reset"
         ]
       },
-      "ps_sys_rst_peripheral_reset": {
+      "Op1_0_1": {
         "ports": [
-          "ps_sys_rst/peripheral_reset",
-          "xxv_ethernet_0/sys_reset",
-          "xxv_ethernet_0/rx_reset_0",
-          "xxv_ethernet_0/tx_reset_0"
+          "PHY_RESET",
+          "util_vector_logic_0/Op1"
+        ]
+      },
+      "xlconstant_9_dout": {
+        "ports": [
+          "xlconstant_9/dout",
+          "gig_ethernet_pcs_pma_0/an_adv_config_vector"
         ]
       }
     },

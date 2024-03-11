@@ -35,37 +35,6 @@ read_ip [ glob ./src/fifo_10g/*.xci]
 generate_target all [get_files *fifo_10g.xci]
 synth_ip [get_files *fifo_10g.xci]
 
-############
-# GT Example
-############
-
-read_xdc [glob -type f -directory ./src/moller_gth/src *.{tcl,xdc}]
-
-read_verilog -sv "./src/moller_gth/src/moller_gth_example_bit_sync.v"
-read_verilog -sv "./src/moller_gth/src/moller_gth_example_checking_64b66b_async.v"
-read_verilog -sv "./src/moller_gth/src/moller_gth_example_init.v"
-read_verilog -sv "./src/moller_gth/src/moller_gth_example_reset_sync.v"
-read_verilog -sv "./src/moller_gth/src/moller_gth_example_stimulus_64b66b_async.v"
-read_verilog -sv "./src/moller_gth/src/moller_gth_example_top_sim.v"
-read_verilog -sv "./src/moller_gth/src/moller_gth_example_top.v"
-read_verilog -sv "./src/moller_gth/src/moller_gth_example_wrapper.v"
-read_verilog -sv "./src/moller_gth/src/moller_gth_prbs_any.v"
-
-read_ip [ glob ./src/moller_gth/ip/moller_gth/moller_gth.xci]
-generate_target all [get_files *moller_gth.xci]
-synth_ip [get_files *moller_gth.xci]
-
-read_ip [ glob ./src/moller_gth/ip/moller_gth_in_system_ibert_0/moller_gth_in_system_ibert_0.xci]
-generate_target all [get_files *moller_gth_in_system_ibert_0.xci]
-synth_ip [get_files *moller_gth_in_system_ibert_0.xci]
-
-read_ip [ glob ./src/moller_gth/ip/moller_gth_vio_0/moller_gth_vio_0.xci]
-generate_target all [get_files *moller_gth_vio_0.xci]
-synth_ip [get_files *moller_gth_vio_0.xci]
-
-#################
-# END GTH EXAMPLE
-#################
 
 report_ip_status
 

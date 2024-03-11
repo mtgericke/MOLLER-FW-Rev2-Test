@@ -680,6 +680,18 @@ architecture Behavioral of TInode is
       SigOut    : inout STD_LOGIC);
   end component;
 
+  component  WordBuffer is
+    port (Clock  : in    std_logic;
+      Data     : in    std_logic_vector (71 downto 0);
+      FifoREn  : in    std_logic;
+      Reset    : in    std_logic;
+      Write_En : in    std_logic;
+      FnEmpty  : out   std_logic;
+      FnFull   : out   std_logic;
+      Status   : out   std_logic_vector(31 downto 0);
+      MedOut   : out   std_logic_vector (35 downto 0));
+  end component;
+
   component BlockReadBuf is
     port ( ClkRead : in    std_logic;
       ClkWrite     : in    std_logic;
@@ -1254,6 +1266,12 @@ architecture Behavioral of TInode is
   signal NewBlockTh    : std_logic_vector(7 downto 0);
   signal TIbusyLatch   : std_logic;
   signal CountRstBusy  : std_logic;
+-- signals for SingleWord Register readout
+  signal SW2PCI  : std_logic_vector(35 downto 0);
+  signal SWStatus : std_logic_vector(31 downto 0);
+  signal SWFifoFull : std_logic;
+  signal Dly1RValid : std_logic;
+  signal Dly2RValid : std_logic;
 
 begin
 
@@ -1311,7 +1329,9 @@ begin
             OB  => ClkRefO_N,   -- 1-bit output: Refer to Transceiver User Guide
             CEB => '0',         -- 1-bit input: Refer to Transceiver User Guide
             I   => CLKRCVD );   -- 1-bit input: Refer to Transceiver User Guide
-  RstGtp <= '0'; -- set it low explicitly
+
+  RstGtp <= '0'; -- specifically assign it to '0'
+
   TI1andLPBK_MGT : TrgMGT1L
     Port map(ClkRef  => CLKREF,   -- in STD_LOGIC;
       ClkRcvd     => ClkRcvd,   -- out std_logic;
@@ -1339,7 +1359,7 @@ begin
       TsRdStart   => TsRdStart, -- in std_logic;
       TrgBufE     => TrgBufE(9 downto 0),  -- out std_logic_vector(25 downto 0);
       GTPStA      => GTPStAB(31 downto 0),  -- out std_logic_vector(31 downto 0);
-      TrgAProm    => open, --TrgAProm,               -- out STD_LOGIC;
+      TrgAProm    => TrgStbR, --open, --TrgAProm,               -- out STD_LOGIC;
       TrgData     => TrgData(15 downto 0),    -- out STD_LOGIC_VECTOR (15 downto 0);
       StatusA     => StatusA(15 downto 0),    -- out STD_LOGIC_VECTOR (15 downto 0);
       TsLpData    => TsLpData(15 downto 0),   -- out STD_LOGIC_VECTOR (15 downto 0);
@@ -1598,7 +1618,21 @@ begin
       TSack       => TSack );    -- out   std_logic);
   BlockAv(39 downto 32) <= IRQCount(7 downto 0);
 
-  FnFull(1) <= BlkBufFull and (not VmeSetting(15));
+-- Data buffer and data readout; single word readout
+  SingleWordREN <= '0';
+  WordBufRen <= EvtReadEn; -- and D2RValid; -- or SingleWordREN;
+  SingleWordReadBuf : WordBuffer
+    port map(Clock => ClkReg, -- ClkPci,             -- in    std_logic;
+      Data       => DaqData(71 downto 0), -- in    std_logic_vector (71 downto 0);
+      FifoREn    => WordBufRen,           -- in    std_logic;
+      Reset      => FifoResetS, --Reset,     -- in    std_logic;
+      Write_En   => DaqDEn,    -- in    std_logic;
+      FnEmpty    => FnEmpty,   -- out   std_logic;
+      FnFull     => SWFifoFull, -- out   std_logic;
+      Status     => SWStatus(31 downto 0), --
+      MedOut     => SW2PCI(35 downto 0) ); -- out   std_logic_vector (35 downto 0));
+
+  FnFull(1) <= (SWFifoFull and BlkBufFull) and (not VmeSetting(15));
 
   FifoResetS <= Reset or VmeReset(4);
 -- to add the ExtraDataBuffer
@@ -2104,8 +2138,11 @@ begin
       GtpPreScaleB => x"00000000", --DMAAddress(31 downto 0),
       GtpPreScaleC => GtpPreScaleC(31 downto 0),
       GtpPreScaleD => GtpPreScaleD(31 downto 0),
-      ExtPreScaleA => ExtPreScaleA(31 downto 0),
-      ExtPreScaleB => ExtPreScaleB(31 downto 0), -- SW2PCI(31 downto 0),
+-- Trigger data readout by single register access (0x68)
+      ExtPreScaleA(31 downto 0) => SWStatus(31 downto 0),
+      ExtPreScaleB => SW2PCI(31 downto 0), -- FTDCMon(31 downto 0), -- ExtPreScaleB(31 downto 0), --
+--      ExtPreScaleA => ExtPreScaleA(31 downto 0),
+--      ExtPreScaleB => ExtPreScaleB(31 downto 0), -- SW2PCI(31 downto 0),
       ExtPreScaleC => ExtPreScaleC(31 downto 0),
       ExtPreScaleD => ExtPreScaleD(31 downto 0),
       ROCAckRd => ROCAckRd(63 downto 0),

@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-//Date        : Wed Dec  6 19:30:46 2023
+//Date        : Fri Mar  8 23:01:51 2024
 //Host        : home running 64-bit unknown
 //Command     : generate_target Mercury_XU1_wrapper.bd
 //Design      : Mercury_XU1_wrapper
@@ -17,6 +17,7 @@ module Mercury_XU1_wrapper
     CLKREFO_P,
     GENINP,
     GENOUTP,
+    PHY_RESET,
     SWM,
     TCSOUT,
     TI1RX_N,
@@ -54,13 +55,12 @@ module Mercury_XU1_wrapper
     run_fifo_tlast,
     run_fifo_tready,
     run_fifo_tvalid,
-    sfp_data_refclk_clk_n,
-    sfp_data_refclk_clk_p,
-    sfp_data_rx_gt_port_0_n,
-    sfp_data_rx_gt_port_0_p,
-    sfp_data_tx_gt_port_0_n,
-    sfp_data_tx_gt_port_0_p,
-    sfp_reset,
+    sfp_gem_rxn,
+    sfp_gem_rxp,
+    sfp_gem_txn,
+    sfp_gem_txp,
+    sfp_refclk_clk_n,
+    sfp_refclk_clk_p,
     soc_in_reset,
     status_adc_train_done,
     status_clk_holdover,
@@ -69,16 +69,7 @@ module Mercury_XU1_wrapper
     stream_ctrl_ch1,
     stream_ctrl_enable,
     stream_ctrl_num_samples,
-    stream_ctrl_rate_div,
-    udp_tx_ack,
-    udp_tx_clk,
-    udp_tx_cts,
-    udp_tx_data,
-    udp_tx_data_valid,
-    udp_tx_dest_ipv4_6n,
-    udp_tx_eof,
-    udp_tx_nak,
-    udp_tx_sof);
+    stream_ctrl_rate_div);
   input CLK250;
   input CLK625;
   input CLKPrg;
@@ -86,6 +77,7 @@ module Mercury_XU1_wrapper
   output CLKREFO_P;
   input [16:1]GENINP;
   output [16:1]GENOUTP;
+  input [0:0]PHY_RESET;
   inout [8:1]SWM;
   output [16:1]TCSOUT;
   input TI1RX_N;
@@ -123,13 +115,12 @@ module Mercury_XU1_wrapper
   input run_fifo_tlast;
   output run_fifo_tready;
   input run_fifo_tvalid;
-  input sfp_data_refclk_clk_n;
-  input sfp_data_refclk_clk_p;
-  input sfp_data_rx_gt_port_0_n;
-  input sfp_data_rx_gt_port_0_p;
-  output sfp_data_tx_gt_port_0_n;
-  output sfp_data_tx_gt_port_0_p;
-  input sfp_reset;
+  input sfp_gem_rxn;
+  input sfp_gem_rxp;
+  output sfp_gem_txn;
+  output sfp_gem_txp;
+  input sfp_refclk_clk_n;
+  input sfp_refclk_clk_p;
   output soc_in_reset;
   input [0:0]status_adc_train_done;
   input [0:0]status_clk_holdover;
@@ -139,15 +130,6 @@ module Mercury_XU1_wrapper
   output [0:0]stream_ctrl_enable;
   output [15:0]stream_ctrl_num_samples;
   output [6:0]stream_ctrl_rate_div;
-  output udp_tx_ack;
-  output udp_tx_clk;
-  output udp_tx_cts;
-  input [63:0]udp_tx_data;
-  input [7:0]udp_tx_data_valid;
-  input udp_tx_dest_ipv4_6n;
-  input udp_tx_eof;
-  output udp_tx_nak;
-  input udp_tx_sof;
 
   wire CLK250;
   wire CLK625;
@@ -156,6 +138,7 @@ module Mercury_XU1_wrapper
   wire CLKREFO_P;
   wire [16:1]GENINP;
   wire [16:1]GENOUTP;
+  wire [0:0]PHY_RESET;
   wire [8:1]SWM;
   wire [16:1]TCSOUT;
   wire TI1RX_N;
@@ -193,13 +176,12 @@ module Mercury_XU1_wrapper
   wire run_fifo_tlast;
   wire run_fifo_tready;
   wire run_fifo_tvalid;
-  wire sfp_data_refclk_clk_n;
-  wire sfp_data_refclk_clk_p;
-  wire sfp_data_rx_gt_port_0_n;
-  wire sfp_data_rx_gt_port_0_p;
-  wire sfp_data_tx_gt_port_0_n;
-  wire sfp_data_tx_gt_port_0_p;
-  wire sfp_reset;
+  wire sfp_gem_rxn;
+  wire sfp_gem_rxp;
+  wire sfp_gem_txn;
+  wire sfp_gem_txp;
+  wire sfp_refclk_clk_n;
+  wire sfp_refclk_clk_p;
   wire soc_in_reset;
   wire [0:0]status_adc_train_done;
   wire [0:0]status_clk_holdover;
@@ -209,15 +191,6 @@ module Mercury_XU1_wrapper
   wire [0:0]stream_ctrl_enable;
   wire [15:0]stream_ctrl_num_samples;
   wire [6:0]stream_ctrl_rate_div;
-  wire udp_tx_ack;
-  wire udp_tx_clk;
-  wire udp_tx_cts;
-  wire [63:0]udp_tx_data;
-  wire [7:0]udp_tx_data_valid;
-  wire udp_tx_dest_ipv4_6n;
-  wire udp_tx_eof;
-  wire udp_tx_nak;
-  wire udp_tx_sof;
 
   Mercury_XU1 Mercury_XU1_i
        (.CLK250(CLK250),
@@ -227,6 +200,7 @@ module Mercury_XU1_wrapper
         .CLKREFO_P(CLKREFO_P),
         .GENINP(GENINP),
         .GENOUTP(GENOUTP),
+        .PHY_RESET(PHY_RESET),
         .SWM(SWM),
         .TCSOUT(TCSOUT),
         .TI1RX_N(TI1RX_N),
@@ -264,13 +238,12 @@ module Mercury_XU1_wrapper
         .run_fifo_tlast(run_fifo_tlast),
         .run_fifo_tready(run_fifo_tready),
         .run_fifo_tvalid(run_fifo_tvalid),
-        .sfp_data_refclk_clk_n(sfp_data_refclk_clk_n),
-        .sfp_data_refclk_clk_p(sfp_data_refclk_clk_p),
-        .sfp_data_rx_gt_port_0_n(sfp_data_rx_gt_port_0_n),
-        .sfp_data_rx_gt_port_0_p(sfp_data_rx_gt_port_0_p),
-        .sfp_data_tx_gt_port_0_n(sfp_data_tx_gt_port_0_n),
-        .sfp_data_tx_gt_port_0_p(sfp_data_tx_gt_port_0_p),
-        .sfp_reset(sfp_reset),
+        .sfp_gem_rxn(sfp_gem_rxn),
+        .sfp_gem_rxp(sfp_gem_rxp),
+        .sfp_gem_txn(sfp_gem_txn),
+        .sfp_gem_txp(sfp_gem_txp),
+        .sfp_refclk_clk_n(sfp_refclk_clk_n),
+        .sfp_refclk_clk_p(sfp_refclk_clk_p),
         .soc_in_reset(soc_in_reset),
         .status_adc_train_done(status_adc_train_done),
         .status_clk_holdover(status_clk_holdover),
@@ -279,14 +252,5 @@ module Mercury_XU1_wrapper
         .stream_ctrl_ch1(stream_ctrl_ch1),
         .stream_ctrl_enable(stream_ctrl_enable),
         .stream_ctrl_num_samples(stream_ctrl_num_samples),
-        .stream_ctrl_rate_div(stream_ctrl_rate_div),
-        .udp_tx_ack(udp_tx_ack),
-        .udp_tx_clk(udp_tx_clk),
-        .udp_tx_cts(udp_tx_cts),
-        .udp_tx_data(udp_tx_data),
-        .udp_tx_data_valid(udp_tx_data_valid),
-        .udp_tx_dest_ipv4_6n(udp_tx_dest_ipv4_6n),
-        .udp_tx_eof(udp_tx_eof),
-        .udp_tx_nak(udp_tx_nak),
-        .udp_tx_sof(udp_tx_sof));
+        .stream_ctrl_rate_div(stream_ctrl_rate_div));
 endmodule
