@@ -506,7 +506,7 @@ CONFIG_tar=y
 #
 # ethtool 
 #
-# CONFIG_ethtool is not set
+CONFIG_ethtool=y
 # CONFIG_ethtool-dev is not set
 # CONFIG_ethtool-dbg is not set
 

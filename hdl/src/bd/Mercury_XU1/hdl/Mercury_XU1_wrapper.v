@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-//Date        : Fri Mar  8 23:01:51 2024
+//Date        : Thu Mar 21 04:33:26 2024
 //Host        : home running 64-bit unknown
 //Command     : generate_target Mercury_XU1_wrapper.bd
 //Design      : Mercury_XU1_wrapper
@@ -15,6 +15,7 @@ module Mercury_XU1_wrapper
     CLKPrg,
     CLKREFO_N,
     CLKREFO_P,
+    CLK_IBERT,
     GENINP,
     GENOUTP,
     PHY_RESET,
@@ -61,6 +62,7 @@ module Mercury_XU1_wrapper
     sfp_gem_txp,
     sfp_refclk_clk_n,
     sfp_refclk_clk_p,
+    sfp_signal_detect,
     soc_in_reset,
     status_adc_train_done,
     status_clk_holdover,
@@ -75,6 +77,7 @@ module Mercury_XU1_wrapper
   input CLKPrg;
   output CLKREFO_N;
   output CLKREFO_P;
+  input CLK_IBERT;
   input [16:1]GENINP;
   output [16:1]GENOUTP;
   input [0:0]PHY_RESET;
@@ -121,6 +124,7 @@ module Mercury_XU1_wrapper
   output sfp_gem_txp;
   input sfp_refclk_clk_n;
   input sfp_refclk_clk_p;
+  input sfp_signal_detect;
   output soc_in_reset;
   input [0:0]status_adc_train_done;
   input [0:0]status_clk_holdover;
@@ -136,6 +140,7 @@ module Mercury_XU1_wrapper
   wire CLKPrg;
   wire CLKREFO_N;
   wire CLKREFO_P;
+  wire CLK_IBERT;
   wire [16:1]GENINP;
   wire [16:1]GENOUTP;
   wire [0:0]PHY_RESET;
@@ -182,6 +187,7 @@ module Mercury_XU1_wrapper
   wire sfp_gem_txp;
   wire sfp_refclk_clk_n;
   wire sfp_refclk_clk_p;
+  wire sfp_signal_detect;
   wire soc_in_reset;
   wire [0:0]status_adc_train_done;
   wire [0:0]status_clk_holdover;
@@ -198,6 +204,7 @@ module Mercury_XU1_wrapper
         .CLKPrg(CLKPrg),
         .CLKREFO_N(CLKREFO_N),
         .CLKREFO_P(CLKREFO_P),
+        .CLK_IBERT(CLK_IBERT),
         .GENINP(GENINP),
         .GENOUTP(GENOUTP),
         .PHY_RESET(PHY_RESET),
@@ -244,6 +251,7 @@ module Mercury_XU1_wrapper
         .sfp_gem_txp(sfp_gem_txp),
         .sfp_refclk_clk_n(sfp_refclk_clk_n),
         .sfp_refclk_clk_p(sfp_refclk_clk_p),
+        .sfp_signal_detect(sfp_signal_detect),
         .soc_in_reset(soc_in_reset),
         .status_adc_train_done(status_adc_train_done),
         .status_clk_holdover(status_clk_holdover),

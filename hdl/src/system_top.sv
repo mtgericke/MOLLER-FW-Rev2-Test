@@ -260,10 +260,10 @@ assign LMK_STAT_CLKin1 = SW1[5];
 assign SEL_TI_MGTn = (SW1[1] == 1'b1) ? 1'bZ : 1'b0; // 3V3 pullup on pin exceeds pins 2V5 IO voltage, infer open-drain buffer
 
 // These are pulled up, so use output buffer to make open drain
-assign TI_RESETn = 1'bZ;
+assign TI_RESETn = 1'b1;
 assign TI_ModSELn = 1'bZ;
-assign DATA_RESETn = 1'bZ;
-assign DATA_ModSELn = 1'bZ;
+assign DATA_RESETn = 1'b1;
+assign DATA_ModSELn = 1'b0;
 
 assign ADC_CNVT_SEL = 1'b1;
 
@@ -300,7 +300,7 @@ assign EXT_LVDS_OUT_N = EXT_LVDS_IN_N;
 // assign ext_lvds_out = ext_lvds_in;
 
 subsystem_clock clock_subsystem (
-    .clk_osc_100( clnr_osc ), // oscillator 100MHz
+    .clk_osc_125( clnr_osc ), // oscillator 100MHz
     .clk_cc_250( fpga_clk250_td ), // clock cleaner 250 MHz output (TD_250)
 
     .soc_ready( soc_ready ),
@@ -493,7 +493,9 @@ Mercury_XU1 bd (
     .sfp_gem_txn(MGT_B228_TX0_N),
     .sfp_gem_txp(MGT_B228_TX0_P),
 
+    .CLK_IBERT(clnr_osc),
     .PHY_RESET(rst),
+    .sfp_signal_detect(~DATA_ModPRSn),
     /*
     .sfp_reset(~LMK_STAT_LD),
     // Comblock 10g UDP client input stream

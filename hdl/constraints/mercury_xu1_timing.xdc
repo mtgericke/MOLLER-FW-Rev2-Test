@@ -4,6 +4,7 @@ create_clock -period 8.000 -name SOM_CLK_1 -waveform {0.000 4.000} [get_ports {S
 create_clock -period 8.000 -name SOM_CLK_0 -waveform {0.000 4.000} [get_ports {SOM_IN_CLK_P[0]}]
 create_clock -period 4.000 -name TD_CLK -waveform {0.000 2.000} [get_ports FPGA_CLK250_TD_P]
 create_clock -period 8.000 -name OSC_CLK -waveform {0.000 4.000} [get_ports CLNR_OSC_P]
+create_clock -period 8.000 -name MGT_B228_REFCLK1 -waveform {0.000 4.000} [get_ports MGT_B228_REFCLK1_P]
 
 # create_clock -period 8.000 -name {ADC_DCO[1]} -waveform {0.000 4.000} [get_ports {ADC_DCO_P[1]}]
 # create_clock -period 8.000 -name {ADC_DCO[2]} -waveform {0.000 4.000} [get_ports {ADC_DCO_P[2]}]
@@ -63,7 +64,7 @@ set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
 set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
 set_property port_width 1 [get_debug_ports u_ila_0/clk]
 
-connect_debug_port u_ila_0/clk [get_nets [list bd/zynq_ultra_ps_e/inst/pl_clk1]]
+connect_debug_port u_ila_0/clk [get_nets [list bd/CLK625]]
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
 set_property port_width 16 [get_debug_ports u_ila_0/probe0]
 

@@ -1,3 +1,5 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " file://si5338.patch"
 SRC_URI += " file://qspi.patch"
+SRC_URI += " file://0001-net-xilinx_phy-add-flag-to-reset-after-clock-enable.patch"
+SRC_URI += " file://0002-net-macb-Handling-phy-reset-for-pcs-pma-ip.patch"

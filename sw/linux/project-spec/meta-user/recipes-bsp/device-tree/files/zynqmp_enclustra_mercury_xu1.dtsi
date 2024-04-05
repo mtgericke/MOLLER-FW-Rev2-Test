@@ -63,7 +63,7 @@
    phy2: phy@9 {
       reg = <0x9>;
       xlnx,phy-type = <0x5>;
-      reset-gpios = <&gpio 78 0>;
+      reset-gpios = <&gpio 78 GPIO_ACTIVE_HIGH>;
    };
 };
 
