@@ -1305,7 +1305,7 @@ unsigned long psu_clock_init_data(void)
     *  PSU_CRL_APB_PL0_REF_CTRL_DIVISOR1                           0x1
 
     * 6 bit divider
-    *  PSU_CRL_APB_PL0_REF_CTRL_DIVISOR0                           0xc
+    *  PSU_CRL_APB_PL0_REF_CTRL_DIVISOR0                           0x6
 
     * 000 = IOPLL; 010 = RPLL; 011 = DPLL; (This signal may only be toggled af
     * ter 4 cycles of the old clock and 4 cycles of the new clock. This is not
@@ -1313,10 +1313,10 @@ unsigned long psu_clock_init_data(void)
     *  PSU_CRL_APB_PL0_REF_CTRL_SRCSEL                             0x0
 
     * This register controls this reference clock
-    * (OFFSET, MASK, VALUE)      (0XFF5E00C0, 0x013F3F07U ,0x01010C00U)
+    * (OFFSET, MASK, VALUE)      (0XFF5E00C0, 0x013F3F07U ,0x01010600U)
     */
 	PSU_Mask_Write(CRL_APB_PL0_REF_CTRL_OFFSET,
-		0x013F3F07U, 0x01010C00U);
+		0x013F3F07U, 0x01010600U);
 /*##################################################################### */
 
     /*
@@ -12743,7 +12743,7 @@ unsigned long psu_mio_init_data(void)
     * Level 2 Mux Select 0= Level 3 Mux Output 1= sd0, Input, sd0_data_in[4]-
     * (8-bit Data bus) = sd0, Output, sdio0_data_out[4]- (8-bit Data bus) 2= s
     * d1, Input, sdio1_cd_n- (SD card detect from connector) 3= Not Used
-    *  PSU_IOU_SLCR_MIO_PIN_45_L2_SEL                              0
+    *  PSU_IOU_SLCR_MIO_PIN_45_L2_SEL                              2
 
     * Level 3 Mux Select 0= gpio1, Input, gpio_1_pin_in[19]- (GPIO bank 1) 0=
     * gpio1, Output, gpio_1_pin_out[19]- (GPIO bank 1) 1= can1, Input, can1_ph
@@ -12755,9 +12755,9 @@ unsigned long psu_mio_init_data(void)
     *  PSU_IOU_SLCR_MIO_PIN_45_L3_SEL                              0
 
     * Configures MIO Pin 45 peripheral interface mapping
-    * (OFFSET, MASK, VALUE)      (0XFF1800B4, 0x000000FEU ,0x00000000U)
+    * (OFFSET, MASK, VALUE)      (0XFF1800B4, 0x000000FEU ,0x00000010U)
     */
-	PSU_Mask_Write(IOU_SLCR_MIO_PIN_45_OFFSET, 0x000000FEU, 0x00000000U);
+	PSU_Mask_Write(IOU_SLCR_MIO_PIN_45_OFFSET, 0x000000FEU, 0x00000010U);
 /*##################################################################### */
 
     /*
@@ -13921,7 +13921,7 @@ unsigned long psu_mio_init_data(void)
     *  PSU_IOU_SLCR_MIO_MST_TRI1_PIN_44_TRI                        0
 
     * Master Tri-state Enable for pin 45, active high
-    *  PSU_IOU_SLCR_MIO_MST_TRI1_PIN_45_TRI                        0
+    *  PSU_IOU_SLCR_MIO_MST_TRI1_PIN_45_TRI                        1
 
     * Master Tri-state Enable for pin 46, active high
     *  PSU_IOU_SLCR_MIO_MST_TRI1_PIN_46_TRI                        0
@@ -13978,10 +13978,10 @@ unsigned long psu_mio_init_data(void)
     *  PSU_IOU_SLCR_MIO_MST_TRI1_PIN_63_TRI                        0
 
     * MIO pin Tri-state Enables, 63:32
-    * (OFFSET, MASK, VALUE)      (0XFF180208, 0xFFFFFFFFU ,0x00B0007FU)
+    * (OFFSET, MASK, VALUE)      (0XFF180208, 0xFFFFFFFFU ,0x00B0207FU)
     */
 	PSU_Mask_Write(IOU_SLCR_MIO_MST_TRI1_OFFSET,
-		0xFFFFFFFFU, 0x00B0007FU);
+		0xFFFFFFFFU, 0x00B0207FU);
 /*##################################################################### */
 
     /*
