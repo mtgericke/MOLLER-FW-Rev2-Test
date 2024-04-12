@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-//Date        : Thu Mar 21 04:33:26 2024
+//Date        : Sun Apr  7 03:52:12 2024
 //Host        : home running 64-bit unknown
 //Command     : generate_target Mercury_XU1_wrapper.bd
 //Design      : Mercury_XU1_wrapper

@@ -225,11 +225,11 @@ proc create_root_design { parentCell } {
    CONFIG.TUSER_WIDTH {0} \
    ] $run_fifo
 
-  set sfp_gem [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:sfp_rtl:1.0 sfp_gem ]
+  set sfp_gem [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:sgmii_rtl:1.0 sfp_gem ]
 
   set sfp_refclk [ create_bd_intf_port -mode Slave -vlnv xilinx.com:interface:diff_clock_rtl:1.0 sfp_refclk ]
   set_property -dict [ list \
-   CONFIG.FREQ_HZ {125000000} \
+   CONFIG.FREQ_HZ {156250000} \
    ] $sfp_refclk
 
 
@@ -337,10 +337,10 @@ proc create_root_design { parentCell } {
    CONFIG.Ext_Management_Interface {false} \
    CONFIG.GT_Location {X1Y4} \
    CONFIG.GTinEx {false} \
-   CONFIG.RefClkRate {125} \
+   CONFIG.RefClkRate {156.25} \
    CONFIG.RxGmiiClkSrc {TXOUTCLK} \
-   CONFIG.SGMII_PHY_Mode {false} \
-   CONFIG.Standard {1000BASEX} \
+   CONFIG.SGMII_PHY_Mode {true} \
+   CONFIG.Standard {SGMII} \
    CONFIG.SupportLevel {Include_Shared_Logic_in_Core} \
    CONFIG.TransceiverControl {true} \
  ] $gig_ethernet_pcs_pma_0
@@ -454,7 +454,7 @@ proc create_root_design { parentCell } {
   # Create instance: xlconstant_7, and set properties
   set xlconstant_7 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_7 ]
   set_property -dict [ list \
-   CONFIG.CONST_VAL {16} \
+   CONFIG.CONST_VAL {0} \
    CONFIG.CONST_WIDTH {5} \
  ] $xlconstant_7
 
@@ -467,7 +467,7 @@ proc create_root_design { parentCell } {
   # Create instance: xlconstant_9, and set properties
   set xlconstant_9 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_9 ]
   set_property -dict [ list \
-   CONFIG.CONST_VAL {32} \
+   CONFIG.CONST_VAL {55297} \
    CONFIG.CONST_WIDTH {16} \
  ] $xlconstant_9
 
@@ -1962,7 +1962,7 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net adc_fifo_M_AXIS [get_bd_intf_pins adc_fifo/M_AXIS] [get_bd_intf_pins packet_switch/S01_AXIS]
   connect_bd_intf_net -intf_net axi_dma_0_M_AXI_S2MM [get_bd_intf_pins axi_dma_0/M_AXI_S2MM] [get_bd_intf_pins smartconnect_2/S00_AXI]
   connect_bd_intf_net -intf_net axi_dma_0_M_AXI_SG [get_bd_intf_pins axi_dma_0/M_AXI_SG] [get_bd_intf_pins smartconnect_2/S01_AXI]
-  connect_bd_intf_net -intf_net gig_ethernet_pcs_pma_0_sfp [get_bd_intf_ports sfp_gem] [get_bd_intf_pins gig_ethernet_pcs_pma_0/sfp]
+  connect_bd_intf_net -intf_net gig_ethernet_pcs_pma_0_sgmii [get_bd_intf_ports sfp_gem] [get_bd_intf_pins gig_ethernet_pcs_pma_0/sgmii]
   connect_bd_intf_net -intf_net in_system_ibert_0_GT0_DRP [get_bd_intf_pins gig_ethernet_pcs_pma_0/gt_drp] [get_bd_intf_pins in_system_ibert_0/GT0_DRP]
   connect_bd_intf_net -intf_net mollerTI_0_C2H [get_bd_intf_pins mollerTI_0/C2H] [get_bd_intf_pins ti_fifo/S_AXIS]
   connect_bd_intf_net -intf_net priority_switch_M00_AXIS [get_bd_intf_pins axi_dma_0/S_AXIS_S2MM] [get_bd_intf_pins packet_switch/M00_AXIS]
@@ -1974,6 +1974,7 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net smartconnect_2_M00_AXI [get_bd_intf_pins smartconnect_2/M00_AXI] [get_bd_intf_pins zynq_ultra_ps_e/S_AXI_HPC0_FPD]
   connect_bd_intf_net -intf_net ti_fifo_M_AXIS [get_bd_intf_pins packet_switch/S02_AXIS] [get_bd_intf_pins ti_fifo/M_AXIS]
   connect_bd_intf_net -intf_net zynq_ultra_ps_e_GMII_ENET1 [get_bd_intf_pins gig_ethernet_pcs_pma_0/gmii_gem_pcs_pma] [get_bd_intf_pins zynq_ultra_ps_e/GMII_ENET1]
+  set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_intf_nets zynq_ultra_ps_e_GMII_ENET1]
   connect_bd_intf_net -intf_net zynq_ultra_ps_e_MDIO_ENET1 [get_bd_intf_pins gig_ethernet_pcs_pma_0/mdio_pcs_pma] [get_bd_intf_pins zynq_ultra_ps_e/MDIO_ENET1]
   connect_bd_intf_net -intf_net zynq_ultra_ps_e_M_AXI_HPM0_FPD [get_bd_intf_pins smartconnect_1/S00_AXI] [get_bd_intf_pins zynq_ultra_ps_e/M_AXI_HPM0_FPD]
   connect_bd_intf_net -intf_net zynq_ultra_ps_e_M_AXI_HPM0_LPD [get_bd_intf_pins smartconnect_0/S00_AXI] [get_bd_intf_pins zynq_ultra_ps_e/M_AXI_HPM0_LPD]

@@ -34,7 +34,7 @@
 		rxd2-skew-ps = <420>;
 		rxd3-skew-ps = <420>;
 	};
-	phy1: phy@7 {
+	phy2: phy@7 {
 		reg = <7>;
 
 		txc-skew-ps = <1800>;
@@ -57,12 +57,13 @@
 
 &gem1 {
    status = "okay";
-   phy-handle = <&phy2>;
-   phy-mode = "gmii";
-   is-internal-pcspma;
-   phy2: phy@9 {
+   /delete-property/ local-mac-address;
+   phy-handle = <&phy1>;
+   phy-mode = "sgmii";
+   /* is-internal-pcspma; */
+   phy1: phy@9 {
       reg = <0x9>;
-      xlnx,phy-type = <0x5>;
+      xlnx,phy-type = <0x4>;
       reset-gpios = <&gpio 78 GPIO_ACTIVE_HIGH>;
    };
 };
@@ -70,6 +71,6 @@
 &gem3 {
 	status = "okay";
 	/delete-property/ local-mac-address;
-	phy-handle = <&phy1>;
+	phy-handle = <&phy2>;
 	phy-mode = "rgmii-id";
 };
