@@ -4,6 +4,7 @@ docker/*.tar.gz
 hdl/axsim.sh
 hdl/sim/adc/*.txt
 hdl/*.txt
+hdl/.ip_user_files
 
 vivado/
 !vivado/moller.xpr

@@ -11,6 +11,17 @@ if {![info exists vivado_dir]} { set vivado_dir "Vivado/${module_name}" }
 # Create project
 create_project ${project_name} ${vivado_dir} -force -part ${part}
 
+set_property "ip_repo_paths" "./src/moller_regmap_1.0 ./src/mollerTI_1.0 " [current_fileset]
+update_ip_catalog
+
+read_ip [ glob ./src/mmcm_adc/*.xci]
+generate_target all [get_files *mmcm_adc.xci]
+synth_ip [get_files *mmcm_adc.xci]
+
+read_ip [ glob ./src/adc_ts_fifo/*.xci]
+generate_target all [get_files *adc_ts_fifo.xci]
+synth_ip [get_files *adc_ts_fifo.xci]
+
 # Set project directory
 set proj_dir [get_property directory [current_project]]
 
@@ -30,13 +41,16 @@ if {[string equal [get_filesets -quiet constrs_1] ""]} {
 
 # add source and constraints to corresponding fileset
 add_files -norecurse -fileset sources_1 [glob -type f -directory src *.{sv,v,vhd,edn}]
+add_files -norecurse -fileset sources_1 [glob -type f -directory src/moller_regmap_1.0/src/ moller_regs_pkg.sv]
+add_files -norecurse -fileset sources_1 [glob -type f -directory src/util *.{sv,v,vhd,edn}]
+add_files -norecurse -fileset sources_1 [glob -type f -directory src/uwire *.{sv,v,vhd,edn}]
 add_files -norecurse -fileset constrs_1 [glob -type f -directory constraints *.{tcl,xdc}]
 
 # re-create block design
 # contains PS settings, IP instances, DDR settings
 # ################################################
 source scripts/${project_name}_bd.tcl
-add_files -norecurse src/bd/Mercury_XU1/Mercury_XU1.bd
+
 # ################################################
 
 # handle list of generics at level top

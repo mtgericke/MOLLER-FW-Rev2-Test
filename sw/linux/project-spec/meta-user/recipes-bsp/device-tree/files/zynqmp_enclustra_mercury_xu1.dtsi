@@ -14,8 +14,8 @@
 	status = "okay";
 	/delete-property/ local-mac-address;
 	phy-mode = "rgmii-id";
-	phy-handle = <&phy0>;
-	phy0: phy@3 {
+	phy-handle = <&phy1>;
+	phy1: phy@3 {
 		reg = <3>;
 
 		txc-skew-ps = <1800>;
@@ -59,11 +59,11 @@
    status = "okay";
    /delete-property/ local-mac-address;
    phy-handle = <&phy2>;
-   phy-mode = "sgmii";
+   phy-mode = "gmii";
    /* is-internal-pcspma; */
    phy2: phy@9 {
       reg = <0x9>;
-      xlnx,phy-type = <0x4>;
+      xlnx,phy-type = <0x5>;
       reset-gpios = <&gpio 78 GPIO_ACTIVE_HIGH>;
    };
 };

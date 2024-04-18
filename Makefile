@@ -8,8 +8,8 @@ SDCARD_ZIP := moller.zip
 SDCARD_DEV := /dev/FAKE
 SDCARD_BOOT_LABEL := BOOT
 SDCARD_ROOTFS_LABEL := PETALINUX
-USB_UART := /dev/ttyACM0
-DEVICE_IP := 192.168.1.229
+USB_UART ?= /dev/ttyACM0
+DEVICE_IP ?= 192.168.1.229
 SSH_KEY := .ssh/moller_root
 SSH_OPTIONS := -i ${SSH_KEY} -oHostKeyAlgorithms=+ssh-rsa -oPubkeyAcceptedAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
 
@@ -34,11 +34,9 @@ clean: ## Clean
 	@rm -f hdl/*.txt
 	@rm -rf hdl/.cache
 	@rm -rf hdl/.Xil
-	@rm -rf hdl/src/bd/Mercury_XU1/ip
-	@rm -rf hdl/src/bd/Mercury_XU1/ipshared
+	@rm -rf hdl/src/bd
 	@rm -rf hdl/.cache
 	@rm -rf hdl/xsim.dir
-	@rm -rf hdl/.Xil
 	@rm -rf hdl/xsim.dir
 	@rm -rf hdl/output/*.dcp
 	@rm -rf hdl/output/*.rpt
@@ -298,7 +296,7 @@ sdcard-format: ## Format SDCard image for petalinux
 	sudo sync
 
 ssh-update-sdcard: ## Copy files via SSH/SCP and reboot device
-	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk1p1/
+	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/rootfs.cpio.gz.u-boot sw/linux/images/linux/system.dtb root@${DEVICE_IP}:/media/sd-mmcblk1p1/
 	@scp ${SSH_OPTIONS} sw/linux/project-spec/configs/extlinux.conf root@${DEVICE_IP}:/media/sd-mmcblk1p1/extlinux/extlinux.conf
 	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} 'sync;'
 

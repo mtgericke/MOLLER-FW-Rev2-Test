@@ -1,8 +1,8 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-//Date        : Fri Apr 12 19:43:53 2024
-//Host        : edevel17 running 64-bit unknown
+//Date        : Thu Apr 18 00:55:07 2024
+//Host        : home running 64-bit unknown
 //Command     : generate_target Mercury_XU1_wrapper.bd
 //Design      : Mercury_XU1_wrapper
 //Purpose     : IP block netlist

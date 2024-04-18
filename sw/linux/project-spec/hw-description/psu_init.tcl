@@ -548,28 +548,28 @@ set psu_clock_init_data {
 		# This register controls this reference clock
 		#(OFFSET, MASK, VALUE)      (0XFF5E0050, 0x063F3F07U ,0x06010C00U)  */
     mask_write 0XFF5E0050 0x063F3F07 0x06010C00
-		# Register : GEM1_REF_CTRL @ 0XFF5E0054</p>
+		# Register : GEM2_REF_CTRL @ 0XFF5E0058</p>
 
 		# Clock active for the RX channel
-		# PSU_CRL_APB_GEM1_REF_CTRL_RX_CLKACT                                             0x1
+		# PSU_CRL_APB_GEM2_REF_CTRL_RX_CLKACT                                             0x1
 
 		# Clock active signal. Switch to 0 to disable the clock
-		# PSU_CRL_APB_GEM1_REF_CTRL_CLKACT                                                0x1
+		# PSU_CRL_APB_GEM2_REF_CTRL_CLKACT                                                0x1
 
 		# 6 bit divider
-		# PSU_CRL_APB_GEM1_REF_CTRL_DIVISOR1                                              0x1
+		# PSU_CRL_APB_GEM2_REF_CTRL_DIVISOR1                                              0x1
 
 		# 6 bit divider
-		# PSU_CRL_APB_GEM1_REF_CTRL_DIVISOR0                                              0xc
+		# PSU_CRL_APB_GEM2_REF_CTRL_DIVISOR0                                              0xc
 
 		# 000 = IOPLL; 010 = RPLL; 011 = DPLL; (This signal may only be toggled af
     # ter 4 cycles of the old clock and 4 cycles of the new clock. This is not
     #  usually an issue, but designers must be aware.)
-		# PSU_CRL_APB_GEM1_REF_CTRL_SRCSEL                                                0x0
+		# PSU_CRL_APB_GEM2_REF_CTRL_SRCSEL                                                0x0
 
 		# This register controls this reference clock
-		#(OFFSET, MASK, VALUE)      (0XFF5E0054, 0x063F3F07U ,0x06010C00U)  */
-    mask_write 0XFF5E0054 0x063F3F07 0x06010C00
+		#(OFFSET, MASK, VALUE)      (0XFF5E0058, 0x063F3F07U ,0x06010C00U)  */
+    mask_write 0XFF5E0058 0x063F3F07 0x06010C00
 		# Register : GEM3_REF_CTRL @ 0XFF5E005C</p>
 
 		# Clock active for the RX channel
@@ -594,17 +594,17 @@ set psu_clock_init_data {
     mask_write 0XFF5E005C 0x063F3F07 0x06010C00
 		# Register : GEM_CLK_CTRL @ 0XFF180308</p>
 
-		# PLL or PHY source selection for gem1_ref_clk generation 0: PLL Reference
+		# PLL or PHY source selection for gem2_ref_clk generation 0: PLL Reference
     #  clock 1: FMIO PLL clock or GTX Clock
-		# PSU_IOU_SLCR_GEM_CLK_CTRL_GEM1_REF_SRC_SEL                                      0x1
+		# PSU_IOU_SLCR_GEM_CLK_CTRL_GEM2_REF_SRC_SEL                                      0x1
 
-		# MIO or FMIO source selection for gem1_rx_clk generation 0: MIO clock 1:
+		# MIO or FMIO source selection for gem2_rx_clk generation 0: MIO clock 1:
     # FMIO clock
-		# PSU_IOU_SLCR_GEM_CLK_CTRL_GEM1_RX_SRC_SEL                                       0x1
+		# PSU_IOU_SLCR_GEM_CLK_CTRL_GEM2_RX_SRC_SEL                                       0x1
 
 		# SoC Debug Clock Control
-		#(OFFSET, MASK, VALUE)      (0XFF180308, 0x00000060U ,0x00000060U)  */
-    mask_write 0XFF180308 0x00000060 0x00000060
+		#(OFFSET, MASK, VALUE)      (0XFF180308, 0x00000C00U ,0x00000C00U)  */
+    mask_write 0XFF180308 0x00000C00 0x00000C00
 		# Register : GEM_TSU_REF_CTRL @ 0XFF5E0100</p>
 
 		# 6 bit divider
@@ -893,7 +893,7 @@ set psu_clock_init_data {
 		# PSU_CRL_APB_PL0_REF_CTRL_DIVISOR1                                               0x1
 
 		# 6 bit divider
-		# PSU_CRL_APB_PL0_REF_CTRL_DIVISOR0                                               0x6
+		# PSU_CRL_APB_PL0_REF_CTRL_DIVISOR0                                               0xc
 
 		# 000 = IOPLL; 010 = RPLL; 011 = DPLL; (This signal may only be toggled af
     # ter 4 cycles of the old clock and 4 cycles of the new clock. This is not
@@ -901,8 +901,8 @@ set psu_clock_init_data {
 		# PSU_CRL_APB_PL0_REF_CTRL_SRCSEL                                                 0x0
 
 		# This register controls this reference clock
-		#(OFFSET, MASK, VALUE)      (0XFF5E00C0, 0x013F3F07U ,0x01010600U)  */
-    mask_write 0XFF5E00C0 0x013F3F07 0x01010600
+		#(OFFSET, MASK, VALUE)      (0XFF5E00C0, 0x013F3F07U ,0x01010C00U)  */
+    mask_write 0XFF5E00C0 0x013F3F07 0x01010C00
 		# Register : PL1_REF_CTRL @ 0XFF5E00C4</p>
 
 		# Clock active signal. Switch to 0 to disable the clock
@@ -10966,7 +10966,7 @@ set psu_mio_init_data {
 		# Level 2 Mux Select 0= Level 3 Mux Output 1= sd0, Input, sd0_data_in[4]-
     # (8-bit Data bus) = sd0, Output, sdio0_data_out[4]- (8-bit Data bus) 2= s
     # d1, Input, sdio1_cd_n- (SD card detect from connector) 3= Not Used
-		# PSU_IOU_SLCR_MIO_PIN_45_L2_SEL                                                  2
+		# PSU_IOU_SLCR_MIO_PIN_45_L2_SEL                                                  0
 
 		# Level 3 Mux Select 0= gpio1, Input, gpio_1_pin_in[19]- (GPIO bank 1) 0=
     # gpio1, Output, gpio_1_pin_out[19]- (GPIO bank 1) 1= can1, Input, can1_ph
@@ -10978,8 +10978,8 @@ set psu_mio_init_data {
 		# PSU_IOU_SLCR_MIO_PIN_45_L3_SEL                                                  0
 
 		# Configures MIO Pin 45 peripheral interface mapping
-		#(OFFSET, MASK, VALUE)      (0XFF1800B4, 0x000000FEU ,0x00000010U)  */
-    mask_write 0XFF1800B4 0x000000FE 0x00000010
+		#(OFFSET, MASK, VALUE)      (0XFF1800B4, 0x000000FEU ,0x00000000U)  */
+    mask_write 0XFF1800B4 0x000000FE 0x00000000
 		# Register : MIO_PIN_46 @ 0XFF1800B8</p>
 
 		# Level 0 Mux Select 0= Level 1 Mux Output 1= gem1, Input, gem1_rgmii_rxd[
@@ -12007,7 +12007,7 @@ set psu_mio_init_data {
 		# PSU_IOU_SLCR_MIO_MST_TRI1_PIN_44_TRI                                            0
 
 		# Master Tri-state Enable for pin 45, active high
-		# PSU_IOU_SLCR_MIO_MST_TRI1_PIN_45_TRI                                            1
+		# PSU_IOU_SLCR_MIO_MST_TRI1_PIN_45_TRI                                            0
 
 		# Master Tri-state Enable for pin 46, active high
 		# PSU_IOU_SLCR_MIO_MST_TRI1_PIN_46_TRI                                            0
@@ -12064,8 +12064,8 @@ set psu_mio_init_data {
 		# PSU_IOU_SLCR_MIO_MST_TRI1_PIN_63_TRI                                            0
 
 		# MIO pin Tri-state Enables, 63:32
-		#(OFFSET, MASK, VALUE)      (0XFF180208, 0xFFFFFFFFU ,0x00B0207FU)  */
-    mask_write 0XFF180208 0xFFFFFFFF 0x00B0207F
+		#(OFFSET, MASK, VALUE)      (0XFF180208, 0xFFFFFFFFU ,0x00B0007FU)  */
+    mask_write 0XFF180208 0xFFFFFFFF 0x00B0007F
 		# Register : MIO_MST_TRI2 @ 0XFF18020C</p>
 
 		# Master Tri-state Enable for pin 64, active high
@@ -13716,15 +13716,15 @@ set psu_peripherals_init_data {
 		# GEM 0 reset
 		# PSU_CRL_APB_RST_LPD_IOU0_GEM0_RESET                                             0
 
-		# GEM 1 reset
-		# PSU_CRL_APB_RST_LPD_IOU0_GEM1_RESET                                             0
+		# GEM 2 reset
+		# PSU_CRL_APB_RST_LPD_IOU0_GEM2_RESET                                             0
 
 		# GEM 3 reset
 		# PSU_CRL_APB_RST_LPD_IOU0_GEM3_RESET                                             0
 
 		# Software controlled reset for the GEMs
-		#(OFFSET, MASK, VALUE)      (0XFF5E0230, 0x0000000BU ,0x00000000U)  */
-    mask_write 0XFF5E0230 0x0000000B 0x00000000
+		#(OFFSET, MASK, VALUE)      (0XFF5E0230, 0x0000000DU ,0x00000000U)  */
+    mask_write 0XFF5E0230 0x0000000D 0x00000000
 		# : QSPI
 		# Register : RST_LPD_IOU2 @ 0XFF5E0238</p>
 

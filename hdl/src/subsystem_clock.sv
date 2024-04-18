@@ -52,7 +52,7 @@ assign uwire_cfg_data = {
     32'h00140280, // CLK 0/1 ()
     32'h00141901, // CLK 2/3 ()
     32'h00140202, // CLK 4/5  (MGT B229/230 REFCLKs, 156.25)
-    32'h00140203, // CLK 6/7  (MGT B228/ REP OUT, 125)
+    32'h00140203, // CLK 6/7  (MGT B228/ REP OUT, 156.25)
     32'h00140284, // CLK 8/9  (CLKB / CLKA 125
     32'h00140145, // CLK 10/11 (250 MHz for TI)
     32'h00000006, // Disabling CLK 3/2/1/0. Originally: 32'h11110006

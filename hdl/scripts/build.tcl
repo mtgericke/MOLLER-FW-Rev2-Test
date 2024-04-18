@@ -10,6 +10,9 @@ set_part xczu6cg-ffvc900-1-e
 
 # STEP 1: setup design sources and constraints
 
+set_property "ip_repo_paths" "./src/moller_regmap_1.0 ./src/mollerTI_1.0 " [current_fileset]
+update_ip_catalog
+
 # Need the moller_regs_pkg.sv file to pass in the revision info back into the register map
 read_verilog -sv "./src/moller_regmap_1.0/src/moller_regs_pkg.sv"
 
@@ -17,11 +20,15 @@ read_verilog -sv [glob -type f -directory ./src *.{sv,v}]
 read_verilog -sv [glob -type f -directory ./src/uwire *.{sv,v}]
 read_verilog -sv [glob -type f -directory ./src/util *.{sv,v}]
 
-set_property "ip_repo_paths" "./src/moller_regmap_1.0 ./src/mollerTI_1.0 ./src/comblock/com_5501_10g_mac ./src/comblock/com_5503_10g_client" [current_fileset]
-update_ip_catalog
-
 read_bd [ glob ./src/bd/Mercury_XU1/*.bd ]
 open_bd_design [ glob ./src/bd/Mercury_XU1/*.bd ]
+write_bd_tcl -force ./scripts/moller_bd.tcl
+
+generate_target -force all [ get_files ./src/bd/Mercury_XU1/Mercury_XU1.bd ]
+export_ip_user_files -of_objects [get_files ./src/bd/Mercury_XU1/Mercury_XU1.bd] -no_script -sync -force -quiet
+# read_bd [ glob ./src/bd/Mercury_XU1/*.bd ]
+# validate_bd_design -force
+
 
 read_ip [ glob ./src/mmcm_adc/*.xci]
 generate_target all [get_files *mmcm_adc.xci]
@@ -31,17 +38,14 @@ read_ip [ glob ./src/adc_ts_fifo/*.xci]
 generate_target all [get_files *adc_ts_fifo.xci]
 synth_ip [get_files *adc_ts_fifo.xci]
 
-read_ip [ glob ./src/fifo_10g/*.xci]
-generate_target all [get_files *fifo_10g.xci]
-synth_ip [get_files *fifo_10g.xci]
-
+# read_ip [ glob ./src/fifo_10g/*.xci]
+# generate_target all [get_files *fifo_10g.xci]
+# synth_ip [get_files *fifo_10g.xci]
 
 report_ip_status
 
-validate_bd_design -force
-write_bd_tcl -force ./scripts/moller_bd.tcl
-generate_target -force all [ get_files ./src/bd/Mercury_XU1/Mercury_XU1.bd ]
 read_xdc [glob -type f -directory ./constraints *.{tcl,xdc}]
+
 
 # STEP 2: run synthesis, report utilization and timing estimates, write checkpoint design
 synth_design -top system_top

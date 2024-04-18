@@ -60,7 +60,7 @@ module system_top
     input wire RX_TI_SYNC_P,
     input wire RX_TI_SYNC_N,
 
-    // Oscillator from clock cleaner, should be 100MHz
+    // Oscillator from clock cleaner, should be 125MHz
     input wire CLNR_OSC_P,
     input wire CLNR_OSC_N,
 
@@ -289,7 +289,6 @@ endgenerate
 // Various Inputs
 IBUFDS diff_lvds_nim0       (	.O(nim_input[0]),	    .I(LVDS_NIM_P[0]),      .IB(LVDS_NIM_N[0]) );
 IBUFDS diff_lvds_nim1       (	.O(nim_input[1]),	    .I(LVDS_NIM_P[1]),      .IB(LVDS_NIM_N[1]) );
-IBUFDS diff_rx_ti_sync      (	.O(rx_ti_sync),	        .I(RX_TI_SYNC_P),       .IB(RX_TI_SYNC_N) );
 IBUFDS diff_clnr_osc        (	.O(clnr_osc),	        .I(CLNR_OSC_P),         .IB(CLNR_OSC_N) );        // 100 MHz VCXO
 IBUFDS diff_fpga_250_td     (	.O(fpga_clk250_td),	    .I(FPGA_CLK250_TD_P),   .IB(FPGA_CLK250_TD_N) );  // Cleaner CLK_OUT10
 
