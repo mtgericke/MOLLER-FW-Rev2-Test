@@ -32,6 +32,7 @@ clean: ## Clean
 	@rm -f hdl/*.wdb
 	@rm -f hdl/*.zip
 	@rm -f hdl/*.txt
+	@rm -rf hdl/.ip_user_files
 	@rm -rf hdl/.cache
 	@rm -rf hdl/.Xil
 	@rm -rf hdl/src/bd

@@ -4001,54 +4001,6 @@
       }
     },
     "interface_nets": {
-      "mollerTI_0_C2H": {
-        "interface_ports": [
-          "mollerTI_0/C2H",
-          "ti_fifo/S_AXIS"
-        ]
-      },
-      "priority_switch_M00_AXIS": {
-        "interface_ports": [
-          "axi_dma_0/S_AXIS_S2MM",
-          "packet_switch/M00_AXIS"
-        ]
-      },
-      "smartconnect_0_M01_AXI": {
-        "interface_ports": [
-          "mollerTI_0/S_AXI",
-          "smartconnect_0/M01_AXI"
-        ]
-      },
-      "ti_fifo_M_AXIS": {
-        "interface_ports": [
-          "packet_switch/S02_AXIS",
-          "ti_fifo/M_AXIS"
-        ]
-      },
-      "smartconnect_2_M00_AXI": {
-        "interface_ports": [
-          "smartconnect_2/M00_AXI",
-          "zynq_ultra_ps_e/S_AXI_HPC0_FPD"
-        ]
-      },
-      "zynq_ultra_ps_e_M_AXI_HPM0_LPD": {
-        "interface_ports": [
-          "smartconnect_0/S00_AXI",
-          "zynq_ultra_ps_e/M_AXI_HPM0_LPD"
-        ]
-      },
-      "zynq_ultra_ps_e_M_AXI_HPM0_FPD": {
-        "interface_ports": [
-          "smartconnect_1/S00_AXI",
-          "zynq_ultra_ps_e/M_AXI_HPM0_FPD"
-        ]
-      },
-      "sfp_data_refclk_1": {
-        "interface_ports": [
-          "sfp_refclk",
-          "gig_ethernet_pcs_pma_0/gtrefclk_in"
-        ]
-      },
       "zynq_ultra_ps_e_MDIO_ENET2": {
         "interface_ports": [
           "gig_ethernet_pcs_pma_0/mdio_pcs_pma",
@@ -4111,6 +4063,18 @@
           "in_system_ibert_0/GT0_DRP"
         ]
       },
+      "mollerTI_0_C2H": {
+        "interface_ports": [
+          "mollerTI_0/C2H",
+          "ti_fifo/S_AXIS"
+        ]
+      },
+      "priority_switch_M00_AXIS": {
+        "interface_ports": [
+          "axi_dma_0/S_AXIS_S2MM",
+          "packet_switch/M00_AXIS"
+        ]
+      },
       "run_fifo_M_AXIS": {
         "interface_ports": [
           "packet_switch/S00_AXIS",
@@ -4127,6 +4091,42 @@
         "interface_ports": [
           "axi_dma_0/S_AXI_LITE",
           "smartconnect_1/M00_AXI"
+        ]
+      },
+      "smartconnect_0_M01_AXI": {
+        "interface_ports": [
+          "mollerTI_0/S_AXI",
+          "smartconnect_0/M01_AXI"
+        ]
+      },
+      "ti_fifo_M_AXIS": {
+        "interface_ports": [
+          "packet_switch/S02_AXIS",
+          "ti_fifo/M_AXIS"
+        ]
+      },
+      "smartconnect_2_M00_AXI": {
+        "interface_ports": [
+          "smartconnect_2/M00_AXI",
+          "zynq_ultra_ps_e/S_AXI_HPC0_FPD"
+        ]
+      },
+      "zynq_ultra_ps_e_M_AXI_HPM0_LPD": {
+        "interface_ports": [
+          "smartconnect_0/S00_AXI",
+          "zynq_ultra_ps_e/M_AXI_HPM0_LPD"
+        ]
+      },
+      "zynq_ultra_ps_e_M_AXI_HPM0_FPD": {
+        "interface_ports": [
+          "smartconnect_1/S00_AXI",
+          "zynq_ultra_ps_e/M_AXI_HPM0_FPD"
+        ]
+      },
+      "sfp_data_refclk_1": {
+        "interface_ports": [
+          "sfp_refclk",
+          "gig_ethernet_pcs_pma_0/gtrefclk_in"
         ]
       }
     },
