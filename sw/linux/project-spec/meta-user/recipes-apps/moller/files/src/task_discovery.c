@@ -24,7 +24,7 @@ void* discovery_thread(void *vargp) {
 	eeprom_get_values(&logicalID, &devID);
 
 	// Wait until ethernet is up before continuing
-	while(!is_ip_assigned("eth0") && !is_ip_assigned("eth1")) {
+	while(!is_ip_assigned("eth0") || !is_ip_assigned("eth1")) {
 		sleep(1);
 	}
 

@@ -14,6 +14,9 @@
 #include <time.h>
 #include <errno.h>
 #include <sys/param.h>
+#include <ifaddrs.h>
+#include <netdb.h>
+#include <linux/if_link.h>
 
 #include <stdio.h>
 #include <zmq.h>
@@ -25,6 +28,7 @@
 #include "moller.h"
 
 static int UPDATE_RATE_PER_SECOND;
+static int is_ip_assigned(const char* intf_name);
 
 void* dma_thread(void *vargp) {
 
@@ -53,10 +57,17 @@ void* dma_thread(void *vargp) {
 
 	printf("Starting DMA Thread\n");
 
+
+	// Wait until ethernet is up before continuing
+	while(!is_ip_assigned("eth0") || !is_ip_assigned("eth1")) {
+		sleep(1);
+	}
+
+
 	pub = zmq_socket(context, ZMQ_PUB);
 	zmq_setsockopt(pub, ZMQ_SNDHWM, "", 32768);
 	zmq_setsockopt(pub, ZMQ_SNDBUF, "", 32768);
-	if(zmq_bind(pub, "tcp://*:5556") != 0) {
+	if(zmq_bind(pub, "tcp://0.0.0.0:5556") != 0) {
         printf("Failed to bind ZMQ to port 5556\n");
         pthread_exit(NULL);
     }
@@ -183,4 +194,30 @@ void* dma_thread(void *vargp) {
 	close(rx_proxy_fd);
 
 	pthread_exit(NULL);
+}
+
+static int is_ip_assigned(const char* intf_name) {
+	struct ifaddrs *ifaddr;
+	int family;
+	int s;
+	char host[NI_MAXHOST];
+
+	if (getifaddrs(&ifaddr) == -1) {
+		return 0;
+	}
+
+	for (struct ifaddrs *ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
+		if (ifa->ifa_addr == NULL)
+			continue;
+
+		// If we find the structure we are looking for, return immediately
+		if((strcmp(ifa->ifa_name, intf_name) == 0) && (ifa->ifa_addr->sa_family == AF_INET)) {
+			freeifaddrs(ifaddr);
+			return 1;
+		}
+	}
+
+	freeifaddrs(ifaddr);
+
+	return 0;
 }
