@@ -305,6 +305,8 @@ subsystem_clock clock_subsystem (
     .soc_ready( soc_ready ),
     .cc_locked( LMK_STAT_HOLDOVER ),
 
+    .clkin0_prediv( SW1[4:3] ),
+
     .clk_out_125( clk ),
     .rst_out_125( rst ),
 

@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x73283EEC0A240517",
+      "boundary_crc": "0x73283EEC97699654",
       "device": "xczu6cg-ffvc900-1-e",
       "name": "Mercury_XU1",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
@@ -132,10 +132,6 @@
           }
         }
       },
-      "sfp_gem": {
-        "mode": "Master",
-        "vlnv": "xilinx.com:interface:sfp_rtl:1.0"
-      },
       "sfp_refclk": {
         "mode": "Slave",
         "vlnv": "xilinx.com:interface:diff_clock_rtl:1.0",
@@ -145,9 +141,13 @@
             "value_src": "default"
           },
           "FREQ_HZ": {
-            "value": "156250000"
+            "value": "125000000"
           }
         }
+      },
+      "sfp_gem": {
+        "mode": "Master",
+        "vlnv": "xilinx.com:interface:sgmii_rtl:1.0"
       }
     },
     "ports": {
@@ -470,7 +470,7 @@
         "inst_hier_path": "an_adv_cfg",
         "parameters": {
           "CONST_VAL": {
-            "value": "32"
+            "value": "55297"
           },
           "CONST_WIDTH": {
             "value": "16"
@@ -601,7 +601,7 @@
             "value": "false"
           },
           "RefClkRate": {
-            "value": "156.25"
+            "value": "125"
           },
           "RxGmiiClkSrc": {
             "value": "TXOUTCLK"
@@ -610,7 +610,7 @@
             "value": "true"
           },
           "Standard": {
-            "value": "1000BASEX"
+            "value": "SGMII"
           },
           "SupportLevel": {
             "value": "Include_Shared_Logic_in_Core"
@@ -1057,7 +1057,10 @@
         "inst_hier_path": "zero",
         "parameters": {
           "CONST_VAL": {
-            "value": "0"
+            "value": "0x00"
+          },
+          "CONST_WIDTH": {
+            "value": "1"
           }
         }
       },
@@ -1559,20 +1562,11 @@
           "PSU_MIO_44_SLEW": {
             "value": "fast"
           },
-          "PSU_MIO_45_DRIVE_STRENGTH": {
-            "value": "12"
-          },
           "PSU_MIO_45_INPUT_TYPE": {
             "value": "cmos"
           },
-          "PSU_MIO_45_POLARITY": {
-            "value": "Default"
-          },
           "PSU_MIO_45_PULLUPDOWN": {
             "value": "pullup"
-          },
-          "PSU_MIO_45_SLEW": {
-            "value": "fast"
           },
           "PSU_MIO_46_DRIVE_STRENGTH": {
             "value": "12"
@@ -1953,10 +1947,10 @@
             "value": "fast"
           },
           "PSU_MIO_TREE_PERIPHERALS": {
-            "value": "Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Feedback Clk####I2C 0#I2C 0##SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0####Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#UART 0#UART 0#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#SD 1#SD 1#SD 1#SD 1#SD 1#SD 1#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#MDIO 0#MDIO 0"
+            "value": "Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Feedback Clk####I2C 0#I2C 0##SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0####Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#UART 0#UART 0#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#SD 1#SD 1#SD 1#SD 1#SD 1#SD 1#SD 1#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#MDIO 0#MDIO 0"
           },
           "PSU_MIO_TREE_SIGNALS": {
-            "value": "sclk_out#miso_mo1#mo2#mo3#mosi_mi0#n_ss_out#clk_for_lpbk####scl_out#sda_out##sdio0_data_out[0]#sdio0_data_out[1]#sdio0_data_out[2]#sdio0_data_out[3]#sdio0_data_out[4]#sdio0_data_out[5]#sdio0_data_out[6]#sdio0_data_out[7]#sdio0_cmd_out#sdio0_clk_out####rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#rxd#txd#gpio1[40]#gpio1[41]#gpio1[42]#gpio1[43]#gpio1[44]#gpio1[45]#sdio1_data_out[0]#sdio1_data_out[1]#sdio1_data_out[2]#sdio1_data_out[3]#sdio1_cmd_out#sdio1_clk_out#ulpi_clk_in#ulpi_dir#ulpi_tx_data[2]#ulpi_nxt#ulpi_tx_data[0]#ulpi_tx_data[1]#ulpi_stp#ulpi_tx_data[3]#ulpi_tx_data[4]#ulpi_tx_data[5]#ulpi_tx_data[6]#ulpi_tx_data[7]#rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#gem0_mdc#gem0_mdio_out"
+            "value": "sclk_out#miso_mo1#mo2#mo3#mosi_mi0#n_ss_out#clk_for_lpbk####scl_out#sda_out##sdio0_data_out[0]#sdio0_data_out[1]#sdio0_data_out[2]#sdio0_data_out[3]#sdio0_data_out[4]#sdio0_data_out[5]#sdio0_data_out[6]#sdio0_data_out[7]#sdio0_cmd_out#sdio0_clk_out####rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#rxd#txd#gpio1[40]#gpio1[41]#gpio1[42]#gpio1[43]#gpio1[44]#sdio1_cd_n#sdio1_data_out[0]#sdio1_data_out[1]#sdio1_data_out[2]#sdio1_data_out[3]#sdio1_cmd_out#sdio1_clk_out#ulpi_clk_in#ulpi_dir#ulpi_tx_data[2]#ulpi_nxt#ulpi_tx_data[0]#ulpi_tx_data[1]#ulpi_stp#ulpi_tx_data[3]#ulpi_tx_data[4]#ulpi_tx_data[5]#ulpi_tx_data[6]#ulpi_tx_data[7]#rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#gem0_mdc#gem0_mdio_out"
           },
           "PSU_SD0_INTERNAL_BUS_WIDTH": {
             "value": "8"
@@ -2505,10 +2499,10 @@
             "value": "IOPLL"
           },
           "PSU__CRL_APB__PL0_REF_CTRL__ACT_FREQMHZ": {
-            "value": "124.998749"
+            "value": "249.997498"
           },
           "PSU__CRL_APB__PL0_REF_CTRL__FREQMHZ": {
-            "value": "125"
+            "value": "250"
           },
           "PSU__CRL_APB__PL0_REF_CTRL__SRCSEL": {
             "value": "IOPLL"
@@ -4001,12 +3995,6 @@
       }
     },
     "interface_nets": {
-      "zynq_ultra_ps_e_MDIO_ENET2": {
-        "interface_ports": [
-          "gig_ethernet_pcs_pma_0/mdio_pcs_pma",
-          "zynq_ultra_ps_e/MDIO_ENET2"
-        ]
-      },
       "S_AXIS_0_1": {
         "interface_ports": [
           "run_fifo",
@@ -4027,40 +4015,34 @@
           }
         }
       },
-      "S_AXIS_1_1": {
-        "interface_ports": [
-          "adc_fifo",
-          "adc_fifo/S_AXIS"
-        ]
-      },
-      "adc_fifo_M_AXIS": {
-        "interface_ports": [
-          "adc_fifo/M_AXIS",
-          "packet_switch/S01_AXIS"
-        ]
-      },
-      "axi_dma_0_M_AXI_SG": {
-        "interface_ports": [
-          "axi_dma_0/M_AXI_SG",
-          "smartconnect_2/S01_AXI"
-        ]
-      },
       "axi_dma_0_M_AXI_S2MM": {
         "interface_ports": [
           "axi_dma_0/M_AXI_S2MM",
           "smartconnect_2/S00_AXI"
         ]
       },
-      "gig_ethernet_pcs_pma_0_sfp": {
-        "interface_ports": [
-          "sfp_gem",
-          "gig_ethernet_pcs_pma_0/sfp"
-        ]
-      },
       "in_system_ibert_0_GT0_DRP": {
         "interface_ports": [
           "gig_ethernet_pcs_pma_0/gt_drp",
           "in_system_ibert_0/GT0_DRP"
+        ]
+      },
+      "ti_fifo_M_AXIS": {
+        "interface_ports": [
+          "packet_switch/S02_AXIS",
+          "ti_fifo/M_AXIS"
+        ]
+      },
+      "zynq_ultra_ps_e_M_AXI_HPM0_LPD": {
+        "interface_ports": [
+          "smartconnect_0/S00_AXI",
+          "zynq_ultra_ps_e/M_AXI_HPM0_LPD"
+        ]
+      },
+      "gig_ethernet_pcs_pma_0_sgmii": {
+        "interface_ports": [
+          "sfp_gem",
+          "gig_ethernet_pcs_pma_0/sgmii"
         ]
       },
       "mollerTI_0_C2H": {
@@ -4099,24 +4081,6 @@
           "smartconnect_0/M01_AXI"
         ]
       },
-      "ti_fifo_M_AXIS": {
-        "interface_ports": [
-          "packet_switch/S02_AXIS",
-          "ti_fifo/M_AXIS"
-        ]
-      },
-      "smartconnect_2_M00_AXI": {
-        "interface_ports": [
-          "smartconnect_2/M00_AXI",
-          "zynq_ultra_ps_e/S_AXI_HPC0_FPD"
-        ]
-      },
-      "zynq_ultra_ps_e_M_AXI_HPM0_LPD": {
-        "interface_ports": [
-          "smartconnect_0/S00_AXI",
-          "zynq_ultra_ps_e/M_AXI_HPM0_LPD"
-        ]
-      },
       "zynq_ultra_ps_e_M_AXI_HPM0_FPD": {
         "interface_ports": [
           "smartconnect_1/S00_AXI",
@@ -4127,6 +4091,36 @@
         "interface_ports": [
           "sfp_refclk",
           "gig_ethernet_pcs_pma_0/gtrefclk_in"
+        ]
+      },
+      "smartconnect_2_M00_AXI": {
+        "interface_ports": [
+          "smartconnect_2/M00_AXI",
+          "zynq_ultra_ps_e/S_AXI_HPC0_FPD"
+        ]
+      },
+      "zynq_ultra_ps_e_MDIO_ENET2": {
+        "interface_ports": [
+          "gig_ethernet_pcs_pma_0/mdio_pcs_pma",
+          "zynq_ultra_ps_e/MDIO_ENET2"
+        ]
+      },
+      "S_AXIS_1_1": {
+        "interface_ports": [
+          "adc_fifo",
+          "adc_fifo/S_AXIS"
+        ]
+      },
+      "adc_fifo_M_AXIS": {
+        "interface_ports": [
+          "adc_fifo/M_AXIS",
+          "packet_switch/S01_AXIS"
+        ]
+      },
+      "axi_dma_0_M_AXI_SG": {
+        "interface_ports": [
+          "axi_dma_0/M_AXI_SG",
+          "smartconnect_2/S01_AXI"
         ]
       }
     },
