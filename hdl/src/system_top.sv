@@ -245,9 +245,8 @@ wire ext_lvds_in;
 
 wire [3:0] led_output;
 
-// assign ext_sig[1] = genoutp[3];
-// assign ext_sig[2] = genoutp[2];
-
+wire clock_sync;
+wire block_trigger;
 
 assign I2C_SCL_PL = 1'bZ;
 assign I2C_SDA_PL = 1'bZ;
@@ -266,7 +265,8 @@ assign DATA_RESETn = 1'bZ; // let it get pulled high
 assign DATA_ModSELn = 1'bZ; // determines which QSFP slots i2c is used
 
 assign ADC_CNVT_SEL = 1'b1;
-
+assign clock_sync = tcsout[6];
+assign block_trigger = genoutp[2];
 
 assign LED_DSP = (SW1[2]) ? led_output : { TTL_INPUT, nim_input };
 
