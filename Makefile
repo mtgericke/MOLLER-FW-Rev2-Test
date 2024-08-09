@@ -266,7 +266,7 @@ petalinux-app: ## Build petalinux app only
 
 sdcard-copy: ## Copy Petalinux to sdcard
 	mkdir -p /media/${USER}/${SDCARD_BOOT_LABEL}/extlinux
-	cp sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot /media/${USER}/${SDCARD_BOOT_LABEL}
+	cp sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot sw/linux/images/linux/system.dtb /media/${USER}/${SDCARD_BOOT_LABEL}
 	cp sw/linux/project-spec/configs/extlinux.conf /media/${USER}/${SDCARD_BOOT_LABEL}/extlinux/extlinux.conf
 	sync
 	sudo umount /media/${USER}/${SDCARD_BOOT_LABEL}
@@ -275,13 +275,14 @@ sdcard-copy: ## Copy Petalinux to sdcard
 create-zip: ## Make a zip of the required files
 	cp sw/linux/project-spec/configs/extlinux.conf sw/linux/images/linux/extlinux.conf; \
 	cd sw/linux/images/linux/; \
-	zip ../../../../moller_$(shell date +%Y%m%d).zip BOOT.BIN extlinux.conf Image rootfs.cpio.gz.u-boot
+	zip ../../../../moller_$(shell date +%Y%m%d).zip BOOT.BIN extlinux.conf Image rootfs.cpio.gz.u-boot system.dtb
 
 unzip-to-sdcard:
 	mkdir -p /media/${USER}/${SDCARD_BOOT_LABEL}/extlinux
 	unzip -p ${SDCARD_ZIP} BOOT.BIN >/media/${USER}/${SDCARD_BOOT_LABEL}/BOOT.BIN
 	unzip -p ${SDCARD_ZIP} extlinux.conf >/media/${USER}/${SDCARD_BOOT_LABEL}/extlinux/extlinux.conf
 	unzip -p ${SDCARD_ZIP} Image >/media/${USER}/${SDCARD_BOOT_LABEL}/Image
+	unzip -p ${SDCARD_ZIP} system.dtb >/media/${USER}/${SDCARD_BOOT_LABEL}/system.dtb
 	unzip -p ${SDCARD_ZIP} rootfs.cpio.gz.u-boot >/media/${USER}/${SDCARD_BOOT_LABEL}/rootfs.cpio.gz.u-boot
 	sudo sync
 
@@ -302,7 +303,7 @@ ssh-update-sdcard: ## Copy files via SSH/SCP and reboot device
 	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} 'sync;'
 
 ssh-update-emmc:
-	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot root@${DEVICE_IP}:/media/sd-mmcblk0p1/
+	@scp ${SSH_OPTIONS} sw/linux/images/linux/BOOT.BIN sw/linux/images/linux/Image sw/linux/images/linux/rootfs.cpio.gz.u-boot sw/linux/images/linux/system.dtb root@${DEVICE_IP}:/media/sd-mmcblk0p1/
 	@scp ${SSH_OPTIONS} sw/linux/project-spec/configs/extlinux.conf  root@${DEVICE_IP}:/media/sd-mmcblk0p1/extlinux/extlinux.conf
 	@ssh ${SSH_OPTIONS} -t root@${DEVICE_IP} 'sync'
 
