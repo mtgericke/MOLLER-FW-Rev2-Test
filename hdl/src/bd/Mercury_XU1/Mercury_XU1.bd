@@ -17,7 +17,6 @@
       "axprot_unsecure": "",
       "gig_ethernet_pcs_pma_0": "",
       "in_system_ibert_0": "",
-      "mollerTI_0": "",
       "moller_regmap": "",
       "packet_switch": "",
       "phy_cfg": "",
@@ -33,7 +32,8 @@
       "xlconstant_0": "",
       "xlslice_0": "",
       "zero": "",
-      "zynq_ultra_ps_e": ""
+      "zynq_ultra_ps_e": "",
+      "mollerTI_0": ""
     },
     "interface_ports": {
       "adc_fifo": {
@@ -147,7 +147,7 @@
       },
       "sfp_gem": {
         "mode": "Master",
-        "vlnv": "xilinx.com:interface:sgmii_rtl:1.0"
+        "vlnv": "xilinx.com:interface:sfp_rtl:1.0"
       }
     },
     "ports": {
@@ -470,7 +470,7 @@
         "inst_hier_path": "an_adv_cfg",
         "parameters": {
           "CONST_VAL": {
-            "value": "55297"
+            "value": "32"
           },
           "CONST_WIDTH": {
             "value": "16"
@@ -601,7 +601,7 @@
             "value": "false"
           },
           "RefClkRate": {
-            "value": "125"
+            "value": "156.25"
           },
           "RxGmiiClkSrc": {
             "value": "TXOUTCLK"
@@ -610,7 +610,7 @@
             "value": "true"
           },
           "Standard": {
-            "value": "SGMII"
+            "value": "1000BASEX"
           },
           "SupportLevel": {
             "value": "Include_Shared_Logic_in_Core"
@@ -633,12 +633,6 @@
             "value": " X1Y4"
           }
         }
-      },
-      "mollerTI_0": {
-        "vlnv": "user.org:user:mollerTI:1.0",
-        "xci_name": "Mercury_XU1_mollerTI_0_0",
-        "xci_path": "ip/Mercury_XU1_mollerTI_0_0/Mercury_XU1_mollerTI_0_0.xci",
-        "inst_hier_path": "mollerTI_0"
       },
       "moller_regmap": {
         "vlnv": "TRIUMF:user:moller_regmap:1.2",
@@ -1057,7 +1051,7 @@
         "inst_hier_path": "zero",
         "parameters": {
           "CONST_VAL": {
-            "value": "0x00"
+            "value": "0"
           },
           "CONST_WIDTH": {
             "value": "1"
@@ -1562,11 +1556,20 @@
           "PSU_MIO_44_SLEW": {
             "value": "fast"
           },
+          "PSU_MIO_45_DRIVE_STRENGTH": {
+            "value": "12"
+          },
           "PSU_MIO_45_INPUT_TYPE": {
             "value": "cmos"
           },
+          "PSU_MIO_45_POLARITY": {
+            "value": "Default"
+          },
           "PSU_MIO_45_PULLUPDOWN": {
             "value": "pullup"
+          },
+          "PSU_MIO_45_SLEW": {
+            "value": "fast"
           },
           "PSU_MIO_46_DRIVE_STRENGTH": {
             "value": "12"
@@ -1947,10 +1950,10 @@
             "value": "fast"
           },
           "PSU_MIO_TREE_PERIPHERALS": {
-            "value": "Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Feedback Clk####I2C 0#I2C 0##SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0####Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#UART 0#UART 0#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#SD 1#SD 1#SD 1#SD 1#SD 1#SD 1#SD 1#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#MDIO 0#MDIO 0"
+            "value": "Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Quad SPI Flash#Feedback Clk####I2C 0#I2C 0##SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0#SD 0####Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#Gem 0#UART 0#UART 0#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#GPIO1 MIO#SD 1#SD 1#SD 1#SD 1#SD 1#SD 1#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#USB 0#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#Gem 3#MDIO 0#MDIO 0"
           },
           "PSU_MIO_TREE_SIGNALS": {
-            "value": "sclk_out#miso_mo1#mo2#mo3#mosi_mi0#n_ss_out#clk_for_lpbk####scl_out#sda_out##sdio0_data_out[0]#sdio0_data_out[1]#sdio0_data_out[2]#sdio0_data_out[3]#sdio0_data_out[4]#sdio0_data_out[5]#sdio0_data_out[6]#sdio0_data_out[7]#sdio0_cmd_out#sdio0_clk_out####rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#rxd#txd#gpio1[40]#gpio1[41]#gpio1[42]#gpio1[43]#gpio1[44]#sdio1_cd_n#sdio1_data_out[0]#sdio1_data_out[1]#sdio1_data_out[2]#sdio1_data_out[3]#sdio1_cmd_out#sdio1_clk_out#ulpi_clk_in#ulpi_dir#ulpi_tx_data[2]#ulpi_nxt#ulpi_tx_data[0]#ulpi_tx_data[1]#ulpi_stp#ulpi_tx_data[3]#ulpi_tx_data[4]#ulpi_tx_data[5]#ulpi_tx_data[6]#ulpi_tx_data[7]#rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#gem0_mdc#gem0_mdio_out"
+            "value": "sclk_out#miso_mo1#mo2#mo3#mosi_mi0#n_ss_out#clk_for_lpbk####scl_out#sda_out##sdio0_data_out[0]#sdio0_data_out[1]#sdio0_data_out[2]#sdio0_data_out[3]#sdio0_data_out[4]#sdio0_data_out[5]#sdio0_data_out[6]#sdio0_data_out[7]#sdio0_cmd_out#sdio0_clk_out####rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#rxd#txd#gpio1[40]#gpio1[41]#gpio1[42]#gpio1[43]#gpio1[44]#gpio1[45]#sdio1_data_out[0]#sdio1_data_out[1]#sdio1_data_out[2]#sdio1_data_out[3]#sdio1_cmd_out#sdio1_clk_out#ulpi_clk_in#ulpi_dir#ulpi_tx_data[2]#ulpi_nxt#ulpi_tx_data[0]#ulpi_tx_data[1]#ulpi_stp#ulpi_tx_data[3]#ulpi_tx_data[4]#ulpi_tx_data[5]#ulpi_tx_data[6]#ulpi_tx_data[7]#rgmii_tx_clk#rgmii_txd[0]#rgmii_txd[1]#rgmii_txd[2]#rgmii_txd[3]#rgmii_tx_ctl#rgmii_rx_clk#rgmii_rxd[0]#rgmii_rxd[1]#rgmii_rxd[2]#rgmii_rxd[3]#rgmii_rx_ctl#gem0_mdc#gem0_mdio_out"
           },
           "PSU_SD0_INTERNAL_BUS_WIDTH": {
             "value": "8"
@@ -2499,10 +2502,10 @@
             "value": "IOPLL"
           },
           "PSU__CRL_APB__PL0_REF_CTRL__ACT_FREQMHZ": {
-            "value": "249.997498"
+            "value": "124.998749"
           },
           "PSU__CRL_APB__PL0_REF_CTRL__FREQMHZ": {
-            "value": "250"
+            "value": "125"
           },
           "PSU__CRL_APB__PL0_REF_CTRL__SRCSEL": {
             "value": "IOPLL"
@@ -3992,9 +3995,21 @@
             "memory_map_ref": "SAXIGP0"
           }
         }
+      },
+      "mollerTI_0": {
+        "vlnv": "user.org:user:mollerTI:1.0",
+        "xci_name": "Mercury_XU1_mollerTI_0_0",
+        "xci_path": "ip/Mercury_XU1_mollerTI_0_0/Mercury_XU1_mollerTI_0_0.xci",
+        "inst_hier_path": "mollerTI_0"
       }
     },
     "interface_nets": {
+      "zynq_ultra_ps_e_MDIO_ENET2": {
+        "interface_ports": [
+          "gig_ethernet_pcs_pma_0/mdio_pcs_pma",
+          "zynq_ultra_ps_e/MDIO_ENET2"
+        ]
+      },
       "S_AXIS_0_1": {
         "interface_ports": [
           "run_fifo",
@@ -4037,12 +4052,6 @@
         "interface_ports": [
           "smartconnect_0/S00_AXI",
           "zynq_ultra_ps_e/M_AXI_HPM0_LPD"
-        ]
-      },
-      "gig_ethernet_pcs_pma_0_sgmii": {
-        "interface_ports": [
-          "sfp_gem",
-          "gig_ethernet_pcs_pma_0/sgmii"
         ]
       },
       "mollerTI_0_C2H": {
@@ -4099,12 +4108,6 @@
           "zynq_ultra_ps_e/S_AXI_HPC0_FPD"
         ]
       },
-      "zynq_ultra_ps_e_MDIO_ENET2": {
-        "interface_ports": [
-          "gig_ethernet_pcs_pma_0/mdio_pcs_pma",
-          "zynq_ultra_ps_e/MDIO_ENET2"
-        ]
-      },
       "S_AXIS_1_1": {
         "interface_ports": [
           "adc_fifo",
@@ -4121,6 +4124,12 @@
         "interface_ports": [
           "axi_dma_0/M_AXI_SG",
           "smartconnect_2/S01_AXI"
+        ]
+      },
+      "gig_ethernet_pcs_pma_0_sfp": {
+        "interface_ports": [
+          "sfp_gem",
+          "gig_ethernet_pcs_pma_0/sfp"
         ]
       }
     },
@@ -4155,11 +4164,11 @@
         "ports": [
           "clk_125",
           "adc_fifo/s_axis_aclk",
-          "mollerTI_0/s_axi_aclk",
           "moller_regmap/s00_axi_aclk",
           "run_fifo/s_axis_aclk",
           "smartconnect_0/aclk1",
-          "ti_fifo/s_axis_aclk"
+          "ti_fifo/s_axis_aclk",
+          "mollerTI_0/s_axi_aclk"
         ]
       },
       "Net1": {
@@ -4535,10 +4544,10 @@
         "ports": [
           "rst_125_n",
           "adc_fifo/s_axis_aresetn",
-          "mollerTI_0/s_axi_aresetn",
           "moller_regmap/s00_axi_aresetn",
           "run_fifo/s_axis_aresetn",
-          "ti_fifo/s_axis_aresetn"
+          "ti_fifo/s_axis_aresetn",
+          "mollerTI_0/s_axi_aresetn"
         ]
       },
       "run_fifo_axis_rd_data_count": {
