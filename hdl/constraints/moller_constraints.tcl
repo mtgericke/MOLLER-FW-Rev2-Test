@@ -239,13 +239,13 @@ set_property -dict {PACKAGE_PIN AE8 IOSTANDARD LVCMOS18} [get_ports {LED2_N_PWR_
 set_property -dict {PACKAGE_PIN N8} [get_ports {MGT_B228_REFCLK1_P}]
 set_property -dict {PACKAGE_PIN N7} [get_ports {MGT_B228_REFCLK1_N}]
 
-# set_property -dict {PACKAGE_PIN G8} [get_ports {MGT_B230_REFCLK0_P}]
-# set_property -dict {PACKAGE_PIN G7} [get_ports {MGT_B230_REFCLK0_N}]
+set_property -dict {PACKAGE_PIN G8} [get_ports {MGT_B230_REFCLK0_P}]
+set_property -dict {PACKAGE_PIN G7} [get_ports {MGT_B230_REFCLK0_N}]
 
-# set_property -dict {PACKAGE_PIN D6} [get_ports {MGT_B230_TX0_P}]
-# set_property -dict {PACKAGE_PIN D5} [get_ports {MGT_B230_TX0_N}]
-# set_property -dict {PACKAGE_PIN D2} [get_ports {MGT_B230_RX0_P}]
-# set_property -dict {PACKAGE_PIN D1} [get_ports {MGT_B230_RX0_N}]
+set_property -dict {PACKAGE_PIN D6} [get_ports {MGT_B230_TX0_P}]
+set_property -dict {PACKAGE_PIN D5} [get_ports {MGT_B230_TX0_N}]
+set_property -dict {PACKAGE_PIN D2} [get_ports {MGT_B230_RX0_P}]
+set_property -dict {PACKAGE_PIN D1} [get_ports {MGT_B230_RX0_N}]
 
 # set_property -dict {PACKAGE_PIN C8} [get_ports {MGT_B230_TX1_P}]
 # set_property -dict {PACKAGE_PIN C7} [get_ports {MGT_B230_TX1_N}]

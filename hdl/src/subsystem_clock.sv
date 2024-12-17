@@ -50,19 +50,19 @@ assign rst_out_250 = rst_250;
 
 // LMK04816 Clock cleaner configuration
 assign uwire_cfg_data = {
-    32'h80160140, // CLK 0/1 (250MHz for TI)
-    32'h00140280, // CLK 0/1 ()
-    32'h00141901, // CLK 2/3 ()
-    32'h00140202, // CLK 4/5  (MGT B229/230 REFCLKs, 156.25)
-    32'h00140283, // CLK 6/7  (MGT B228/ REP OUT, 125)
-    32'h00140284, // CLK 8/9  (CLKB / CLKA 125
-    32'h00140145, // CLK 10/11 (250 MHz for TI)
-    32'h00000006, // Disabling CLK 3/2/1/0. Originally: 32'h11110006
-    32'h11110007,
-    32'h11000008, // Disabling CLK 9/8. Orignally 32'h11110008
-    32'h55555549,
-    32'h914249AA,
-    32'h1403000B,
+    32'h00160140, // R0 CLK 0/1 TI - 250MHz (Reset)
+    32'h00140140, // R0 CLK 0/1 TI - 250MHz
+    32'h00140281, // R1 CLK 2/3 SOM A/B IN - 125MHz
+    32'h00140202, // 32'h00140202, // R2 CLK 4/5  (MGT B229/230 REFCLKs, 156.25)
+    32'h00140283, // R3 CLK 6/7  (MGT B228/ REP OUT, 125)
+    32'h00140144, // R4 CLK 8/9  SMA1 250 MHz
+    32'h00140285, // R5 CLK 10/11 SMA0 125 MHz
+    32'h11110006, // R6 All clocks enabled
+    32'h01110007, // R7 Disabling CLK 7 (unconnected)
+    32'h01010008, // R8 Disabling CLK 11 & 9 (unconnected)
+    32'h55555549, // RESERVED
+    32'h114249AA, // OSCout0_TYPE=LVDS, EN_OSCOut0=1, OSCOut0_MUX=0, OSCOutDIV=0x02, VCO_MUX=0, EN_FEEDBACK=1, VCO_DIV=1, FEEDBACK_MUX=b101
+    32'h1403000B, //
     32'h0B8C01AC,
     32'h130086ED,
     32'h1000000E,

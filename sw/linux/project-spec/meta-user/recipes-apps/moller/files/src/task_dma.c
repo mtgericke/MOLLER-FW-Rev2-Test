@@ -59,7 +59,7 @@ void* dma_thread(void *vargp) {
 
 
 	// Wait until ethernet is up before continuing
-	while(!is_ip_assigned("eth0") || !is_ip_assigned("eth1")) {
+	while(!is_ip_assigned("eth0") && !is_ip_assigned("eth1")) {
 		sleep(1);
 	}
 

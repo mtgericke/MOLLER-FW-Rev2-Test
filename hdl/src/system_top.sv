@@ -96,7 +96,7 @@ module system_top
     output wire MGT_B228_TX0_P,
     output wire MGT_B228_TX0_N,
     input wire MGT_B228_RX0_P,
-    input wire MGT_B228_RX0_N
+    input wire MGT_B228_RX0_N,
 
     /*
     output wire MGT_B228_TX1_P,
@@ -107,7 +107,7 @@ module system_top
 
     // input wire MGT_B229_REFCLK1_P,
     // input wire MGT_B229_REFCLK1_N,
-    /*
+
     input wire MGT_B230_REFCLK0_P,
     input wire MGT_B230_REFCLK0_N,
 
@@ -115,7 +115,6 @@ module system_top
     output wire MGT_B230_TX0_N,
     input wire MGT_B230_RX0_P,
     input wire MGT_B230_RX0_N
-    */
 
     /*
     // DATA QSFP 10/100/1000/2500 ethernet
