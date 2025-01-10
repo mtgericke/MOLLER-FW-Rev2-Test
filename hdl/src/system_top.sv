@@ -166,7 +166,6 @@ wire fpga_clk250_td;
 
 wire adc_clk;
 wire adc_convert;
-wire adc_ready;
 
 wire adc_data_valid;
 wire [NUM_ADC_CH-1:0] adc_ch_valid;
@@ -331,7 +330,7 @@ subsystem_led #(
 ) led_subsystem (
     .clk( clk ),
     .rst( rst ),
-    .led_in( {LMK_STAT_LD, LMK_STAT_HOLDOVER, ctrl_adc_testpat, adc_ready} ), // LED position order: top, middle top, middle bottom, bottom
+    .led_in( {LMK_STAT_LD, LMK_STAT_HOLDOVER, ctrl_adc_testpat, stream_ena} ), // LED position order: top, middle top, middle bottom, bottom
     .led_out( led_output ),
     .ready( led_ready )
 );

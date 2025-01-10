@@ -77,7 +77,7 @@ set_property -dict {PACKAGE_PIN K12 IOSTANDARD LVCMOS25} [get_ports {SEL_TI_MGTn
 set_property -dict {PACKAGE_PIN AH11 IOSTANDARD LVCMOS18} [get_ports {ADC_PDn}]
 
 set_property -dict {PACKAGE_PIN J10 IOSTANDARD LVCMOS25} [get_ports {ADC_CNVT_SEL}]
-set_property -dict {PACKAGE_PIN J11 IOSTANDARD LVCMOS25} [get_ports {TACH1}]
+set_property -dict {PACKAGE_PIN AJ1 IOSTANDARD LVCMOS25} [get_ports {TACH1}]
 set_property -dict {PACKAGE_PIN H11 IOSTANDARD LVCMOS25} [get_ports {TACH2}]
 set_property -dict {PACKAGE_PIN J12 IOSTANDARD LVCMOS25} [get_ports {TACH3}]
 
