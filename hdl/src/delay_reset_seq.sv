@@ -17,7 +17,7 @@ module delay_reset_seq #(
 );
 
 localparam ST_RESET = 1, ST_IDLE = 2, ST_START_LOAD = 4, ST_LOAD = 8, ST_FINISH_LOAD = 16;
-localparam DELAY_WAIT = 10;
+localparam DELAY_WAIT = 20;
 
 reg en_vtc;
 reg load;
@@ -49,7 +49,7 @@ always@(posedge clk, posedge rst) begin
 
         ST_IDLE: begin
             state <= (r_current_value == load_value) ? ST_IDLE : ST_START_LOAD;
-            en_vtc <= 1'b1;
+            en_vtc <= 1'b0; // changed to 1'b0 when using COUNT
             load <= 1'b0;
             done <= (r_current_value == load_value) ? 1'b1 : 1'b0;
             state_count <= DELAY_WAIT;
@@ -90,7 +90,7 @@ end
 IDELAYE3 #(
     .SIM_DEVICE("ULTRASCALE_PLUS"),
     .CASCADE("NONE"),       // Cascade setting(NONE,MASTER,SLAVE_END,SLAVE_MIDDLE)
-    .DELAY_FORMAT("TIME"),  // Units of the DELAY_VALUE(TIME,COUNT)
+    .DELAY_FORMAT("COUNT"),  // Units of the DELAY_VALUE(TIME,COUNT)
     .DELAY_SRC("IDATAIN"),  // Delay input(IDATAIN,DATAIN)
     .DELAY_TYPE("VAR_LOAD"),   // Set thet ype of tap delay line(FIXED,VAR_LOAD,VARIABLE)
     .DELAY_VALUE(0),        // Input delay value setting

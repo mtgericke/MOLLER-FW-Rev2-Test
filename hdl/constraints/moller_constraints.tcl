@@ -77,7 +77,7 @@ set_property -dict {PACKAGE_PIN K12 IOSTANDARD LVCMOS25} [get_ports {SEL_TI_MGTn
 set_property -dict {PACKAGE_PIN AH11 IOSTANDARD LVCMOS18} [get_ports {ADC_PDn}]
 
 set_property -dict {PACKAGE_PIN J10 IOSTANDARD LVCMOS25} [get_ports {ADC_CNVT_SEL}]
-set_property -dict {PACKAGE_PIN AJ1 IOSTANDARD LVCMOS25} [get_ports {TACH1}]
+set_property -dict {PACKAGE_PIN AJ1 IOSTANDARD LVCMOS18} [get_ports {TACH1}]
 set_property -dict {PACKAGE_PIN H11 IOSTANDARD LVCMOS25} [get_ports {TACH2}]
 set_property -dict {PACKAGE_PIN J12 IOSTANDARD LVCMOS25} [get_ports {TACH3}]
 
@@ -165,11 +165,11 @@ set_property -dict {PACKAGE_PIN AB1 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get
 set_property -dict {PACKAGE_PIN AA3 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {ADC_DA_P[6]}]
 set_property -dict {PACKAGE_PIN AA2 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {ADC_DA_N[6]}]
 
-# set_property -dict {PACKAGE_PIN V7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_P[0]}]
-# set_property -dict {PACKAGE_PIN V6 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_N[0]}]
+set_property -dict {PACKAGE_PIN V7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_P[0]}]
+set_property -dict {PACKAGE_PIN V6 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_N[0]}]
 
-# set_property -dict {PACKAGE_PIN AC7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_P[1]}]
-# set_property -dict {PACKAGE_PIN AD7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_N[1]}]
+set_property -dict {PACKAGE_PIN AC7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_P[1]}]
+set_property -dict {PACKAGE_PIN AD7 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {SOM_IN_CLK_N[1]}]
 
 set_property -dict {PACKAGE_PIN AF10 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {LVDS_NIM_P[0]}]
 set_property -dict {PACKAGE_PIN AG10 IOSTANDARD LVDS DIFF_TERM_ADV TERM_100} [get_ports {LVDS_NIM_N[0]}]

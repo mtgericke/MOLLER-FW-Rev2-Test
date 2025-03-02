@@ -1,12 +1,13 @@
 
 module subsystem_clock (
-    input wire clk_osc_125, // oscillator 125MHz
+    input wire clk_osc, // oscillator 125MHz
     input wire clk_cc_250, // clock cleaner 250 MHz output (TD_250)
 
-    input wire cc_locked,
     input wire soc_ready,
 
     input wire [1:0] clkin0_prediv,
+
+    input wire [1:0] som_in_clk,
 
     output wire clk_out_125,
     output wire rst_out_125,
@@ -27,7 +28,7 @@ module subsystem_clock (
     output wire [31:0] fc_clk_td
 );
 
-localparam FREQ_OSCILLATOR = 125000000;
+localparam FREQ_OSCILLATOR = 100000000;
 localparam FREQ_125 = 125000000;
 localparam NUM_UWIRE_DATA_WORDS = 26;
 
@@ -61,10 +62,10 @@ assign uwire_cfg_data = {
     32'h01110007, // R7 Disabling CLK 7 (unconnected)
     32'h01010008, // R8 Disabling CLK 11 & 9 (unconnected)
     32'h55555549, // RESERVED
-    32'h114249AA, // OSCout0_TYPE=LVDS, EN_OSCOut0=1, OSCOut0_MUX=0, OSCOutDIV=0x02, VCO_MUX=0, EN_FEEDBACK=1, VCO_DIV=1, FEEDBACK_MUX=b101
+    32'h1142490A, // OSCout0_TYPE=LVDS, EN_OSCOut0=1, OSCOut0_MUX=0, OSCOutDIV=0x02, VCO_MUX=0, EN_FEEDBACK=1, VCO_DIV=1, FEEDBACK_MUX=b000
     32'h1403000B, //
-    32'h0B8C01AC,
-    32'h130086ED,
+    32'h1B8C01AC,
+    32'h230086ED,
     32'h1000000E,
     32'h8000800F,
     32'hC1550410,
@@ -78,25 +79,25 @@ assign uwire_cfg_data = {
     32'h001F001F
 };
 
-reg [2:0] r_soc_ready_sync;
+reg [15:0] r_soc_ready_sync;
 reg r_soc_ready;
 always@(posedge clk_out_125) begin
-    r_soc_ready_sync <= { r_soc_ready_sync[1:0], soc_ready };
+    r_soc_ready_sync <= { r_soc_ready_sync[14:0], soc_ready };
     r_soc_ready <= &r_soc_ready_sync;
 end
 
-reg [5:0] r_soc_ready_sync_250; // make twice as long as 125MHz version of signal so they come out of reset closer to each other
+reg [31:0] r_soc_ready_sync_250; // make twice as long as 125MHz version of signal so they come out of reset closer to each other
 reg r_soc_ready_250;
 always@(posedge clk_out_250) begin
-    r_soc_ready_sync_250 <= { r_soc_ready_sync_250[4:0], soc_ready };
+    r_soc_ready_sync_250 <= { r_soc_ready_sync_250[30:0], soc_ready };
     r_soc_ready_250 <= &r_soc_ready_sync_250;
 end
 
 reg [15:0] r_cc_locked_sync;
 reg r_cc_locked;
 reg [31:0] rst_osc_delay = 32'h0;
-always@(posedge clk_osc_125) begin
-    r_cc_locked_sync <= { r_cc_locked_sync[14:0], cc_locked };
+always@(posedge clk_osc) begin
+    r_cc_locked_sync <= { r_cc_locked_sync[14:0], uwire_done  };
     r_cc_locked <= &r_cc_locked_sync;
 
     rst_osc_delay <= (rst_osc_delay < 32'd125000000) ? rst_osc_delay + 1'b1 : rst_osc_delay;
@@ -117,7 +118,7 @@ end
 uwire_lmk04816 #(
     .CLK_PERIOD(FREQ_OSCILLATOR) // clk = 125 MHz, so 8ns period
 ) cleaner_uwire (
-    .clk	    ( clk_osc_125 ),
+    .clk	    ( clk_osc ),
     .rst	    ( rst_osc ),
     .start	    ( uwire_start ),
     .d		    ( uwire_cfg_q ),
@@ -130,7 +131,7 @@ uwire_lmk04816 #(
 uwire_loader #(
     .NUM_WORDS(NUM_UWIRE_DATA_WORDS)
 ) cleaner_loader (
-    .clk    ( clk_osc_125 ),
+    .clk    ( clk_osc ),
     .rst    ( rst_osc ),
     .d	    ( uwire_cfg_data ),
     .q	    ( uwire_cfg_q ),
@@ -158,8 +159,27 @@ freq_counter #(
 ) fc_osc (
     .clk        ( clk_out_125 ),
     .rst        ( rst_out_125 ),
-    .clk_freq   ( clk_osc_125 ),
+    .clk_freq   ( clk_osc ),
     .q          ( fc_clk_osc )
+);
+
+freq_counter #(
+    .REF_FREQ(FREQ_125)
+) fc_som0 (
+    .clk        ( clk_out_125 ),
+    .rst        ( rst_out_125 ),
+    .clk_freq   ( som_in_clk[0] ),
+    .q          ( fc_clk_som_in[0] )
+);
+
+
+freq_counter #(
+    .REF_FREQ(FREQ_125)
+) fc_som1 (
+    .clk        ( clk_out_125 ),
+    .rst        ( rst_out_125 ),
+    .clk_freq   ( som_in_clk[1] ),
+    .q          ( fc_clk_som_in[1] )
 );
 
 freq_counter #(

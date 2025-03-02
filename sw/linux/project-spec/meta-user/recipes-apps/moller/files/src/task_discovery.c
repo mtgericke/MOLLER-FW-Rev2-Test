@@ -24,9 +24,11 @@ void* discovery_thread(void *vargp) {
 	eeprom_get_values(&logicalID, &devID);
 
 	// Wait until ethernet is up before continuing
-	while(!is_ip_assigned("eth0") || !is_ip_assigned("eth1")) {
-		sleep(1);
-	}
+	//while(!is_ip_assigned("eth0") || !is_ip_assigned("eth1")) {
+	//	sleep(1);
+	//}
+
+	printf("Starting Discovery Thread\n");
 
     discovery_client_init(&ctx, INADDR_ANY, devID, logicalID, DISCOVERY_HW_REV, DISCOVERY_FW_REV, DISCOVERY_VENDOR, DISCOVERY_PRODUCT);
 

@@ -197,6 +197,11 @@ proc create_root_design { parentCell } {
 
 
   # Create interface ports
+  set TI_C2H [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:axis_rtl:1.0 TI_C2H ]
+  set_property -dict [ list \
+   CONFIG.FREQ_HZ {125000000} \
+   ] $TI_C2H
+
   set adc_fifo [ create_bd_intf_port -mode Slave -vlnv xilinx.com:interface:axis_rtl:1.0 adc_fifo ]
   set_property -dict [ list \
    CONFIG.FREQ_HZ {125000000} \
@@ -267,7 +272,7 @@ proc create_root_design { parentCell } {
   set adc_test_data_bad_pattern_counter [ create_bd_port -dir I -from 255 -to 0 adc_test_data_bad_pattern_counter ]
   set clk_125 [ create_bd_port -dir I -type clk -freq_hz 125000000 clk_125 ]
   set_property -dict [ list \
-   CONFIG.ASSOCIATED_BUSIF {run_fifo:adc_fifo} \
+   CONFIG.ASSOCIATED_BUSIF {run_fifo:adc_fifo:TI_C2H} \
    CONFIG.ASSOCIATED_RESET {rst_125_n:soc_in_reset:SYNC_RESET_0} \
  ] $clk_125
   set freq_osc_value [ create_bd_port -dir I -from 31 -to 0 freq_osc_value ]
@@ -368,12 +373,12 @@ proc create_root_design { parentCell } {
   # Create instance: packet_switch, and set properties
   set packet_switch [ create_bd_cell -type ip -vlnv xilinx.com:ip:axis_switch:1.1 packet_switch ]
   set_property -dict [ list \
-   CONFIG.ARB_ALGORITHM {0} \
+   CONFIG.ARB_ALGORITHM {3} \
    CONFIG.ARB_ON_MAX_XFERS {0} \
-   CONFIG.ARB_ON_NUM_CYCLES {0} \
+   CONFIG.ARB_ON_NUM_CYCLES {4} \
    CONFIG.ARB_ON_TLAST {1} \
    CONFIG.HAS_TLAST {1} \
-   CONFIG.NUM_SI {3} \
+   CONFIG.NUM_SI {2} \
    CONFIG.ROUTING_MODE {0} \
    CONFIG.TDATA_NUM_BYTES {8} \
  ] $packet_switch
@@ -427,17 +432,6 @@ proc create_root_design { parentCell } {
    CONFIG.NUM_SI {2} \
  ] $smartconnect_2
 
-  # Create instance: ti_fifo, and set properties
-  set ti_fifo [ create_bd_cell -type ip -vlnv xilinx.com:ip:axis_data_fifo:2.0 ti_fifo ]
-  set_property -dict [ list \
-   CONFIG.FIFO_DEPTH {256} \
-   CONFIG.FIFO_MODE {2} \
-   CONFIG.HAS_RD_DATA_COUNT {1} \
-   CONFIG.HAS_WR_DATA_COUNT {0} \
-   CONFIG.IS_ACLK_ASYNC {1} \
-   CONFIG.TDATA_NUM_BYTES {8} \
- ] $ti_fifo
-
   # Create instance: ti_zero, and set properties
   set ti_zero [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 ti_zero ]
   set_property -dict [ list \
@@ -455,8 +449,15 @@ proc create_root_design { parentCell } {
   set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
   set_property -dict [ list \
    CONFIG.CONST_VAL {0} \
-   CONFIG.CONST_WIDTH {3} \
+   CONFIG.CONST_WIDTH {2} \
  ] $xlconstant_0
+
+  # Create instance: xlconstant_1, and set properties
+  set xlconstant_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_1 ]
+  set_property -dict [ list \
+   CONFIG.CONST_VAL {0} \
+   CONFIG.CONST_WIDTH {32} \
+ ] $xlconstant_1
 
   # Create instance: xlslice_0, and set properties
   set xlslice_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_0 ]
@@ -1960,7 +1961,7 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net axi_dma_0_M_AXI_SG [get_bd_intf_pins axi_dma_0/M_AXI_SG] [get_bd_intf_pins smartconnect_2/S01_AXI]
   connect_bd_intf_net -intf_net gig_ethernet_pcs_pma_0_sfp [get_bd_intf_ports sfp_gem] [get_bd_intf_pins gig_ethernet_pcs_pma_0/sfp]
   connect_bd_intf_net -intf_net in_system_ibert_0_GT0_DRP [get_bd_intf_pins gig_ethernet_pcs_pma_0/gt_drp] [get_bd_intf_pins in_system_ibert_0/GT0_DRP]
-  connect_bd_intf_net -intf_net mollerTI_0_C2H [get_bd_intf_pins mollerTI_0/C2H] [get_bd_intf_pins ti_fifo/S_AXIS]
+  connect_bd_intf_net -intf_net mollerTI_0_C2H [get_bd_intf_ports TI_C2H] [get_bd_intf_pins mollerTI_0/C2H]
   connect_bd_intf_net -intf_net priority_switch_M00_AXIS [get_bd_intf_pins axi_dma_0/S_AXIS_S2MM] [get_bd_intf_pins packet_switch/M00_AXIS]
   connect_bd_intf_net -intf_net run_fifo_M_AXIS [get_bd_intf_pins packet_switch/S00_AXIS] [get_bd_intf_pins run_fifo/M_AXIS]
   connect_bd_intf_net -intf_net sfp_data_refclk_1 [get_bd_intf_ports sfp_refclk] [get_bd_intf_pins gig_ethernet_pcs_pma_0/gtrefclk_in]
@@ -1968,7 +1969,6 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net smartconnect_0_M01_AXI [get_bd_intf_pins mollerTI_0/S_AXI] [get_bd_intf_pins smartconnect_0/M01_AXI]
   connect_bd_intf_net -intf_net smartconnect_1_M00_AXI [get_bd_intf_pins axi_dma_0/S_AXI_LITE] [get_bd_intf_pins smartconnect_1/M00_AXI]
   connect_bd_intf_net -intf_net smartconnect_2_M00_AXI [get_bd_intf_pins smartconnect_2/M00_AXI] [get_bd_intf_pins zynq_ultra_ps_e/S_AXI_HPC0_FPD]
-  connect_bd_intf_net -intf_net ti_fifo_M_AXIS [get_bd_intf_pins packet_switch/S02_AXIS] [get_bd_intf_pins ti_fifo/M_AXIS]
   connect_bd_intf_net -intf_net zynq_ultra_ps_e_GMII_ENET1 [get_bd_intf_pins gig_ethernet_pcs_pma_0/gmii_gem_pcs_pma] [get_bd_intf_pins zynq_ultra_ps_e/GMII_ENET2]
   set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_intf_nets zynq_ultra_ps_e_GMII_ENET1]
   connect_bd_intf_net -intf_net zynq_ultra_ps_e_MDIO_ENET2 [get_bd_intf_pins gig_ethernet_pcs_pma_0/mdio_pcs_pma] [get_bd_intf_pins zynq_ultra_ps_e/MDIO_ENET2]
@@ -1980,7 +1980,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net CLK625_1 [get_bd_ports CLK625] [get_bd_pins gig_ethernet_pcs_pma_0/independent_clock_bufg] [get_bd_pins in_system_ibert_0/drpclk_i] [get_bd_pins mollerTI_0/CLK625]
   connect_bd_net -net CLKPrg_1 [get_bd_ports CLKPrg] [get_bd_pins mollerTI_0/CLKPrg]
   connect_bd_net -net GENINP_1 [get_bd_ports GENINP] [get_bd_pins mollerTI_0/GENINP]
-  connect_bd_net -net Net [get_bd_ports clk_125] [get_bd_pins adc_fifo/s_axis_aclk] [get_bd_pins mollerTI_0/s_axi_aclk] [get_bd_pins moller_regmap/s00_axi_aclk] [get_bd_pins run_fifo/s_axis_aclk] [get_bd_pins smartconnect_0/aclk1] [get_bd_pins ti_fifo/s_axis_aclk]
+  connect_bd_net -net Net [get_bd_ports clk_125] [get_bd_pins adc_fifo/s_axis_aclk] [get_bd_pins mollerTI_0/s_axi_aclk] [get_bd_pins moller_regmap/s00_axi_aclk] [get_bd_pins run_fifo/s_axis_aclk] [get_bd_pins smartconnect_0/aclk1]
   connect_bd_net -net Net1 [get_bd_ports SWM] [get_bd_pins mollerTI_0/SWM]
   connect_bd_net -net PHY_RESET_1 [get_bd_ports PHY_RESET] [get_bd_pins util_vector_logic_1/Op1]
   connect_bd_net -net TI1RX_N_1 [get_bd_ports TI1RX_N] [get_bd_pins mollerTI_0/TI1RX_N]
@@ -2041,7 +2041,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net resetdone [get_bd_pins gig_ethernet_pcs_pma_0/resetdone]
   set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_nets resetdone]
   connect_bd_net -net revision_value_1 [get_bd_ports revision_value] [get_bd_pins moller_regmap/revision_value]
-  connect_bd_net -net rst_125_1 [get_bd_ports rst_125_n] [get_bd_pins adc_fifo/s_axis_aresetn] [get_bd_pins mollerTI_0/s_axi_aresetn] [get_bd_pins moller_regmap/s00_axi_aresetn] [get_bd_pins run_fifo/s_axis_aresetn] [get_bd_pins ti_fifo/s_axis_aresetn]
+  connect_bd_net -net rst_125_1 [get_bd_ports rst_125_n] [get_bd_pins adc_fifo/s_axis_aresetn] [get_bd_pins mollerTI_0/s_axi_aresetn] [get_bd_pins moller_regmap/s00_axi_aresetn] [get_bd_pins run_fifo/s_axis_aresetn]
   connect_bd_net -net run_fifo_axis_rd_data_count [get_bd_pins moller_regmap/run_fifo_count] [get_bd_pins run_fifo/axis_rd_data_count]
   connect_bd_net -net signal_detect_0_1 [get_bd_ports sfp_signal_detect] [get_bd_pins gig_ethernet_pcs_pma_0/signal_detect]
   connect_bd_net -net status_adc_train_done_0_1 [get_bd_ports status_adc_train_done] [get_bd_pins moller_regmap/status_adc_train_done]
@@ -2049,9 +2049,9 @@ proc create_root_design { parentCell } {
   connect_bd_net -net status_clk_lockdetect_0_1 [get_bd_ports status_clk_lockdetect] [get_bd_pins moller_regmap/status_clk_lockdetect]
   connect_bd_net -net status_vector [get_bd_pins gig_ethernet_pcs_pma_0/status_vector]
   set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_nets status_vector]
-  connect_bd_net -net ti_fifo_axis_rd_data_count [get_bd_pins moller_regmap/ti_fifo_count] [get_bd_pins ti_fifo/axis_rd_data_count]
   connect_bd_net -net util_vector_logic_1_Res [get_bd_pins gig_ethernet_pcs_pma_0/reset] [get_bd_pins util_vector_logic_1/Res]
   connect_bd_net -net xlconstant_0_dout [get_bd_pins packet_switch/s_req_suppress] [get_bd_pins xlconstant_0/dout]
+  connect_bd_net -net xlconstant_1_dout [get_bd_pins moller_regmap/ti_fifo_count] [get_bd_pins xlconstant_1/dout]
   connect_bd_net -net xlconstant_4_dout [get_bd_pins mollerTI_0/h2c_tvalid] [get_bd_pins ti_zero/dout]
   connect_bd_net -net xlconstant_6_dout [get_bd_pins gig_ethernet_pcs_pma_0/phyaddr] [get_bd_pins phy_id/dout]
   connect_bd_net -net xlconstant_7_dout [get_bd_pins gig_ethernet_pcs_pma_0/configuration_vector] [get_bd_pins phy_cfg/dout]
@@ -2060,7 +2060,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net xlslice_0_Dout [get_bd_pins util_vector_logic_1/Op2] [get_bd_pins xlslice_0/Dout]
   connect_bd_net -net zynq_ultra_ps_e_emio_gpio_o [get_bd_pins xlslice_0/Din] [get_bd_pins zynq_ultra_ps_e/emio_gpio_o]
   set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_nets zynq_ultra_ps_e_emio_gpio_o]
-  connect_bd_net -net zynq_ultra_ps_e_pl_clk0 [get_bd_pins adc_fifo/m_axis_aclk] [get_bd_pins axi_dma_0/m_axi_s2mm_aclk] [get_bd_pins axi_dma_0/m_axi_sg_aclk] [get_bd_pins axi_dma_0/s_axi_lite_aclk] [get_bd_pins packet_switch/aclk] [get_bd_pins ps_sys_rst/slowest_sync_clk] [get_bd_pins run_fifo/m_axis_aclk] [get_bd_pins smartconnect_0/aclk] [get_bd_pins smartconnect_1/aclk] [get_bd_pins smartconnect_2/aclk] [get_bd_pins ti_fifo/m_axis_aclk] [get_bd_pins zynq_ultra_ps_e/maxihpm0_fpd_aclk] [get_bd_pins zynq_ultra_ps_e/maxihpm0_lpd_aclk] [get_bd_pins zynq_ultra_ps_e/pl_clk0] [get_bd_pins zynq_ultra_ps_e/saxihpc0_fpd_aclk]
+  connect_bd_net -net zynq_ultra_ps_e_pl_clk0 [get_bd_pins adc_fifo/m_axis_aclk] [get_bd_pins axi_dma_0/m_axi_s2mm_aclk] [get_bd_pins axi_dma_0/m_axi_sg_aclk] [get_bd_pins axi_dma_0/s_axi_lite_aclk] [get_bd_pins packet_switch/aclk] [get_bd_pins ps_sys_rst/slowest_sync_clk] [get_bd_pins run_fifo/m_axis_aclk] [get_bd_pins smartconnect_0/aclk] [get_bd_pins smartconnect_1/aclk] [get_bd_pins smartconnect_2/aclk] [get_bd_pins zynq_ultra_ps_e/maxihpm0_fpd_aclk] [get_bd_pins zynq_ultra_ps_e/maxihpm0_lpd_aclk] [get_bd_pins zynq_ultra_ps_e/pl_clk0] [get_bd_pins zynq_ultra_ps_e/saxihpc0_fpd_aclk]
   connect_bd_net -net zynq_ultra_ps_e_pl_resetn0 [get_bd_pins ps_sys_rst/ext_reset_in] [get_bd_pins zynq_ultra_ps_e/pl_resetn0]
 
   # Create address segments

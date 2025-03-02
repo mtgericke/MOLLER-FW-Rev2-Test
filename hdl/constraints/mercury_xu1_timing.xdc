@@ -35,21 +35,21 @@ set_clock_groups -asynchronous -group clk_pl_0 -group clk_pl_1 -group TD_CLK -gr
 set_false_path -from [get_clocks clk_pl_0] -to [get_ports LED2_N_PWR_SYNC]
 set_false_path -from [get_ports {SW1[5]}] -to [get_ports LMK_STAT_CLKin1]
 set_false_path -from [get_ports {SW1[6]}] -to [get_ports LMK_STAT_CLKin0]
-set_false_path -from [get_ports {LMK_STAT_HOLDOVER}]
-set_false_path -from [get_ports {LMK_STAT_LD}]
-set_false_path -from [get_ports {DATA_ModPRSn}]
+set_false_path -from [get_ports LMK_STAT_HOLDOVER]
+set_false_path -from [get_ports LMK_STAT_LD]
+set_false_path -from [get_ports DATA_ModPRSn]
 set_false_path -from [get_ports {TTL_INPUT[*]}]
 set_false_path -from [get_ports {ADC_DA_P[*]}]
 set_false_path -from [get_ports {ADC_DB_P[*]}]
 set_false_path -from [get_ports {ADC_DCO_P[*]}]
-set_false_path -from [get_ports {RX_TI_SYNC_P}]
+set_false_path -from [get_ports RX_TI_SYNC_P]
 set_false_path -to [get_ports {LED_DSP[*]}]
-set_false_path -to [get_ports {ADC_PDn}]
-set_false_path -to [get_ports {ADC_TESTPAT}]
-set_false_path -to [get_ports {SOM_OUT_CLKA_P}]
-set_false_path -to [get_ports {SOM_OUT_CLKB_P}]
-set_false_path -to [get_ports {SOM_OUT_CNVA_P}]
-set_false_path -to [get_ports {SOM_OUT_CNVB_P}]
+set_false_path -to [get_ports ADC_PDn]
+set_false_path -to [get_ports ADC_TESTPAT]
+set_false_path -to [get_ports SOM_OUT_CLKA_P]
+set_false_path -to [get_ports SOM_OUT_CLKB_P]
+set_false_path -to [get_ports SOM_OUT_CNVA_P]
+set_false_path -to [get_ports SOM_OUT_CNVB_P]
 
 set_output_delay -clock [get_clocks OSC_CLK] -min -add_delay 0.000 [get_ports LMK_UWIRE_CLK]
 set_output_delay -clock [get_clocks OSC_CLK] -max -add_delay 0.200 [get_ports LMK_UWIRE_CLK]
@@ -62,97 +62,22 @@ set_false_path -from [get_clocks OSC_CLK] -to [get_clocks clk_adc_mmcm_adc]
 set_false_path -from [get_clocks -of_objects [get_pins clock_subsystem/adc_mmcm/inst/mmcme4_adv_inst/CLKOUT1]] -to [get_clocks OSC_CLK]
 set_false_path -from [get_clocks -of_objects [get_pins clock_subsystem/adc_mmcm/inst/mmcme4_adv_inst/CLKOUT1]] -to [get_clocks TD_CLK]
 
-create_debug_core u_ila_0 ila
-set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
-set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
-set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0]
-set_property C_DATA_DEPTH 1024 [get_debug_cores u_ila_0]
-set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0]
-set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
-set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
-set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
-set_property port_width 1 [get_debug_ports u_ila_0/clk]
 
-connect_debug_port u_ila_0/clk [get_nets [list bd/gig_ethernet_pcs_pma_0/inst/core_clocking_i/userclk2]]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
-set_property port_width 16 [get_debug_ports u_ila_0/probe0]
-connect_debug_port u_ila_0/probe0 [get_nets [list {bd/status_vector[0]} {bd/status_vector[1]} {bd/status_vector[2]} {bd/status_vector[3]} {bd/status_vector[4]} {bd/status_vector[5]} {bd/status_vector[6]} {bd/status_vector[7]} {bd/status_vector[8]} {bd/status_vector[9]} {bd/status_vector[10]} {bd/status_vector[11]} {bd/status_vector[12]} {bd/status_vector[13]} {bd/status_vector[14]} {bd/status_vector[15]}]]
 
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
-set_property port_width 8 [get_debug_ports u_ila_0/probe1]
-connect_debug_port u_ila_0/probe1 [get_nets [list {bd/zynq_ultra_ps_e_GMII_ENET1_RXD[0]} {bd/zynq_ultra_ps_e_GMII_ENET1_RXD[1]} {bd/zynq_ultra_ps_e_GMII_ENET1_RXD[2]} {bd/zynq_ultra_ps_e_GMII_ENET1_RXD[3]} {bd/zynq_ultra_ps_e_GMII_ENET1_RXD[4]} {bd/zynq_ultra_ps_e_GMII_ENET1_RXD[5]} {bd/zynq_ultra_ps_e_GMII_ENET1_RXD[6]} {bd/zynq_ultra_ps_e_GMII_ENET1_RXD[7]}]]
 
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
-set_property port_width 8 [get_debug_ports u_ila_0/probe2]
-connect_debug_port u_ila_0/probe2 [get_nets [list {bd/zynq_ultra_ps_e_GMII_ENET1_TXD[0]} {bd/zynq_ultra_ps_e_GMII_ENET1_TXD[1]} {bd/zynq_ultra_ps_e_GMII_ENET1_TXD[2]} {bd/zynq_ultra_ps_e_GMII_ENET1_TXD[3]} {bd/zynq_ultra_ps_e_GMII_ENET1_TXD[4]} {bd/zynq_ultra_ps_e_GMII_ENET1_TXD[5]} {bd/zynq_ultra_ps_e_GMII_ENET1_TXD[6]} {bd/zynq_ultra_ps_e_GMII_ENET1_TXD[7]}]]
 
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
-set_property port_width 31 [get_debug_ports u_ila_0/probe3]
-connect_debug_port u_ila_0/probe3 [get_nets [list {bd/zynq_ultra_ps_e_emio_gpio_o[1]} {bd/zynq_ultra_ps_e_emio_gpio_o[2]} {bd/zynq_ultra_ps_e_emio_gpio_o[3]} {bd/zynq_ultra_ps_e_emio_gpio_o[4]} {bd/zynq_ultra_ps_e_emio_gpio_o[5]} {bd/zynq_ultra_ps_e_emio_gpio_o[6]} {bd/zynq_ultra_ps_e_emio_gpio_o[7]} {bd/zynq_ultra_ps_e_emio_gpio_o[8]} {bd/zynq_ultra_ps_e_emio_gpio_o[9]} {bd/zynq_ultra_ps_e_emio_gpio_o[10]} {bd/zynq_ultra_ps_e_emio_gpio_o[11]} {bd/zynq_ultra_ps_e_emio_gpio_o[12]} {bd/zynq_ultra_ps_e_emio_gpio_o[13]} {bd/zynq_ultra_ps_e_emio_gpio_o[14]} {bd/zynq_ultra_ps_e_emio_gpio_o[15]} {bd/zynq_ultra_ps_e_emio_gpio_o[16]} {bd/zynq_ultra_ps_e_emio_gpio_o[17]} {bd/zynq_ultra_ps_e_emio_gpio_o[18]} {bd/zynq_ultra_ps_e_emio_gpio_o[19]} {bd/zynq_ultra_ps_e_emio_gpio_o[20]} {bd/zynq_ultra_ps_e_emio_gpio_o[21]} {bd/zynq_ultra_ps_e_emio_gpio_o[22]} {bd/zynq_ultra_ps_e_emio_gpio_o[23]} {bd/zynq_ultra_ps_e_emio_gpio_o[24]} {bd/zynq_ultra_ps_e_emio_gpio_o[25]} {bd/zynq_ultra_ps_e_emio_gpio_o[26]} {bd/zynq_ultra_ps_e_emio_gpio_o[27]} {bd/zynq_ultra_ps_e_emio_gpio_o[28]} {bd/zynq_ultra_ps_e_emio_gpio_o[29]} {bd/zynq_ultra_ps_e_emio_gpio_o[30]} {bd/zynq_ultra_ps_e_emio_gpio_o[31]}]]
 
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe4]
-set_property port_width 1 [get_debug_ports u_ila_0/probe4]
-connect_debug_port u_ila_0/probe4 [get_nets [list clk_625]]
 
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe5]
-set_property port_width 1 [get_debug_ports u_ila_0/probe5]
-connect_debug_port u_ila_0/probe5 [get_nets [list bd/mmcm_locked_out]]
 
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe6]
-set_property port_width 1 [get_debug_ports u_ila_0/probe6]
-connect_debug_port u_ila_0/probe6 [get_nets [list bd/resetdone]]
 
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe7]
-set_property port_width 1 [get_debug_ports u_ila_0/probe7]
-connect_debug_port u_ila_0/probe7 [get_nets [list bd/xlslice_0_Dout]]
 
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe8]
-set_property port_width 1 [get_debug_ports u_ila_0/probe8]
-connect_debug_port u_ila_0/probe8 [get_nets [list bd/zynq_ultra_ps_e_GMII_ENET1_RX_DV]]
 
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe9]
-set_property port_width 1 [get_debug_ports u_ila_0/probe9]
-connect_debug_port u_ila_0/probe9 [get_nets [list bd/zynq_ultra_ps_e_GMII_ENET1_RX_ER]]
 
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe10]
-set_property port_width 1 [get_debug_ports u_ila_0/probe10]
-connect_debug_port u_ila_0/probe10 [get_nets [list bd/zynq_ultra_ps_e_GMII_ENET1_TX_EN]]
 
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe11]
-set_property port_width 1 [get_debug_ports u_ila_0/probe11]
-connect_debug_port u_ila_0/probe11 [get_nets [list bd/zynq_ultra_ps_e_GMII_ENET1_TX_ER]]
 
-create_debug_core u_ila_1 ila
-set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_1]
-set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_1]
-set_property C_ADV_TRIGGER false [get_debug_cores u_ila_1]
-set_property C_DATA_DEPTH 1024 [get_debug_cores u_ila_1]
-set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_1]
-set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_1]
-set_property C_TRIGIN_EN false [get_debug_cores u_ila_1]
-set_property C_TRIGOUT_EN false [get_debug_cores u_ila_1]
-set_property port_width 1 [get_debug_ports u_ila_1/clk]
 
-connect_debug_port u_ila_1/clk [get_nets [list clock_subsystem/adc_mmcm/inst/clk_625]]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_1/probe0]
-set_property port_width 1 [get_debug_ports u_ila_1/probe0]
-connect_debug_port u_ila_1/probe0 [get_nets [list bd/gtpowergood]]
 
-create_debug_port u_ila_1 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_1/probe1]
-set_property port_width 1 [get_debug_ports u_ila_1/probe1]
-connect_debug_port u_ila_1/probe1 [get_nets [list bd/pma_reset_out]]
+
 
 set_property C_CLK_INPUT_FREQ_HZ 125000000 [get_debug_cores dbg_hub]
 set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]

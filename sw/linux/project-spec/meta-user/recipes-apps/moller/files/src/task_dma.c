@@ -27,7 +27,7 @@
 #include "external/dma-proxy.h"
 #include "moller.h"
 
-static int UPDATE_RATE_PER_SECOND;
+static int UPDATE_RATE_PER_SECOND = 2;
 static int is_ip_assigned(const char* intf_name);
 
 void* dma_thread(void *vargp) {
@@ -48,6 +48,10 @@ void* dma_thread(void *vargp) {
 	uint32_t num_valid;
 	uint32_t num_timeouts;
 	uint32_t num_samples;
+	uint32_t num_status_pkts;
+	uint32_t num_adc_pkts;
+	uint32_t num_ti_pkts;
+	uint32_t num_avg_pkts;
 	uint32_t num_unknown_errors;
 
 	struct timeval last_update_time, current_time;
@@ -56,13 +60,6 @@ void* dma_thread(void *vargp) {
 	context = vargp;
 
 	printf("Starting DMA Thread\n");
-
-
-	// Wait until ethernet is up before continuing
-	while(!is_ip_assigned("eth0") && !is_ip_assigned("eth1")) {
-		sleep(1);
-	}
-
 
 	pub = zmq_socket(context, ZMQ_PUB);
 	zmq_setsockopt(pub, ZMQ_SNDHWM, "", 32768);
@@ -96,6 +93,11 @@ void* dma_thread(void *vargp) {
 	num_timeouts = 0;
 	num_samples = 0;
 
+	num_status_pkts = 0;
+	num_adc_pkts = 0;
+	num_ti_pkts = 0;
+	num_avg_pkts = 0;
+
 
 	fflush(stdout);
 
@@ -112,7 +114,7 @@ void* dma_thread(void *vargp) {
 		if(secs >= UPDATE_RATE_PER_SECOND) {
 			gettimeofday(&last_update_time, NULL);
 
-			uint32_t status_buffer[6];
+			uint32_t status_buffer[10];
 
 			status_buffer[0] = num_pkts;
 			status_buffer[1] = num_bytes;
@@ -120,6 +122,11 @@ void* dma_thread(void *vargp) {
 			status_buffer[3] = num_valid;
 			status_buffer[4] = num_timeouts;
 			status_buffer[5] = num_samples;
+
+			status_buffer[6] = ++num_status_pkts;
+			status_buffer[7] = num_adc_pkts;
+			status_buffer[8] = num_ti_pkts;
+			status_buffer[9] = num_avg_pkts;
 
 			zmq_send(pub, "STATUS", 6, ZMQ_SNDMORE);
 			zmq_send(pub, status_buffer, sizeof(status_buffer), 0);
@@ -148,14 +155,20 @@ void* dma_thread(void *vargp) {
 							case 0xAA:
 								zmq_send(pub, "AVG", 3, ZMQ_SNDMORE);
 								zmq_send(pub, rx_proxy_interface_p->buffer, 8+(header_len*8), 0);
+								num_avg_pkts++;
 								break;
 
 							case 0xDD:
 								zmq_send(pub, "ADC", 3, ZMQ_SNDMORE);
 								zmq_send (pub, (const char*)rx_proxy_interface_p->buffer, 8+(header_len*8), 0);
 								num_samples += (header_len-1); // don't count timestamp word
+								num_adc_pkts++;
 								break;
-							default: break;
+
+							default:
+								printf("Unknown Header 0x%02X", header_id);
+								break;
+
 						}
 
 					} else {

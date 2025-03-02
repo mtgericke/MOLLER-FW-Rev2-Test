@@ -80,6 +80,9 @@ module system_top
     output wire SOM_OUT_CNVB_P,
     output wire SOM_OUT_CNVB_N,
 
+    input wire [1:0] SOM_IN_CLK_P,
+    input wire [1:0] SOM_IN_CLK_N,
+
     // I2C_PL
     inout wire I2C_SCL_PL,	// PS_I2C_SCL
     inout wire I2C_SDA_PL,	// PS_I2C_SDA
@@ -156,7 +159,6 @@ localparam CLOCK_FREQ = 125000000;
 localparam CONVERT_CLOCK_FREQ = 250000000;
 localparam CNV_CLOCK_PERIOD = 4;
 
-reg [31:0] valid_count;
 
 wire [1:0] nim_input;
 // wire [2:1] ext_sig;
@@ -181,16 +183,6 @@ wire [63:0] run_fifo_tdata;
 wire run_fifo_tlast;
 wire run_fifo_tvalid;
 wire run_fifo_tready;
-
-wire [63:0] ti_source_tdata;
-wire ti_source_tlast;
-wire ti_source_tready;
-wire ti_source_tvalid;
-
-wire [63:0] ti_fifo_tdata;
-wire ti_fifo_tlast;
-wire ti_fifo_tready;
-wire ti_fifo_tvalid;
 
 wire udp_tx_clk;
 
@@ -246,6 +238,8 @@ wire [3:0] led_output;
 wire clock_sync;
 wire block_trigger;
 
+wire [1:0] som_in_clk;
+
 assign I2C_SCL_PL = 1'bZ;
 assign I2C_SDA_PL = 1'bZ;
 assign LED2_N_PWR_SYNC = 1'bZ;
@@ -290,6 +284,10 @@ IBUFDS diff_lvds_nim1       (	.O(nim_input[1]),	    .I(LVDS_NIM_P[1]),      .IB(
 IBUFDS diff_clnr_osc        (	.O(clnr_osc),	        .I(CLNR_OSC_P),         .IB(CLNR_OSC_N) );        // 100 MHz VCXO
 IBUFDS diff_fpga_250_td     (	.O(fpga_clk250_td),	    .I(FPGA_CLK250_TD_P),   .IB(FPGA_CLK250_TD_N) );  // Cleaner CLK_OUT10
 
+IBUFDS diff_lvds_som_clk_in0       (	.O(som_in_clk[0]),	    .I(SOM_IN_CLK_P[0]),      .IB(SOM_IN_CLK_N[0]) );
+IBUFDS diff_lvds_som_clk_in1       (	.O(som_in_clk[1]),	    .I(SOM_IN_CLK_P[1]),      .IB(SOM_IN_CLK_N[1]) );
+
+
 assign EXT_LVDS_OUT_P = EXT_LVDS_IN_P;
 assign EXT_LVDS_OUT_N = EXT_LVDS_IN_N;
 //IBUFDS diff_ext_lvds_in     (	.O(ext_lvds_in),	    .I(EXT_LVDS_IN_P),      .IB(EXT_LVDS_IN_N) );     // LVDS 2.5 voltage
@@ -297,11 +295,11 @@ assign EXT_LVDS_OUT_N = EXT_LVDS_IN_N;
 // assign ext_lvds_out = ext_lvds_in;
 
 subsystem_clock clock_subsystem (
-    .clk_osc_125( clnr_osc ), // oscillator 100MHz
+    .clk_osc( clnr_osc ), // oscillator 125MHz
     .clk_cc_250( fpga_clk250_td ), // clock cleaner 250 MHz output (TD_250)
 
     .soc_ready( soc_ready ),
-    .cc_locked( LMK_STAT_HOLDOVER ),
+    // .cc_locked( LMK_STAT_HOLDOVER ),
 
     .clkin0_prediv( SW1[4:3] ),
 
@@ -312,6 +310,8 @@ subsystem_clock clock_subsystem (
     .rst_out_250( rst_convert ),
 
     .clk_625( clk_625 ),
+
+    .som_in_clk( som_in_clk ),
 
     .LMK_UWIRE_CLK( LMK_UWIRE_CLK ),
     .LMK_UWIRE_DATA( LMK_UWIRE_DATA ),
@@ -422,38 +422,6 @@ subsystem_capture #(
     .fifo_tvalid( run_fifo_tvalid ),
     .fifo_tlast( run_fifo_tlast ),
     .fifo_tready( run_fifo_tready )
-);
-
-always@(posedge clk) begin
-	if(rst) begin
-        valid_count <= 1;
-	end else begin
-        if(adc_data_valid) begin
-            valid_count <= (valid_count < 8000) ? valid_count + 1'b1 : 8000;
-        end else begin
-            valid_count <= valid_count;
-        end
-	end
-end
-
-axi_stream_len_prepender #(
-    .ID(8'hF0),
-    .MAX_PKT_LEN(64),
-    .DEPTH_BITS(8)
-) ti_stream (
-	.clk( clk ),
-	.rst( rst ),
-  	.ena( 1'b1 ),
-
-  	.in_tdata( ti_source_tdata ),
-	.in_tvalid(),
-  	.in_tlast( ti_source_tlast ),
-	.in_tready( ti_source_tready ),
-
-  	.out_tdata( ti_fifo_tdata ),
-	.out_tlast( ti_fifo_tlast ),
-	.out_tvalid( ti_fifo_tvalid ),
-	.out_tready( ti_fifo_tready )
 );
 
 Mercury_XU1 bd (
