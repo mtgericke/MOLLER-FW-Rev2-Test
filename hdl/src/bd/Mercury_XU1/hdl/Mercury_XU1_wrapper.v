@@ -1,8 +1,8 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-//Date        : Sun Mar  2 10:04:57 2025
-//Host        : home running 64-bit unknown
+//Date        : Mon Jun 16 11:00:03 2025
+//Host        : gericke-basement running 64-bit Ubuntu 18.04.6 LTS
 //Command     : generate_target Mercury_XU1_wrapper.bd
 //Design      : Mercury_XU1_wrapper
 //Purpose     : IP block netlist
@@ -42,6 +42,8 @@ module Mercury_XU1_wrapper
     adc_ctrl_power_down,
     adc_ctrl_sample_rate,
     adc_ctrl_testpattern,
+    adc_ctrl_testpattern1,
+    adc_ctrl_testpattern2,
     adc_delay_value,
     adc_fifo_tdata,
     adc_fifo_tlast,
@@ -55,6 +57,7 @@ module Mercury_XU1_wrapper
     freq_som0_value,
     freq_som1_value,
     freq_td_value,
+    mac_addr,
     revision_value,
     rst_125_n,
     run_fifo_tdata,
@@ -76,7 +79,8 @@ module Mercury_XU1_wrapper
     stream_ctrl_ch1,
     stream_ctrl_enable,
     stream_ctrl_num_samples,
-    stream_ctrl_rate_div);
+    stream_ctrl_rate_div,
+    udp_dest_ip);
   input CLK250;
   input CLK625;
   input CLKPrg;
@@ -109,6 +113,8 @@ module Mercury_XU1_wrapper
   output [0:0]adc_ctrl_power_down;
   output [7:0]adc_ctrl_sample_rate;
   output [0:0]adc_ctrl_testpattern;
+  output [0:0]adc_ctrl_testpattern1;
+  output [0:0]adc_ctrl_testpattern2;
   input [143:0]adc_delay_value;
   input [63:0]adc_fifo_tdata;
   input adc_fifo_tlast;
@@ -122,6 +128,7 @@ module Mercury_XU1_wrapper
   input [31:0]freq_som0_value;
   input [31:0]freq_som1_value;
   input [31:0]freq_td_value;
+  output [47:0]mac_addr;
   input [31:0]revision_value;
   input rst_125_n;
   input [63:0]run_fifo_tdata;
@@ -144,6 +151,7 @@ module Mercury_XU1_wrapper
   output [0:0]stream_ctrl_enable;
   output [15:0]stream_ctrl_num_samples;
   output [6:0]stream_ctrl_rate_div;
+  output [31:0]udp_dest_ip;
 
   wire CLK250;
   wire CLK625;
@@ -177,6 +185,8 @@ module Mercury_XU1_wrapper
   wire [0:0]adc_ctrl_power_down;
   wire [7:0]adc_ctrl_sample_rate;
   wire [0:0]adc_ctrl_testpattern;
+  wire [0:0]adc_ctrl_testpattern1;
+  wire [0:0]adc_ctrl_testpattern2;
   wire [143:0]adc_delay_value;
   wire [63:0]adc_fifo_tdata;
   wire adc_fifo_tlast;
@@ -190,6 +200,7 @@ module Mercury_XU1_wrapper
   wire [31:0]freq_som0_value;
   wire [31:0]freq_som1_value;
   wire [31:0]freq_td_value;
+  wire [47:0]mac_addr;
   wire [31:0]revision_value;
   wire rst_125_n;
   wire [63:0]run_fifo_tdata;
@@ -212,6 +223,7 @@ module Mercury_XU1_wrapper
   wire [0:0]stream_ctrl_enable;
   wire [15:0]stream_ctrl_num_samples;
   wire [6:0]stream_ctrl_rate_div;
+  wire [31:0]udp_dest_ip;
 
   Mercury_XU1 Mercury_XU1_i
        (.CLK250(CLK250),
@@ -246,6 +258,8 @@ module Mercury_XU1_wrapper
         .adc_ctrl_power_down(adc_ctrl_power_down),
         .adc_ctrl_sample_rate(adc_ctrl_sample_rate),
         .adc_ctrl_testpattern(adc_ctrl_testpattern),
+        .adc_ctrl_testpattern1(adc_ctrl_testpattern1),
+        .adc_ctrl_testpattern2(adc_ctrl_testpattern2),
         .adc_delay_value(adc_delay_value),
         .adc_fifo_tdata(adc_fifo_tdata),
         .adc_fifo_tlast(adc_fifo_tlast),
@@ -259,6 +273,7 @@ module Mercury_XU1_wrapper
         .freq_som0_value(freq_som0_value),
         .freq_som1_value(freq_som1_value),
         .freq_td_value(freq_td_value),
+        .mac_addr(mac_addr),
         .revision_value(revision_value),
         .rst_125_n(rst_125_n),
         .run_fifo_tdata(run_fifo_tdata),
@@ -280,5 +295,6 @@ module Mercury_XU1_wrapper
         .stream_ctrl_ch1(stream_ctrl_ch1),
         .stream_ctrl_enable(stream_ctrl_enable),
         .stream_ctrl_num_samples(stream_ctrl_num_samples),
-        .stream_ctrl_rate_div(stream_ctrl_rate_div));
+        .stream_ctrl_rate_div(stream_ctrl_rate_div),
+        .udp_dest_ip(udp_dest_ip));
 endmodule

@@ -53,6 +53,8 @@ void* dma_thread(void *vargp) {
 	uint32_t num_ti_pkts;
 	uint32_t num_avg_pkts;
 	uint32_t num_unknown_errors;
+	
+	uint32_t tmp_len, tmp_cnt=0, prv_hdr_id=-1, prv_bytes=-1;
 
 	struct timeval last_update_time, current_time;
     double secs;
@@ -174,6 +176,13 @@ void* dma_thread(void *vargp) {
 					} else {
 						printf("Max words exceeded! Header: %.016lX (id: %u len: %u)\n", header, header_id, header_len);
 						num_errors++;
+					}
+					tmp_len = 8+(header_len*8);
+					if( header_id == prv_hdr_id && tmp_len == prv_bytes && (++tmp_cnt % 1000) != 0 ){
+				        } else {
+					   prv_hdr_id = header_id;  prv_bytes = tmp_len;
+				 	   printf("DMA Rx[0x%02x %5dBytes] AVG:%6d ADC:%6d ERR:%6d\n", header_id,
+					          tmp_len, num_avg_pkts, num_adc_pkts, num_errors);
 					}
 				}
 				break;

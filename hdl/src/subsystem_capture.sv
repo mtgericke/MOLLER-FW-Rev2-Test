@@ -14,6 +14,7 @@ module subsystem_capture #(
 
     input wire ena,
     input wire start,
+    input wire [3:0] cap_region,
 
     input wire [63:0] in_timestamp,
     input wire sample_valid,
@@ -40,7 +41,10 @@ wire captured;
 // capture on start signal after we've been already started
 // or if we were started and we get turned off (ena goes low)
 // assign captured = (!start && started);
-assign captured = 1'b0;
+reg start_reg;  always@(posedge clk) start_reg <= start;
+assign captured = (start && !start_reg && started) || (!ena && started);
+reg cap_reg;  always @(posedge clk) cap_reg <= captured;
+reg [15:0] cap_cnt; always @(posedge clk) cap_cnt <= captured ? cap_cnt + 16'h1 : cap_cnt;
 
 genvar n;
 generate
@@ -48,26 +52,28 @@ generate
 for(n=0; n<NUM_CH; n = n+1) begin
 
 reg result_valid;
-reg signed [63:0] result;
+reg signed [17:0] result_sum;
+reg signed [35:0] result_sq;
 
 always@(posedge clk) begin
-
     if(rst) begin
         ch_sample_count[n] <= 0;
         ch_sum[n] <= 0;
         ch_sum_of_squares[n] <= 0;
-        result <= 0;
+        result_sum <= 0;
+        result_sq <= 0;
         result_valid <= 1'b0;
     end else begin
 
-        result_valid <= sample_valid;
-        result <= $signed(sample_ch_data[n]) * $signed(sample_ch_data[n]);
+        result_valid <= sample_valid && sample_ch_valid[n];
+        result_sq <= $signed(sample_ch_data[n]) * $signed(sample_ch_data[n]);
+        result_sum <= $signed(sample_ch_data[n]);
 
         // on capture reset the counters,
-        if(captured) begin
-            if(ena && result_valid && sample_ch_valid[n]) begin
-                ch_sum[n] <= $signed(sample_ch_data[n]);
-                ch_sum_of_squares[n] <= result;
+        if( cap_reg ) begin
+             if(ena && result_valid) begin
+                ch_sum[n] <= result_sum;
+                ch_sum_of_squares[n] <= result_sq;
                 ch_sample_count[n] <= 1'b1;
             end else begin
                 ch_sum[n] <= 0;
@@ -75,10 +81,10 @@ always@(posedge clk) begin
                 ch_sample_count[n] <= 0;
             end
         end else begin
-            if(((ena & start) || (started)) && result_valid && sample_ch_valid[n]) begin
-                ch_sum[n] <= ch_sum[n] + $signed(sample_ch_data[n]);
-                ch_sum_of_squares[n] <= ch_sum_of_squares[n] + result;
-                ch_sample_count[n] <= ch_sample_count[n] + 1'b1;
+            if(((ena & start) || (started)) && result_valid ) begin
+                ch_sum[n]            <= ch_sum[n] + result_sum;
+                ch_sum_of_squares[n] <= ch_sum_of_squares[n] + result_sq;
+                ch_sample_count[n]   <= ch_sample_count[n] + 1'b1;
             end else begin
                 ch_sum[n] <= ch_sum[n];
                 ch_sum_of_squares[n] <= ch_sum_of_squares[n];
@@ -100,7 +106,7 @@ always@(posedge clk) begin
         started <= (ena && start) ? 1'b1 : (!ena) ? 1'b0 : started;
 
         // on capture reset the counters,
-        if(captured) begin
+        if(cap_reg) begin
             if(ena && sample_valid) begin
                 samples_captured <= 1;
                 cap_ts <= in_timestamp;
@@ -131,13 +137,13 @@ simple_packetizer #(
 ) integration_packetizer (
     .clk(clk),
     .rst(rst),
-    .capture(captured),
+    .capture(cap_reg),
     .d({
         ch_sum_of_squares,
 		ch_sum,
 		ch_sample_count,
         samples_captured,
-        pkt_counter,
+        cap_region, pkt_counter[59:0],
 		cap_ts}),
     .tready	(fifo_tready),
     .tdata	(fifo_tdata),

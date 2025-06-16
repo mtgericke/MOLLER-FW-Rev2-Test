@@ -266,6 +266,8 @@ proc create_root_design { parentCell } {
   set adc_ctrl_power_down [ create_bd_port -dir O -from 0 -to 0 adc_ctrl_power_down ]
   set adc_ctrl_sample_rate [ create_bd_port -dir O -from 7 -to 0 adc_ctrl_sample_rate ]
   set adc_ctrl_testpattern [ create_bd_port -dir O -from 0 -to 0 adc_ctrl_testpattern ]
+  set adc_ctrl_testpattern1 [ create_bd_port -dir O -from 0 -to 0 adc_ctrl_testpattern1 ]
+  set adc_ctrl_testpattern2 [ create_bd_port -dir O -from 0 -to 0 adc_ctrl_testpattern2 ]
   set adc_delay_value [ create_bd_port -dir I -from 143 -to 0 adc_delay_value ]
   set adc_load_value [ create_bd_port -dir O -from 143 -to 0 adc_load_value ]
   set adc_test_data_bad_dco_counter [ create_bd_port -dir I -from 255 -to 0 adc_test_data_bad_dco_counter ]
@@ -279,6 +281,7 @@ proc create_root_design { parentCell } {
   set freq_som0_value [ create_bd_port -dir I -from 31 -to 0 freq_som0_value ]
   set freq_som1_value [ create_bd_port -dir I -from 31 -to 0 freq_som1_value ]
   set freq_td_value [ create_bd_port -dir I -from 31 -to 0 freq_td_value ]
+  set mac_addr [ create_bd_port -dir O -from 47 -to 0 mac_addr ]
   set revision_value [ create_bd_port -dir I -from 31 -to 0 revision_value ]
   set rst_125_n [ create_bd_port -dir I -type rst rst_125_n ]
   set_property -dict [ list \
@@ -294,6 +297,7 @@ proc create_root_design { parentCell } {
   set stream_ctrl_enable [ create_bd_port -dir O -from 0 -to 0 stream_ctrl_enable ]
   set stream_ctrl_num_samples [ create_bd_port -dir O -from 15 -to 0 stream_ctrl_num_samples ]
   set stream_ctrl_rate_div [ create_bd_port -dir O -from 6 -to 0 stream_ctrl_rate_div ]
+  set udp_dest_ip [ create_bd_port -dir O -from 31 -to 0 udp_dest_ip ]
 
   # Create instance: adc_fifo, and set properties
   set adc_fifo [ create_bd_cell -type ip -vlnv xilinx.com:ip:axis_data_fifo:2.0 adc_fifo ]
@@ -1482,9 +1486,7 @@ proc create_root_design { parentCell } {
    CONFIG.PSU__ENET0__TSU__ENABLE {0} \
    CONFIG.PSU__ENET1__FIFO__ENABLE {0} \
    CONFIG.PSU__ENET1__GRP_MDIO__ENABLE {0} \
-   CONFIG.PSU__ENET1__GRP_MDIO__IO {<Select>} \
    CONFIG.PSU__ENET1__PERIPHERAL__ENABLE {0} \
-   CONFIG.PSU__ENET1__PERIPHERAL__IO {<Select>} \
    CONFIG.PSU__ENET1__PTP__ENABLE {0} \
    CONFIG.PSU__ENET1__TSU__ENABLE {0} \
    CONFIG.PSU__ENET2__FIFO__ENABLE {0} \
@@ -1818,7 +1820,6 @@ proc create_root_design { parentCell } {
    CONFIG.PSU__SD1_ROUTE_THROUGH_FPD {0} \
    CONFIG.PSU__SD1__DATA_TRANSFER_MODE {4Bit} \
    CONFIG.PSU__SD1__GRP_CD__ENABLE {0} \
-   CONFIG.PSU__SD1__GRP_CD__IO {<Select>} \
    CONFIG.PSU__SD1__GRP_POW__ENABLE {0} \
    CONFIG.PSU__SD1__GRP_WP__ENABLE {0} \
    CONFIG.PSU__SD1__PERIPHERAL__ENABLE {1} \
@@ -2033,6 +2034,8 @@ proc create_root_design { parentCell } {
   connect_bd_net -net moller_regmap_adc_ctrl_sample_rate [get_bd_ports adc_ctrl_sample_rate] [get_bd_pins moller_regmap/adc_ctrl_sample_rate]
   connect_bd_net -net moller_regmap_adc_ctrl_testpattern [get_bd_ports adc_ctrl_testpattern] [get_bd_pins moller_regmap/adc_ctrl_testpattern]
   connect_bd_net -net moller_regmap_adc_load_value [get_bd_ports adc_load_value] [get_bd_pins moller_regmap/adc_load_value]
+  connect_bd_net -net moller_regmap_mac_addr [get_bd_ports mac_addr] [get_bd_pins moller_regmap/mac_addr]
+  connect_bd_net -net moller_regmap_udp_dest_ip [get_bd_ports udp_dest_ip] [get_bd_pins moller_regmap/udp_dest_ip]
   connect_bd_net -net pma_reset_out [get_bd_pins gig_ethernet_pcs_pma_0/pma_reset_out]
   set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_nets pma_reset_out]
   connect_bd_net -net ps_sys_rst_interconnect_aresetn [get_bd_pins ps_sys_rst/interconnect_aresetn] [get_bd_pins smartconnect_0/aresetn] [get_bd_pins smartconnect_1/aresetn] [get_bd_pins smartconnect_2/aresetn]

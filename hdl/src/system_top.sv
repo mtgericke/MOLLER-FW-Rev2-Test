@@ -381,7 +381,7 @@ subsystem_adc #(
     .adc_db(db)
 );
 
-subsystem_stream stream_subsystem (
+subsystem_stream_all stream_subsystem (
     .clk( clk ),
     .rst( rst ),
     .data(adc_data),
@@ -389,28 +389,42 @@ subsystem_stream stream_subsystem (
     .timestamp( ts_data ),
     .block( {TTL_INPUT, 1'b0} ),
     .ena( stream_ena ),
+    .all_chan( spare_reg1[3] ),
 
     .ch0_sel( stream_ch0 ),
     .ch1_sel( stream_ch1 ),
     .num_samples( stream_num_samples ),
-    .rate_div( stream_rate_div ),
-
+    .rate_div( stream_rate_div ),  // definition changed - now allows up to ~250k decimation
+                                   //      which allows capturing ~30 seconds of data
     .fifo_tdata( adc_fifo_tdata ),
     .fifo_tfirst( adc_fifo_tfirst ),
-	.fifo_tlast( adc_fifo_tlast ),
-	.fifo_tvalid( adc_fifo_tvalid ),
-	.fifo_tready( adc_fifo_tready )
+    .fifo_tlast( adc_fifo_tlast ),
+    .fifo_tvalid( adc_fifo_tvalid ),
+    .fifo_tready( adc_fifo_tready )
 );
 
+wire cap_ena, cap_start, cap_end;  // after trig - would like to wait for settling, then trigger the averaging
+capture_control cap_ctrl (
+    .clk( clk ),  .rst( ~spare_reg1[0] ),  .trig( 1'b0 ), // for testing - generate trig internally
+
+    .cap_regions(     spare_reg1[1] ?  4'h1    : spare_reg2[ 3: 0] ),
+    .cap_region_size( spare_reg1[1] ? 16'hF40  : spare_reg2[31:15] ),
+
+    .ena_delay(   spare_reg1[2] ?  16'h04A2 : spare_reg1[19: 8] ),
+    .start_delay( spare_reg1[2] ?  16'h04E2 : spare_reg1[31:20] ),
+
+    .cap_ena( cap_ena ),  .cap_start( cap_start ),  .end_cycle( cap_end ),
+    .cap_region( cap_region )
+);
+wire [3:0] cap_region;
 subsystem_capture #(
     .NUM_CH( NUM_ADC_CH ),
     .WIDTH( 18 )
 ) capture_subsystem (
-    .clk( clk ),
-    .rst( rst ),
-
-    .ena( 1'b1 ),
-    .start( {|TTL_INPUT} ),
+    .clk( clk ),           .rst( rst ),
+    //.ena( 1'b1 ),      //.start( {|TTL_INPUT} ),
+    .ena( cap_ena ),   .start( cap_start ),
+    .cap_region( cap_region ),
 
     .in_timestamp( ts_data ),
     .sample_valid( adc_data_valid ),
@@ -423,6 +437,17 @@ subsystem_capture #(
     .fifo_tlast( run_fifo_tlast ),
     .fifo_tready( run_fifo_tready )
 );
+// stream_ctrl 0x44 0x80002000   Ena[31]ratediv[30:24]ch1[23:20]ch0[19:16]nsamp[15:0]
+wire [47:0] spare_reg1; // 0x104 // capture/stream modifications controls
+                        //          bit0:  set to enable Averaging          
+                        //          bit1:  set to enable fixed single[~4k] region, otherwise use spare-reg2
+                        //          bit2:  set to enable fixed enable/start delays, otherwise use spare-reg1
+                        //          bit3:  set to enable streaming all adcs, otherwise just two selected adcs
+                        //          bits 19- 8: enable-delay [from trigger to enable going high]
+                        //          bits 31-20: start-delay  [from trigger to start first going high]
+wire [31:0] spare_reg2; // 0x108 // average #regions and region-size
+                        //          bits  3: 0 - number of averaging regions
+                        //          bits 31:15 - averaging region size
 
 Mercury_XU1 bd (
     .clk_125(clk),
@@ -507,6 +532,9 @@ Mercury_XU1 bd (
 
     .status_clk_holdover( LMK_STAT_HOLDOVER ),
     .status_clk_lockdetect( LMK_STAT_LD ),
+    
+    .mac_addr( spare_reg1 ),
+    .udp_dest_ip( spare_reg2 ),
 
     // JLab TI
     .CLK250( clk_convert ),
