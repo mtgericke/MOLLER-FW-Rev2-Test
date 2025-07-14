@@ -181,8 +181,8 @@ void* dma_thread(void *vargp) {
 					if( header_id == prv_hdr_id && tmp_len == prv_bytes && (++tmp_cnt % 1000) != 0 ){
 				        } else {
 					   prv_hdr_id = header_id;  prv_bytes = tmp_len;
-				 	   printf("DMA Rx[0x%02x %5dBytes] AVG:%6d ADC:%6d ERR:%6d\n", header_id,
-					          tmp_len, num_avg_pkts, num_adc_pkts, num_errors);
+				 	   //printf("DMA Rx[0x%02x %5dBytes] AVG:%6d ADC:%6d ERR:%6d\n", header_id,
+					   //     tmp_len, num_avg_pkts, num_adc_pkts, num_errors);
 					}
 				}
 				break;
