@@ -272,7 +272,7 @@ OBUFDS diff_som_out_clk_b	(	.I(adc_clk),		    .O(SOM_OUT_CLKB_P),	.OB(SOM_OUT_CL
 genvar n;
 generate
 for(n=0; n<NUM_ADC_CH; n=n+1) begin
-    IBUFDS diff_dco(	.O(dco[n]), .I(ADC_DCO_P[n+1]), .IB(ADC_DCO_N[n+1]));
+    IBUFDS diff_dco(   	.O(dco[n]), .I(ADC_DCO_P[n+1]), .IB(ADC_DCO_N[n+1]));
     IBUFDS diff_db(	    .O(db[n]),	.I(ADC_DB_P[n+1]),  .IB(ADC_DB_N[n+1]));
     IBUFDS diff_da(	    .O(da[n]),	.I(ADC_DA_P[n+1]),  .IB(ADC_DA_N[n+1]));
 end
@@ -387,7 +387,7 @@ subsystem_stream_all stream_subsystem (
     .data(adc_data),
     .valid(adc_data_valid),
     .timestamp( ts_data ),
-    .block( {TTL_INPUT, 1'b0} ),
+    .block( {TTL_INPUT, 1'b0} ), // copied to data output words, otherwise unused
     .ena( stream_ena ),
     .all_chan( spare_reg1[3] ),
 
@@ -403,17 +403,27 @@ subsystem_stream_all stream_subsystem (
     .fifo_tready( adc_fifo_tready )
 );
 
-wire cap_ena, cap_start, cap_end;  // after trig - would like to wait for settling, then trigger the averaging
+localparam CAP_REGION_CLOCKS   = 16'h0F40;  // 3904
+localparam ENA_DELAY_CLOCKS    = 16'h04A2;  // 1186
+localparam START_DELAY_CLOCKS  = 16'h04E2;  // 1250
+
+localparam CAP_REGION_SAMPLES  = 16'h01CC;  //  460
+localparam ENA_DELAY_SAMPLES   = 16'h008C;  //  140
+localparam START_DELAY_SAMPLES = 16'h0094;  //  148
+
+wire cap_ena, cap_start, cap_end, cap_region;  // after trig - would like to wait for settling, then trigger the averaging
 capture_control cap_ctrl (
-    .clk( clk ),  .rst( ~spare_reg1[0] ),  .trig( 1'b0 ), // for testing - generate trig internally
+    .clk( clk ),  .rst( ~spare_reg1[0] ),  .trig( {|TTL_INPUT} ), 
+    .valid(adc_data_valid),                .test_mode( spare_reg2[4] ), // for testing - generate trig internally
 
-    .cap_regions(     spare_reg1[1] ?  4'h1    : spare_reg2[ 3: 0] ),
-    .cap_region_size( spare_reg1[1] ? 16'hF40  : spare_reg2[31:15] ),
+    .cap_regions(     spare_reg1[1] ?  4'h1               : spare_reg2[ 3: 0] ),
+    .cap_region_size( spare_reg1[1] ? CAP_REGION_SAMPLES  : spare_reg2[31:15] ),
 
-    .ena_delay(   spare_reg1[2] ?  16'h04A2 : spare_reg1[19: 8] ),
-    .start_delay( spare_reg1[2] ?  16'h04E2 : spare_reg1[31:20] ),
-
+    .ena_delay(   spare_reg1[2] ?  ENA_DELAY_SAMPLES      : spare_reg1[19: 8] ),
+    .start_delay( spare_reg1[2] ?  START_DELAY_SAMPLES    : spare_reg1[31:20] ),
+   
     .cap_ena( cap_ena ),  .cap_start( cap_start ),  .end_cycle( cap_end ),
+    //.win_end(win_end),	  
     .cap_region( cap_region )
 );
 wire [3:0] cap_region;
@@ -425,6 +435,8 @@ subsystem_capture #(
     //.ena( 1'b1 ),      //.start( {|TTL_INPUT} ),
     .ena( cap_ena ),   .start( cap_start ),
     .cap_region( cap_region ),
+    //.win_end(win_end),
+    .trigger(TTL_INPUT),
 
     .in_timestamp( ts_data ),
     .sample_valid( adc_data_valid ),
@@ -437,7 +449,8 @@ subsystem_capture #(
     .fifo_tlast( run_fifo_tlast ),
     .fifo_tready( run_fifo_tready )
 );
-// stream_ctrl 0x44 0x80002000   Ena[31]ratediv[30:24]ch1[23:20]ch0[19:16]nsamp[15:0]
+// stream_ctrl 0x44 0x80002000 Ena[31]ratediv[30:24]ch1[23:20]ch0[19:16]nsamp[15:0]
+// adc   _ctrl 0x48 0x80002000 Ena[31]TestPat[30]PwrDn[29]ClrCnt[28] SPARE[27:24] SampRate[23:16] ChDisable[15:0]
 wire [47:0] spare_reg1; // 0x104 // capture/stream modifications controls
                         //          bit0:  set to enable Averaging          
                         //          bit1:  set to enable fixed single[~4k] region, otherwise use spare-reg2
@@ -447,6 +460,7 @@ wire [47:0] spare_reg1; // 0x104 // capture/stream modifications controls
                         //          bits 31-20: start-delay  [from trigger to start first going high]
 wire [31:0] spare_reg2; // 0x108 // average #regions and region-size
                         //          bits  3: 0 - number of averaging regions
+                        //          bits  7: 4 - SPARE*3, bit[4]:auto-trigger-averaging
                         //          bits 31:15 - averaging region size
 
 Mercury_XU1 bd (

@@ -97,14 +97,14 @@ always@(posedge clk) begin
             if(in_tvalid) begin
                 stream_in_beat <= 4'h1;
                 if( stream_in_beat != 4'h5 ) stream_in_tdata <= 64'hffffffffffffffff; // mark error (will occur just after mode change)
-                else stream_in_tdata <= {2'h0,data_reg[15][7:0],data_reg[2][17:0],data_reg[1][17:0],data_reg[0][17:0]};
+                else stream_in_tdata <= {2'h2,data_reg[15][7:0],data_reg[2][17:0],data_reg[1][17:0],data_reg[0][17:0]}; // set msb to mark start
                 stream_in_tvalid <= 1'b1;
 	    end else begin
                 stream_in_beat  <= (stream_in_beat == 4'h5) ? 4'h5 : stream_in_beat + 4'h1;
                 stream_in_tdata <= (stream_in_beat == 4'h1) ? {2'h0,data_reg[15][15: 8],data_reg[ 5][17:0],data_reg[ 4][17:0],data_reg[ 3][17:0]} :
                                    (stream_in_beat == 4'h2) ? {8'h0,data_reg[15][17:16],data_reg[ 8][17:0],data_reg[ 7][17:0],data_reg[ 6][17:0]} :
                                    (stream_in_beat == 4'h3) ? {10'h0,                   data_reg[11][17:0],data_reg[10][17:0],data_reg[ 9][17:0]} :
-                                                              {10'h0,                   data_reg[14][17:0],data_reg[13][17:0],data_reg[12][17:0]};
+                                                              {7'h0,         block[2:0],data_reg[14][17:0],data_reg[13][17:0],data_reg[12][17:0]};
                 stream_in_tvalid <= stream_in_beat != 4'h5;
 	    end
         end else if(ch0_sel == ch1_sel) begin
